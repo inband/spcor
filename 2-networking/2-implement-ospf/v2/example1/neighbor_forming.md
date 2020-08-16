@@ -1,6 +1,6 @@
 # neighbor forming
 
-### debug CSR1
+###### debug CSR1
 ```
 CSR1#debug ip ospf 1 adj 
 OSPF adjacency debugging is on for process 1
@@ -23,7 +23,7 @@ CSR1#
 
 ```
 
-### tcpdump
+###### tcpdump
 
 
 ```
@@ -171,5 +171,49 @@ f6:10:c7:fb:bb:83 > 01:00:5e:00:00:05, ethertype 802.1Q (0x8100), length 98: vla
 	  LLS: checksum: 0xfff6, length: 3
 	    Extended Options (1), length: 4
 	      Options: 0x00000001 [LSDB resync]
+
+```
+
+
+###### verfiy
+
+```
+CSR1#show ip ospf 1 neighbor 
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+192.51.100.2      0   FULL/  -        00:00:35    192.51.100.201  GigabitEthernet2.12
+
+CSR2#show ip route                                                                                          
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area 
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+      192.51.100.0/24 is variably subnetted, 4 subnets, 2 masks
+O        192.51.100.1/32 
+           [110/2] via 192.51.100.200, 00:05:28, GigabitEthernet2.12
+C        192.51.100.2/32 is directly connected, Loopback0
+C        192.51.100.200/31 is directly connected, GigabitEthernet2.12
+L        192.51.100.201/32 is directly connected, GigabitEthernet2.12
+
+CSR2#ping 192.51.100.1 source loopback 0
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 192.51.100.1, timeout is 2 seconds:
+Packet sent with a source address of 192.51.100.2 
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/2 ms
+
+CSR2#traceroute 192.51.100.1 source loopback 0 numeric 
+Type escape sequence to abort.
+Tracing the route to 192.51.100.1
+VRF info: (vrf in name/id, vrf out name/id)
+  1 192.51.100.200 1 msec *  1 msec
 
 ```
