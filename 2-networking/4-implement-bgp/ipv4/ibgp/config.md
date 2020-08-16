@@ -39,6 +39,15 @@ router bgp 64499
 
 
 Session established
+```
+CSR1#show ip bgp summary 
+BGP router identifier 192.51.100.1, local AS number 64499
+BGP table version is 1, main routing table version 1
+
+Neighbor        V           AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State/PfxRcd
+192.51.100.2    4        64499       5       5        1    0    0 00:01:10        0
+```
+
 
 ```
 CSR1#show tcp brief numeric | inc state|179
