@@ -40,6 +40,12 @@ router bgp 64499
 
 Session established
 
+```
+CSR1#show tcp brief numeric | inc state|179
+TCB       Local Address               Foreign Address             (state)
+7F0E7E795E60  192.51.100.1.179           192.51.100.2.54497          ESTAB
+```
+
 #### debug
 ```
 CSR1#
