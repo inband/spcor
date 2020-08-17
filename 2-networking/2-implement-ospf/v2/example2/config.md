@@ -3,6 +3,11 @@
 
 ### csr1
 ```
+interface Loopback0
+ ip address 192.51.100.1 255.255.255.255
+ ip ospf 1 area 0
+!
+
 interface GigabitEthernet2
  no ip address
  negotiation auto
@@ -34,6 +39,10 @@ router ospf 1
 
 ### csr2
 ```
+interface Loopback0
+ ip address 192.51.100.2 255.255.255.255
+ ip ospf 1 area 0
+!
 interface GigabitEthernet2
  no ip address
  negotiation auto
@@ -66,6 +75,10 @@ router ospf 1
 
 ### csr3
 ```
+interface Loopback0
+ ip address 192.51.100.3 255.255.255.255
+ ip ospf 1 area 0
+!
 interface GigabitEthernet2
  no ip address
  negotiation auto
@@ -98,6 +111,10 @@ router ospf 1
 
 ### csr4
 ```
+interface Loopback0
+ ip address 192.51.100.4 255.255.255.255
+ ip ospf 1 area 0
+!
 interface GigabitEthernet2
  no ip address
  negotiation auto
