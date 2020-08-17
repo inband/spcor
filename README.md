@@ -84,7 +84,7 @@ Study guidelines for SPCOR
 
 2.1.d Metrics
 
-2.2 Implement OSPF (v2 and v3)
+2.2 [Implement OSPF (v2 and v3)](https://github.com/inband/spcor/tree/master/2-networking/2-implement-ospf)
 
 2.2.a Neighbor adjacency
 
