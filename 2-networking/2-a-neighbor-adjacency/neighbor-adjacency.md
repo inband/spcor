@@ -11,9 +11,17 @@ Neighbor ID     Pri   State           Dead Time   Address         Interface
 192.51.100.2      0   FULL/  -        00:00:31    192.51.100.201  GigabitEthernet2.12
 ```
 
-NeighborID - **OSPF router id** of the neigbor.
+NeighborID - **OSPF router id** of the neigbor
+
 Pri - priority, used for shared link adjacencies where a router will be selected as Designated Router(DR) or Backup(BDR)
-State - state of adjacency.
-Dead Time - by default "dead time" is 40 seconds and counts down.  Everytime there is a keepalive it will reset to 40 seconds. 
-Address - the neighbors IP address with in adjacency link.
-Interface - this routers interface to reach neighbor.
+
+State - state of adjacency
+
+Dead Time - by default "dead time" is 40 seconds and counts down.  Everytime there is a keepalive it will reset to 40 seconds
+
+Address - the neighbors IP address with in adjacency link
+
+Interface - this routers interface to reach neighbor
+
+
+
