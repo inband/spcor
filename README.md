@@ -96,7 +96,7 @@ Study guidelines for SPCOR
 
 2.3 [Describe BGP path selection algorithm](https://github.com/inband/spcor/tree/master/2-networking/3-bgp-path-selection)
 
-2.4 Implement BGP (v4 and v6 for IBGP and EBGP)
+2.4 [Implement BGP (v4 and v6 for IBGP and EBGP)](https://github.com/inband/spcor/tree/master/2-networking/4-implement-bgp)
 
 2.4.a Neighbors
 
