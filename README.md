@@ -86,7 +86,7 @@ Study guidelines for SPCOR
 
 2.2 [Implement OSPF (v2 and v3)](https://github.com/inband/spcor/tree/master/2-networking/2-implement-ospf)
 
-2.2.a Neighbor adjacency
+2.2.a [Neighbor adjacency](https://github.com/inband/spcor/tree/master/2-networking/2-a-neighbor-adjacency)
 
 2.2.b Route advertisement
 
