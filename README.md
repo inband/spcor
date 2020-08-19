@@ -227,6 +227,6 @@ Study guidelines for SPCOR
 
 5.9 Configure and verify NETCONF and RESTCONF
 
-5.10 Configure and verify SNMP (v2c/v3)
+5.10 [Configure and verify SNMP (v2c/v3)](https://github.com/inband/spcor/tree/master/5-automation-and-assurance/10-Configure-and-verify-SNMP)
 
 
