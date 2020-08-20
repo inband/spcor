@@ -173,7 +173,7 @@ TCP Semaphore      0x7FEF17B9D050  FREE
 ```
 
 
-View summary and table (CSR1)
+View summary and eBGP routes (CSR1)
 
 ```
 CSR1#show ip bgp summary 
