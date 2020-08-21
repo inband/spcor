@@ -60,11 +60,13 @@ ffff ffff ffff ffff ffff ffff ffff ffff Marker
 04     Version (4)
 fbf0   my AS (64496)
 00b4   Hold Time (180s)
-c000 020a 1c02 0601   Remote Peer ID (192.0.2.10) 
-0400 
-0100 0102  
-0280 0002 0202 0002 0246 0002 0641 0400 
-00fb f0  
+c000 020a Remote Peer ID (192.0.2.10) 
+1c  Optional Parameter Length (28 Bytes)
+0206010400010001 	OCA (2) 
+02028000 		OCA (2)
+02020200		OCA (2)
+02024600		OCA (2)
+020641040000fbf0  	OCA (2)
 
 ```
 
