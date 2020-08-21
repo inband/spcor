@@ -1,5 +1,21 @@
 # demo license
 
+
+Ony need the following for evaluation:
+
+```
+CSR2#configure terminal  
+CSR2(config)#license boot level premium
+CSR2#wr mem
+Building configuration...
+[OK]
+CSR2#reload
+```
+
+
+------------------------------------------------------------------------------------------------------
+
+
 [cisco-licensing](https://slexui.cloudapps.cisco.com/SWIFT/LicensingUI/Quickstart#)
 
 Migrating Technology Package Licenses to Cisco IOS XE 3.13S
