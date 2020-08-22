@@ -44,13 +44,6 @@ Worked for:
 511: vmbr0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 9000 qdisc noqueue state UP mode DEFAULT group default qlen 1000
 ```
 
-Untagged to bond0 are only used for MGMT 
-
-```
-
-
-```
-
 
 Main concern is with MPLS and associated links and interfaces (vlan12, vlan13, vlan24 and vlan34)
 
@@ -133,8 +126,6 @@ root@pve6-lab:~# ip link | grep 'tap51[0-3]'
 
 ```
 
-
-
 Tested OK
 
 ```
@@ -148,6 +139,6 @@ Success rate is 100 percent (1/1), round-trip min/avg/max = 1/1/1 ms
 
 ```
 
-
+Need to monitor - I don't think they will persist.
 
 
