@@ -133,7 +133,7 @@ Study guidelines for SPCOR
 
 ## 3.0 MPLS and Segment Routing
 
-3.1 Implement MPLS
+3.1 [Implement MPLS](https://github.com/inband/spcor/tree/master/3-mpls-and-segment-routing/1-implement-mpls)
 
 3.1.a LDP sync
 
