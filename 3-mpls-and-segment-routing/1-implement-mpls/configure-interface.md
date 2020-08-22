@@ -146,6 +146,94 @@ Proto        Remote      Port      Local       Port  In Out  Stat TTY OutputIF
  17       --listen--          192.51.100.2      646   0   0 2000001   0 
 ```
 
+Now show **discovery**
 
+```
+CSR2#show mpls ldp discovery 
+ Local LDP Identifier:
+    192.51.100.2:0
+    Discovery Sources:
+    Interfaces:
+	GigabitEthernet2.12 (ldp): xmit/recv
+	    LDP Id: 192.51.100.1:0
+	GigabitEthernet3.24 (ldp): xmit/recv
+	    LDP Id: 192.51.100.4:0
+```
+
+**bindings**
+
+```
+CSR2#show mpls ldp bindings summary 
+Total number of prefixes: 9
+Generic label bindings
+                      assigned        learned
+       prefixes      in labels     out labels
+              9              9             17
+Total tib route info allocated: 10
+Previous tib remote label entries allocated Current/Total: 0/0
+Previous tib remote label queues allocated Current/Total: 0/0
+```
+
+```
+CSR2#show mpls ldp bindings 
+  lib entry: 192.51.100.0/24, rev 2
+	local binding:  label: imp-null
+	remote binding: lsr: 192.51.100.1:0, label: imp-null
+  lib entry: 192.51.100.1/32, rev 4
+	local binding:  label: 16
+	remote binding: lsr: 192.51.100.1:0, label: imp-null
+	remote binding: lsr: 192.51.100.4:0, label: 16
+  lib entry: 192.51.100.2/32, rev 6
+	local binding:  label: imp-null
+	remote binding: lsr: 192.51.100.1:0, label: 16
+	remote binding: lsr: 192.51.100.4:0, label: 17
+  lib entry: 192.51.100.3/32, rev 8
+	local binding:  label: 17
+	remote binding: lsr: 192.51.100.1:0, label: 17
+	remote binding: lsr: 192.51.100.4:0, label: 18
+  lib entry: 192.51.100.4/32, rev 10
+	local binding:  label: 18
+	remote binding: lsr: 192.51.100.1:0, label: 18
+	remote binding: lsr: 192.51.100.4:0, label: imp-null
+  lib entry: 192.51.100.5/32, rev 19
+	no local binding
+	remote binding: lsr: 192.51.100.1:0, label: imp-null
+  lib entry: 192.51.100.10/31, rev 20
+	no local binding
+	remote binding: lsr: 192.51.100.1:0, label: imp-null
+  lib entry: 192.51.100.200/31, rev 12
+	local binding:  label: imp-null
+	remote binding: lsr: 192.51.100.1:0, label: imp-null
+	remote binding: lsr: 192.51.100.4:0, label: 19
+  lib entry: 192.51.100.202/31, rev 14
+	local binding:  label: 19
+	remote binding: lsr: 192.51.100.1:0, label: imp-null
+	remote binding: lsr: 192.51.100.4:0, label: 20
+  lib entry: 192.51.100.204/31, rev 16
+        local binding:  label: imp-null
+	remote binding: lsr: 192.51.100.1:0, label: 19
+	remote binding: lsr: 192.51.100.4:0, label: imp-null
+  lib entry: 192.51.100.206/31, rev 18
+	local binding:  label: 20
+	remote binding: lsr: 192.51.100.1:0, label: 20
+	remote binding: lsr: 192.51.100.4:0, label: imp-null
+```
+
+**lfib**
+
+```
+CSR2#show mpls forwarding-table 
+Local      Outgoing   Prefix           Bytes Label   Outgoing   Next Hop    
+Label      Label      or Tunnel Id     Switched      interface              
+16         Pop Label  192.51.100.1/32  0             Gi2.12     192.51.100.200
+17         17         192.51.100.3/32  0             Gi2.12     192.51.100.200
+           18         192.51.100.3/32  0             Gi3.24     192.51.100.205
+18         Pop Label  192.51.100.4/32  0             Gi3.24     192.51.100.205
+19         Pop Label  192.51.100.202/31   \
+                                       0             Gi2.12     192.51.100.200
+20         Pop Label  192.51.100.206/31   \
+                                       0             Gi3.24     192.51.100.205
+
+```
 
 
