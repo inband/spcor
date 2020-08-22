@@ -88,7 +88,7 @@ L 1 192.51.100.201 MRU 1500 [Labels: implicit-null Exp: 0] 2 ms
 
 
 
-What is happening on the wire?
+What is happening on the wire?  Traffic TX/RX over link CSR1 to CSR3 (vlan13)
 
 
 
