@@ -120,13 +120,13 @@ Study guidelines for SPCOR
 
 2.7 Describe IPv6 transition (NAT44, NAT64, 6RD, MAP, and DS Lite)
 
-2.8 Implement high availability
+2.8 [Implement high availability](https://github.com/inband/spcor/tree/master/2-networking/8-Implement-high-availability)
 
 2.8.a NSF / graceful restart
 
 2.8.b NSR
 
-2.8.c BFD
+2.8.c [BFD](https://github.com/inband/spcor/tree/master/2-networking/8-c-bfd)
 
 2.8.d Link aggregation
 
