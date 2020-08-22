@@ -34,3 +34,58 @@ router ospf 1
 !
 ```
 
+Verify on CSR1
+
+```
+CSR1#show bfd neighbors 
+
+IPv4 Sessions
+NeighAddr                              LD/RD         RH/RS     State     Int
+192.51.100.201                          1/1          Up        Up        Gi2.12
+192.51.100.203                          2/2          Up        Up        Gi3.13
+
+```
+
+
+
+Setup and verify on CSR2
+
+NOTE: CSR2 to CSR4 configured in Example1  (without template)
+
+```
+CSR2#show bfd neighbors 
+
+IPv4 Sessions
+NeighAddr                              LD/RD         RH/RS     State     Int
+192.51.100.200                          1/1          Up        Up        Gi2.12
+192.51.100.205                       4097/4097       Up        Up        Gi3.24
+
+```
+
+
+Setup and verify on CSR3
+
+```
+CSR3#show bfd neighbors 
+
+IPv4 Sessions
+NeighAddr                              LD/RD         RH/RS     State     Int
+192.51.100.202                          2/2          Up        Up        Gi2.13
+192.51.100.207                          1/1          Up        Up        Gi3.34
+
+```
+
+Setup and verify on CSR4
+
+NOTE: CSR4 to CSR2 configured in Example1 (without template)
+
+```
+CSR4#show bfd neighbors 
+
+IPv4 Sessions
+NeighAddr                              LD/RD         RH/RS     State     Int
+192.51.100.204                       4097/4097       Up        Up        Gi2.24
+192.51.100.206                          1/1          Up        Up        Gi3.34
+
+
+```
