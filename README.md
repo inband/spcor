@@ -188,7 +188,7 @@ Study guidelines for SPCOR
 
 4.2.d VLAN tag manipulation
 
-4.3 Configure L3VPN
+4.3 [Configure L3VPN](https://github.com/inband/spcor/tree/master/4-services/3-configure-l3vpn)
 
 4.3.a Intra-AS VPN
 
