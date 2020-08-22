@@ -1,4 +1,4 @@
-# configured L3VPN for AS64499 on CSR1
+# configure L3VPN for AS64499 on CSR1
 
 
 Create new vrf AS64499 - this vrf will be used for INTERNET routes and will connect to peers from other ASs.
@@ -24,14 +24,14 @@ CSR1(config)#router bgp 64499
 CSR1(config-router)#no  neighbor 192.51.100.10 remote-as 64496
 ```
 
-### Configure router id
+Configure router id
 
 ```
 CSR1(config)#router bgp 64499                          
 CSR1(config-router)#bgp router-id 192.51.100.1 
 ```
 
-### Configure a loopback - Lo1 ```192.51.100.1``` 
+Configure a loopback - Lo1 ```192.51.100.1``` 
 
 ```
 interface Loopback1
@@ -40,7 +40,7 @@ interface Loopback1
 end
 ```
 
-### place interface facing AS64496 in ```vrf AS64496```
+Place interface facing AS64496 in ```vrf AS64496```
 
 ```
 CSR1(config)#do show run int Gi4.10
@@ -84,7 +84,7 @@ C        192.51.100.10/31 is directly connected, GigabitEthernet4.10
 L        192.51.100.11/32 is directly connected, GigabitEthernet4.10
 ```
 
-Can IP on ```192.51.100.10``` be reached?  That is other end of link AS64496
+Can IP  ```192.51.100.10``` be reached?  That is other end of link AS64496
 
 ```
 CSR1#ping vrf AS64499 192.51.100.10
@@ -106,7 +106,7 @@ Success rate is 0 percent (0/5)
 
 ```
 
-### configured eBGP peer 64496 under ```vrf 64499```
+Configure eBGP peer 64496 under ```vrf 64499```
 
 ```
  address-family vpnv4
@@ -164,6 +164,38 @@ CSR1(config)#ip route vrf AS64499 192.51.100.0 255.255.255.0 null 0
 
 ```
 
+Full BGP config
+
+```
+router bgp 64499
+ bgp router-id 192.51.100.1
+ bgp log-neighbor-changes
+ network 192.51.100.0
+ !
+ address-family vpnv4
+ exit-address-family
+ !
+ address-family ipv4 vrf AS64499
+  network 192.51.100.0
+  neighbor 192.51.100.10 remote-as 64496
+  neighbor 192.51.100.10 update-source GigabitEthernet4.10
+  neighbor 192.51.100.10 activate
+  neighbor 192.51.100.10 prefix-list PL_EBGP_OUT out
+ exit-address-family
+!
+!
+ip route vrf AS64499 192.51.100.0 255.255.255.0 Null0
+!
+ip prefix-list PL_EBGP_OUT seq 10 permit 192.51.100.0/24
+ip prefix-list PL_EBGP_OUT seq 1000 deny 0.0.0.0/0 le 32
+!
+
+
+```
+
+
+
+
 Check again
 
 ```
@@ -182,7 +214,7 @@ Route Distinguisher: 64499:1 (default for vrf AS64499)
 Total number of prefixes 1 
 ```
 
-### verify reachability
+Verify reachability
 ```
 CSR1#ping vrf AS64499 192.51.100.10 source lo1
 Type escape sequence to abort.
