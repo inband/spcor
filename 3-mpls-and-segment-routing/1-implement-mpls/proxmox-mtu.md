@@ -1,5 +1,31 @@
 # proxmox mtu
 
+Can't ping with ```size 1500```
+
+```
+CSR1#ping 192.51.100.4 source lo0 repeat 1 df-bit size 1500
+Type escape sequence to abort.
+Sending 1, 1500-byte ICMP Echos to 192.51.100.4, timeout is 2 seconds:
+Packet sent with a source address of 192.51.100.1 
+Packet sent with the DF bit set
+.
+Success rate is 0 percent (0/1)
+```
+
+Works up to ```size 1496``` due to 4Bytes for MPLS
+
+```
+CSR1#ping 192.51.100.4 source lo0 repeat 1 df-bit size 1496
+Type escape sequence to abort.
+Sending 1, 1496-byte ICMP Echos to 192.51.100.4, timeout is 2 seconds:
+Packet sent with a source address of 192.51.100.1 
+Packet sent with the DF bit set
+!
+Success rate is 100 percent (1/1), round-trip min/avg/max = 4/4/4 ms
+```
+
+
+
 Added mtu 9000 to **interfaces**
 
 ```
