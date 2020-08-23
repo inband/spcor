@@ -114,6 +114,8 @@ Label  Peer-Address    VCID       PWID       In-Use FirstUse ResuedAt FreedAt
 
 Show detail
 
+CSR1
+
 ```
 CSR1#show mpls l2transport vc detail 
 Local interface: Gi5.100 up, line protocol up, Eth VLAN 100 up
@@ -157,6 +159,51 @@ Local interface: Gi5.100 up, line protocol up, Eth VLAN 100 up
 
 ```
 
+CSR4
 
+```
+CSR4#show mpls l2transport vc 100 detail 
+Local interface: Gi5.100 up, line protocol up, Eth VLAN 100 up
+  Interworking type is Ethernet
+  Destination address: 192.51.100.1, VC ID: 100, VC status: up
+    Output interface: Gi2.24, imposed label stack {18 25}
+    Preferred path: not configured  
+    Default path: active
+    Next hop: 192.51.100.204
+  Create time: 00:23:56, last status change time: 00:23:37
+    Last label FSM state change time: 00:23:37
+  Signaling protocol: LDP, peer 192.51.100.1:0 up
+    Targeted Hello: 192.51.100.4(LDP Id) -> 192.51.100.1, LDP is UP
+    Graceful restart: not configured and not enabled
+    Non stop routing: not configured and not enabled
+    Status TLV support (local/remote)   : enabled/supported
+      LDP route watch                   : enabled
+      Label/status state machine        : established, LruRru
+      Last local dataplane   status rcvd: No fault
+      Last BFD dataplane     status rcvd: Not sent
+      Last BFD peer monitor  status rcvd: No fault
+      Last local AC  circuit status rcvd: No fault
+      Last local AC  circuit status sent: No fault
+      Last local PW i/f circ status rcvd: No fault
+      Last local LDP TLV     status sent: No fault
+      Last remote LDP TLV    status rcvd: No fault
+      Last remote LDP ADJ    status rcvd: No fault
+    MPLS VC labels: local 22, remote 25 
+    Group ID: local 0, remote 0
+    MTU: local 1500, remote 1500
+    Remote interface description: 
+  Sequencing: receive disabled, send disabled
+  Control Word: On (configured: autosense)
+  SSO Descriptor: 192.51.100.1/100, local label: 22
+  Dataplane:
+    SSM segment/switch IDs: 4100/4099 (used), PWID: 1
+  VC statistics:
+    transit packet totals: receive 20, send 20
+    transit byte totals:   receive 9306, send 9826
+    transit packet drops:  receive 0, seq error 0, send 0
+
+
+CSR4#
+```
 
 
