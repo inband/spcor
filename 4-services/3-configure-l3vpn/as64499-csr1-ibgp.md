@@ -540,3 +540,14 @@ f6:5a:cd:d6:fc:26 > 3a:28:c6:0b:96:7d, ethertype 802.1Q (0x8100), length 1526: v
 3a:28:c6:0b:96:7d > f6:5a:cd:d6:fc:26, ethertype 802.1Q (0x8100), length 1522: vlan 24, p 0, ethertype MPLS unicast, MPLS (label 19, exp 0, [S], ttl 253) 192.0.2.10 > 192.51.100.4: ICMP echo reply, id 4, seq 0, length 1480
 
 ```
+
+
+Remember to unshut interfaces on CSR3
+
+```
+CSR3(config)#int Gi2
+CSR3(config-if)#no shut
+CSR3(config-if)#int Gi3
+CSR3(config-if)#no shut
+
+```
