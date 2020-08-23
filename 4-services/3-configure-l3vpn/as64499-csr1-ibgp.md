@@ -503,3 +503,40 @@ C        192.51.100.4/32 is directly connected, Loopback1
 B        192.51.100.10/31 [200/0] via 192.51.100.1, 00:02:16
 
 ```
+
+
+
+
+What is happening on wire CSR4 to CSR2 (vlan 24)?
+
+
+```
+CSR4#ping vrf AS64499 192.0.2.10 source Lo1 df-bit size 1500
+Type escape sequence to abort.
+Sending 5, 1500-byte ICMP Echos to 192.0.2.10, timeout is 2 seconds:
+Packet sent with a source address of 192.51.100.4 
+Packet sent with the DF bit set
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 2/2/3 ms
+
+```
+
+tcpdump 
+Note length is 1526Bytes for outgoing frame/packet
+
+14 (Ethernet) + 4 (VLAN) + 4 (MPLS label) +  4 (VPNv4 label) + 20 (IP) +  1480 (ICMP)
+
+Ethernet and VLAN considered Layer2
+
+MPLS/VPNv4/IP consider Layer3 and all contribute to ```mtu```.  ```mtu``` normally set to 1500 but many services use 
+additional headers for encapsulation the ```mtu``` has been adjusted as per: [proxmox-mtu](https://github.com/inband/spcor/blob/master/3-mpls-and-segment-routing/1-implement-mpls/proxmox-mtu.md)
+
+
+```
+root@pve6-lab:~# tcpdump -nntei vmbr0v24 'mpls'
+tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+listening on vmbr0v24, link-type EN10MB (Ethernet), capture size 262144 bytes
+f6:5a:cd:d6:fc:26 > 3a:28:c6:0b:96:7d, ethertype 802.1Q (0x8100), length 1526: vlan 24, p 0, ethertype MPLS unicast, MPLS (label 18, exp 0, ttl 255) (label 21, exp 0, [S], ttl 255) 192.51.100.4 > 192.0.2.10: ICMP echo request, id 4, seq 0, length 1480
+3a:28:c6:0b:96:7d > f6:5a:cd:d6:fc:26, ethertype 802.1Q (0x8100), length 1522: vlan 24, p 0, ethertype MPLS unicast, MPLS (label 19, exp 0, [S], ttl 253) 192.0.2.10 > 192.51.100.4: ICMP echo reply, id 4, seq 0, length 1480
+
+```
