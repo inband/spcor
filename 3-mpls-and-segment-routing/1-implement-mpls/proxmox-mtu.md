@@ -73,7 +73,7 @@ Worked for:
 
 Main concern is with MPLS and associated links and interfaces (vlan12, vlan13, vlan24 and vlan34)
 
-Needed to Mmanually set mtu.  Need to find a better way.
+Needed to manually set mtu.  Need to find a better way.
 
 ```
 ip link set mtu 9000 dev vmbr0v12
