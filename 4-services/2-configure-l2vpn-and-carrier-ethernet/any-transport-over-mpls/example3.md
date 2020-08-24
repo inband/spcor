@@ -141,15 +141,28 @@ MPLS
 ```
 8847				Ethertype MPLS Unicast (2)
 0001 00ff 			Label: 16  TTL:255	(4)
-0001 71ff 			Label: 23 BS-bit  TTL:255 (1)	
-0000 0000 6ec2 4776 		Control Word ??only meant to be 32bits??
-d31c a2df d1ed e9d5		Control Word ??only meant to be 32bits??
+0001 71ff 			Label: 23 BS-bit  TTL:255 (4)	
+0000 0000 			Control word		(4)
 ```
 
+Ethernet and Ethertype IPv4
 
-Ethertype IPv4 and IP
 ```
+6ec2 4776 d31c 			dst MAC (6) 
+a2df d1ed e9d5			src MAC (6)
 0800 				Ethertype IPv4 - this is counted as Ethernet (2)
+```
+
+```
+CUSTX-CPE1#show ip arp vrf CUST1
+Protocol  Address          Age (min)  Hardware Addr   Type   Interface
+Internet  10.1.1.10               -   a2df.d1ed.e9d5  ARPA   GigabitEthernet2.100
+Internet  10.1.1.11             109   6ec2.4776.d31c  ARPA   GigabitEthernet2.100
+```
+
+
+IP
+```
 4500 0064 0030 0000 ff01 	IP src/dst (20)
 a552 0a01 010a 0a01 010b  
 ```
