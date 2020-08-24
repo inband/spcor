@@ -1,5 +1,9 @@
 # spcor
-Study guidelines for SPCOR
+Study guidelines and notes for SPCOR.  
+
+All equipment is based in a private lab. 
+
+None of the material in this reposistory is endorsed by any vendor. 
 
 ## 1.0 Architecture
 
