@@ -109,3 +109,56 @@ Label      Label      or Tunnel Id     Switched      interface
 25         No Label   l2ckt(2)         4076          Gi5.100    point2point 
 ```
 
+
+
+---------------------------------
+
+
+Try and account for every bit
+
+```
+d6:0e:10:83:ae:ff > f6:10:c7:fb:bb:83, ethertype 802.1Q (0x8100), length 144: vlan 12, p 0, ethertype MPLS unicast, MPLS (label 16, exp 0, ttl 255) (label 23, exp 0, [S], ttl 255)
+	0x0000:  f610 c7fb bb83 d60e 1083 aeff 8100 000c  ................
+	0x0010:  8847 0001 00ff 0001 71ff 0000 0000 6ec2  .G......q.....n.
+	0x0020:  4776 d31c a2df d1ed e9d5 0800 4500 0064  Gv..........E..d
+	0x0030:  0030 0000 ff01 a552 0a01 010a 0a01 010b  .0.....R........
+	0x0040:  0800 381b 0009 0003 0000 0000 00ed 4536  ..8...........E6
+	0x0050:  abcd abcd abcd abcd abcd abcd abcd abcd  ................
+	0x0060:  abcd abcd abcd abcd abcd abcd abcd abcd  ................
+	0x0070:  abcd abcd abcd abcd abcd abcd abcd abcd  ................
+	0x0080:  abcd abcd abcd abcd abcd abcd abcd abcd  ................
+```
+
+
+Ethernet
+```
+f610 c7fb bb83 			dst MAC (6)
+d60e 1083 aeff 			src MAC (6)
+8100 000c			TPID/VID dot1q/12 (4)
+```
+
+MPLS
+```
+8847				Ethertype MPLS Unicast (2)
+0001 00ff 			Label: 16  TTL:255	(4)
+0001 71ff 			Label: 23 BS-bit  TTL:255 (1)	
+0000 0000 6ec2 4776 		Control Word ??only meant to be 32bits??
+d31c a2df d1ed e9d5		Control Word ??only meant to be 32bits??
+```
+
+
+Ethertype IPv4 and IP
+```
+0800 				Ethertype IPv4 - this is counted as Ethernet (2)
+4500 0064 0030 0000 ff01 	IP src/dst (20)
+a552 0a01 010a 0a01 010b  
+```
+
+100-byte ICMP Request (IP + 80-bytes below)
+```
+0800 381b 0009 0003 0000 0000 00ed 4536
+abcd abcd abcd abcd abcd abcd abcd abcd  
+abcd abcd abcd abcd abcd abcd abcd abcd  
+abcd abcd abcd abcd abcd abcd abcd abcd  
+abcd abcd abcd abcd abcd abcd abcd abcd
+```
