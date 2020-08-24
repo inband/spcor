@@ -1,0 +1,7 @@
+# for a list of defaults see /etc/ansible/ansible.cfg
+
+[defaults]
+gathering = explicit
+inventory = inv.yml
+retry_files_enabled = False
+host_key_checking = False
