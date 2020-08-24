@@ -11,4 +11,4 @@ Example2: break with different VCs
 
 Example3: revisit simple config with VC1001 and check wire.
 
-Example4: different cust vlans (vlan rewrite)
+Example4: cust different vlans at each PE (vlan rewrite)
