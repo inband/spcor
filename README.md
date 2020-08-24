@@ -1,9 +1,9 @@
 # spcor
-Study guidelines and notes for SPCOR.  
+Study guidelines and personal notes for SPCOR.  
 
 All equipment is based in a private lab. 
 
-None of the material in this reposistory is endorsed by any vendor. 
+None of the material in this reposistory is endorsed by any public vendor/entity. 
 
 ## 1.0 Architecture
 
@@ -182,7 +182,7 @@ None of the material in this reposistory is endorsed by any vendor.
 
 4.1.d mVPN
 
-4.2 Configure L2VPN and Carrier Ethernet
+4.2 [Configure L2VPN and Carrier Ethernet](https://github.com/inband/spcor/tree/master/4-services/2-configure-l2vpn-and-carrier-ethernet)
 
 4.2.a Ethernet services (E-Line, E-Tree, E-Access, E-LAN)
 
