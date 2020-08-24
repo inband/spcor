@@ -1,0 +1,6 @@
+---
+- name: "IOS >> Gather Cisco IOS information"
+  ios_command:
+    commands: "show run"              
+  register: cli_result
+
