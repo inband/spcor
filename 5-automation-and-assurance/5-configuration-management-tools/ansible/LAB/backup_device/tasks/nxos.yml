@@ -1,0 +1,5 @@
+---
+- name: "NXOS >> Gather Cisco NXOS information"
+  nxos_command:
+    commands: "show run"              
+  register: cli_result
