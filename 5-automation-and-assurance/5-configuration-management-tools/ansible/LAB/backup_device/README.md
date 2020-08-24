@@ -1,5 +1,37 @@
 # backup device
 
+Directory structure
+
+```
+root@lab-ansible:~/LAB/backup_device# tree
+.
+|-- ansible.cfg
+|-- group_vars
+|   |-- ios_routers.yml
+|   |-- routers.yml
+|   `-- switches.yml
+|-- inv.yml
+|-- outputs
+|   |-- 2020-08-24-csr1.txt
+|   |-- 2020-08-24-csr10.txt
+|   |-- 2020-08-24-csr2.txt
+|   |-- 2020-08-24-csr3.txt
+|   |-- 2020-08-24-csr4.txt
+|   |-- 2020-08-24-csr5.txt
+|   |-- 2020-08-24-csr6.txt
+|   |-- 2020-08-24-csr7.txt
+|   |-- 2020-08-24-csr8.txt
+|   |-- 2020-08-24-custx-cpe1.txt
+|   `-- 2020-08-24-custx-cpe2.txt
+|-- pb.yml
+`-- tasks
+    |-- dellos9.yml
+    |-- ios.yml
+    `-- nxos.yml
+
+```
+
+
 Use ansible to backup router configs in LAB 
 
 
