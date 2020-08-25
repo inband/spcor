@@ -98,3 +98,22 @@ Sending 5, 100-byte ICMP Echos to 10.1.1.10, timeout is 2 seconds:
 !!!!!
 Success rate is 100 percent (5/5), round-trip min/avg/max = 2/3/4 ms
 ```
+
+
+
+Another verification command
+
+```
+CSR1#show xconnect all detail 
+Legend:    XC ST=Xconnect State  S1=Segment1 State  S2=Segment2 State
+  UP=Up       DN=Down            AD=Admin Down      IA=Inactive
+  SB=Standby  HS=Hot Standby     RV=Recovering      NH=No Hardware
+
+XC ST  Segment 1                         S1 Segment 2                         S2
+------+---------------------------------+--+---------------------------------+--
+UP pri   ac Gi5.100:100/11(Eth VLAN)     UP mpls 192.51.100.4:10011           UP
+            Interworking: ethernet               Local VC label 26              
+                                                 Remote VC label 23             
+                                                 pw-class: CUST1     
+
+```
