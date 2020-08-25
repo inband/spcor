@@ -231,8 +231,8 @@ Sending 5, 100-byte ICMP Echos to 10.1.12.2, timeout is 2 seconds:
 Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/2 ms
 ```
 
+[More reading to do](https://www.cisco.com/c/en/us/td/docs/ios-xml/ios/cether/configuration/xe-3s/ce-xe-3s-book/ce-ether-vc-infra-xe.html)
 
-
-
+This information will have to go into Architecture: Metro Ethernet and Services: Tag Manipulation
 
 
