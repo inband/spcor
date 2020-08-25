@@ -17,6 +17,10 @@ Example5: Trunk
 
 Example6: QinQ
 
+Example6a: QinQ VLAN rewrite
+
+Example6b: QinQ, 2 different CUSTs, same PE
+
 Example7: Traffic Engineering (TE)
 
 Example8: QoS
