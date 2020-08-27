@@ -60,6 +60,11 @@ Will have to come back at some stage but compared to CSRv - it using more resour
 
 Change CPU to ```Type: host```
 
+Due to issue
+```
+%OS-STSMGR-3-ERROR : dp_launcher(1)
+```
+
 ```
 root@pve6-lab:~# qm config 701 
 balloon: 0
