@@ -26,7 +26,7 @@ Change Boot Order: Device 1: Disk 'virtio0'
 ```
 
 
-### XRV
+### XRv
 
 ```
 qm create 701
@@ -51,3 +51,7 @@ Serial Port
 
 Change Boot Order: Device 1: Disk 'virtio0'
 ```
+
+Didn't pick up additional interfaces after install.  
+
+Will have to come back at some stage but compared to CSRv - it using more resourses.  Stopped VM for now.
