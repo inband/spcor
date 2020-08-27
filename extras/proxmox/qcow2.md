@@ -62,7 +62,7 @@ Change CPU to ```Type: host```
 
 Due to issue
 ```
-%OS-STSMGR-3-ERROR : dp_launcher(1)
+%OS-SYSMGR-3-ERROR : dp_launcher(1)
 ```
 
 ```
