@@ -88,11 +88,20 @@ vmgenid: 6b60ab14-9db1-476c-9918-b67d3d76febc
 
 ```
 
+Cisco [requirements](https://www.cisco.com/c/en/us/td/docs/routers/virtual-routers/xrv9k-61x/general/release/notes/b-release-notes-xrv9k-614.html)
 
+Minimum 4 NICs
 
-Add interfaces
+* 1 for management 
+* 2 are reserved
+* 1 for traffic (int Gi0/0/0/0
+
+So 3 NICs for traffic would require a total of 6 ```virtio``` NICs.  Found that a reload was required after adding NICs.
+
+Add interfaces (depending on how many NICs added)
 
 ```
+interface preconfigure GigabitEthernet0/0/0/0
 interface preconfigure GigabitEthernet0/0/0/1
 interface preconfigure GigabitEthernet0/0/0/2
 ```
