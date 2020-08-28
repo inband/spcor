@@ -157,3 +157,17 @@ Gi0_0_0_0 Link encap:Ethernet  HWaddr e2:2f:6e:8e:c4:62
 9: Gi0_0_0_0: <> mtu 1514 qdisc noop state DOWN mode DEFAULT group default qlen 1000
     link/ether e2:2f:6e:8e:c4:62 brd ff:ff:ff:ff:ff:ff    
 ```
+
+Show interface
+
+```
+RP/0/RP0/CPU0:ios#show int GigabitEthernet 0/0/0/0
+Fri Aug 28 00:53:57.736 UTC
+GigabitEthernet0/0/0/0 is administratively down, line protocol is administratively down 
+  Interface state transitions: 0
+  Hardware is GigabitEthernet, address is e22f.6e8e.c462 (bia e22f.6e8e.c462)
+  Internet address is Unknown
+  MTU 1514 bytes, BW 1000000 Kbit (Max: 1000000 Kbit)
+     reliability 255/255, txload 0/255, rxload 0/255
+
+```
