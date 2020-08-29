@@ -204,11 +204,11 @@ None of the material in this reposistory is endorsed by any public vendor/entity
 
 4.4.b IGMP v1/v2/v3 and MLD
 
-4.5 Implement QoS services
+4.5 [Implement QoS services](https://github.com/inband/spcor/tree/master/4-services/5-implement-qos-services)
 
-4.5.a Classification and marking
+4.5.a [Classification and marking](https://github.com/inband/spcor/tree/master/4-services/5-a-classification-and-marking)
 
-4.5.b Congestion avoidance, traffic policing, and shaping
+4.5.b [Congestion avoidance, traffic policing, and shaping](https://github.com/inband/spcor/tree/master/4-services/5-b-congestion-avoidance-traffic-policing-and-shaping)
 
 
 ## 5.0 Automation and Assurance
