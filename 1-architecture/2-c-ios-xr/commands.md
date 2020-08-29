@@ -114,3 +114,28 @@ S    192.168.199.3/32 [1/0] via 192.168.250.1, 00:01:22
 C    192.168.250.0/24 is directly connected, 00:02:33, MgmtEth0/RP0/CPU0/0
 L    192.168.250.71/32 is directly connected, 00:02:33, MgmtEth0/RP0/CPU0/0
 ```
+
+enable ssh
+
+```
+RP/0/RP0/CPU0:XRV1(config)#ssh server vrf LAB_MGMT
+RP/0/RP0/CPU0:XRV1(config)#commit
+Sat Aug 29 11:07:04.297 UTC
+RP/0/RP0/CPU0:XRV1(config)#RP/0/RP0/CPU0:Aug 29 11:07:17.237 UTC: SSHD_[67091]: %SECURITY-SSHD-3-ERR_GENERAL : Failed No Host Key configured on the device 
+```
+
+
+```
+RP/0/RP0/CPU0:XRV1#crypto key generate rsa 
+Sat Aug 29 11:10:16.055 UTC
+The name for the keys will be: the_default
+  Choose the size of the key modulus in the range of 512 to 4096 for your General Purpose Keypair. Choosing a key modulus greater than 512 may take a few minutes.
+
+How many bits in the modulus [2048]:  
+Generating RSA keys ...
+Done w/ crypto generate keypair
+[OK]
+```
+
+
+
