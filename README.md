@@ -17,11 +17,11 @@ None of the material in this reposistory is endorsed by any public vendor/entity
 
 1.2 Describe Cisco network software architecture
 
-1.2.a IOS
+1.2.a [IOS](https://github.com/inband/spcor/tree/master/1-architecture/2-a-ios)
 
 1.2.b IOS XE
 
-1.2.c IOS XR
+1.2.c [IOS XR](https://github.com/inband/spcor/tree/master/1-architecture/2-c-ios-xr)
 
 1.3 Describe service provider virtualization
 
