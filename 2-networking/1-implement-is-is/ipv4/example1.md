@@ -1,4 +1,4 @@
-# exmaple 1
+# example 1
 
 Example1: Basic IPv4 Config (Jeff Doyle's TCP/IP Vol I)
 
