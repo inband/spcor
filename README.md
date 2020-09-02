@@ -78,7 +78,7 @@ None of the material in this reposistory is endorsed by any public vendor/entity
 
 ## 2.0 Networking
 
-2.1 Implement IS-IS (IPv4 and IPv6)
+2.1 [Implement IS-IS (IPv4 and IPv6)](https://github.com/inband/spcor/tree/master/2-networking/1-implement-is-is)
 
 2.1.a Route advertisement
 
