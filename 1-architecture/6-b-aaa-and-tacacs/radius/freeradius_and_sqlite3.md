@@ -34,12 +34,15 @@ root@freeradius:/etc/freeradius# systemctl status freeradius
 
 ```
 
-
+Install ```freeradius``` and ```sqlite3```
 
 ```
 apt update
-apt install freeradius -y
+apt install freeradius sqlite3 -y
 ```
+
+
+Change ```mods-available/sql```
 
 ```
 vim /etc/freeradius/3.0/mods-available/sql
