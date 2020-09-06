@@ -36,6 +36,81 @@ root@freeradius:/etc/freeradius# systemctl status freeradius
 
 
 
+```
+apt update
+apt install freeradius -y
+```
+
+```
+vim /etc/freeradius/3.0/mods-available/sql
+```
+
+Change ```driver```
+
+```
+sql {
+        # The sub-module to use to execute queries. This should match
+        # the database you're attempting to connect to.
+        #
+        #    * rlm_sql_mysql
+        #    * rlm_sql_mssql
+        #    * rlm_sql_oracle
+        #    * rlm_sql_postgresql
+        #    * rlm_sql_sqlite
+        #    * rlm_sql_null (log queries to disk)
+        #
+        #driver = "rlm_sql_null"
+        driver =  "rlm_sql_sqlite"
+
+#
+#       Several drivers accept specific options, to set them, a
+#       config section with the the name as the driver should be added
+#       to the sql instance.
+#
+#       Driver specific options are:
+#
+        sqlite {
+                # Path to the sqlite database
+                filename = "/etc/freeradius/freeradius.db"
+
+                # How long to wait for write locks on the database to be
+                # released (in ms) before giving up.
+                busy_timeout = 200
+
+                # If the file above does not exist and bootstrap is set
+                # a new database file will be created, and the SQL statements
+                # contained within the bootstrap file will be executed.
+                bootstrap = "${modconfdir}/${..:name}/main/sqlite/schema.sql"
+        }
+```
+
+Add to ```mods-enabled``` and import ```schema```
+
+```
+cd /etc/freeradius/3.0/
+cd mods-enabled/
+ln -s ../mods-available/sql
+
+cd /etcfreeradius/
+sqlite3 freeradius.db < 3.0/mods-config/sql/main/sqlite/schema.sql 
+chown freeradius:freeradius freeradius.db
+chmod 664 freeradius.db 
+sqlite3 freeradius.db 
+
+systemctl restart freeradius
+systemctl status freeradius
+man 8 radiusd
+
+```
 
 
+Add a user and an attribute
 
+```
+root@freeradius:/etc/freeradius# sqlite3 freeradius.db 
+SQLite version 3.27.2 2019-02-25 16:06:06
+Enter ".help" for usage hints.
+sqlite> INSERT INTO radcheck (username,attribute,op,value) VALUES ('test2@lab.com.au','Cleartext-Password',':=','test456');
+sqlite> INSERT INTO radreply (username,attribute,op,value) VALUES ('test2@lab.com.au','cisco-avpair','=','ip:sub-qos-policy-out=100Mb');
+
+```
