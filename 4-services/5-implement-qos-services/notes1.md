@@ -29,6 +29,8 @@ Cisco provides platforms and tools to implement QoS policies.  Key areas are:
 Queuing is also known as congestion management.
 
 
+For the rest of these notes1 I'll just focus on **classification - matching, marking**
+
 Lab
 
 CUST1 ```172.20.2.11``` to CSR10 ```192.0.2.10``` via CSR1
