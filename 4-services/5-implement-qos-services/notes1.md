@@ -309,11 +309,91 @@ Set cos not supported in input policy
 OK.  So the question is how to set CoS value for egress in scenario where SP providing PPPoE over QinQ?
 
 
+Try with the Virtual-template then the per-user policy-map (RADIUS)
+
+```
+CSR1(config)#interface Virtual-template 1
+CSR1(config-if)# service-policy output POLICY_RTP
+```
+
+Clear session and wait for it to re-connect and check policy is applied.
+
+```
+CSR1#clear pppoe all
+
+CSR1#show policy-map session 
+ 
+ SSS session identifier 25 - 
+
+  Service-policy output: POLICY_RTP
+
+    Class-map: CLASS_RTP (match-all)  
+      0 packets, 0 bytes
+      30 second offered rate 0000 bps, drop rate 0000 bps
+      Match:  dscp ef (46)
+      QoS Set
+        cos 5
+          Marker statistics: Disabled
+
+    Class-map: class-default (match-any)  
+      0 packets, 0 bytes
+      30 second offered rate 0000 bps, drop rate 0000 bps
+      Match: any 
+
 ```
 
 
+Ping form CPE1
+
+```
+CUSTX-CPE1#ping vrf CUST1 192.0.2.10 source Dialer1 tos 184
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 192.0.2.10, timeout is 2 seconds:
+Packet sent with a source address of 172.20.2.11 
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/2 ms
+
 ```
 
+Check on CSR1
+
+```
+CSR1#show policy-map session 
+ 
+ SSS session identifier 25 - 
+
+  Service-policy output: POLICY_RTP
+
+    Class-map: CLASS_RTP (match-all)  
+      5 packets, 650 bytes
+      30 second offered rate 0000 bps, drop rate 0000 bps
+      Match:  dscp ef (46)
+      QoS Set
+        cos 5
+          Marker statistics: Disabled
+
+    Class-map: class-default (match-any)  
+      22 packets, 924 bytes
+      30 second offered rate 0000 bps, drop rate 0000 bps
+      Match: any 
+
+```
+
+
+
+vlan 100
+
+```
+a2:df:d1:ed:e9:d5 > 4a:c7:d4:1b:83:a1, ethertype 802.1Q (0x8100), length 130: vlan 100, p 5, ethertype 802.1Q, vlan 1, p 5, ethertype PPPoE S, PPPoE  [ses 0x19] IP (0x0021), length 102: (tos 0xb8, ttl 255, id 35001, offset 0, flags [none], proto ICMP (1), length 100)
+    172.20.2.11 > 192.0.2.10: ICMP echo request, id 108, seq 4, length 80
+4a:c7:d4:1b:83:a1 > a2:df:d1:ed:e9:d5, ethertype 802.1Q (0x8100), length 130: vlan 100, p 5, ethertype 802.1Q, vlan 1, p 0, ethertype PPPoE S, PPPoE  [ses 0x19] IP (0x0021), length 102: (tos 0xb8, ttl 254, id 35001, offset 0, flags [none], proto ICMP (1), length 100)
+    192.0.2.10 > 172.20.2.11: ICMP echo reply, id 108, seq 4, length 80
+```
+
+
+That worked (only outer tag as inner tag not specified yet).  However- this is far from elegant.
+
+The better method is per-user policy-map assigned via RADIUS reply.  
 
 
 
