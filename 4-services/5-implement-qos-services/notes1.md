@@ -99,9 +99,98 @@ vlan10
 
 ```
 
-Cisco MQC default is **trust model**
+Cisco MQC default is **trust model**. Is that what **trust model** means anyway?  Or is this just swapping the L2 header? CEF?
 
-Well that was for ToS(Layer 3) - let's see what happens with CoS(Layer 2)
+Well that was for ToS/DSCP(Layer 3) - let's see what happens with CoS(Layer 2)
+
+
+On CUSTX-CPE1 let match ToS/DSCP and Set CoS.
+
+
+So there service-policy is applied to Dialer1 - I'll try later with it applied to Gig interface.  One thing I noted is that I can specify an inner CoS value.
+
+```
+CUSTX-CPE1(config-pmap-c)#set ?
+  cos            Set IEEE 802.1Q/ISL class of service/user priority
+  cos-inner      Set Inner CoS
+```
+
+Anyway here is the config for test.
+
+```
+hostname CUSTX-CPE1
+!
+!
+class-map match-all CLASS_RTP
+ match dscp ef 
+!
+policy-map POLICY_RTP
+ class CLASS_RTP
+  set cos 5
+!
+interface Dialer1
+ vrf forwarding CUST1
+ service-policy output POLICY_RTP
+
+```
+Ping
+```
+CUSTX-CPE1#ping vrf CUST1 192.0.2.10 source Dialer1 tos 184
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 192.0.2.10, timeout is 2 seconds:
+Packet sent with a source address of 172.20.2.11 
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/2/9 ms
+
+```
+
+
+vlan 100 
+
+```
+a2:df:d1:ed:e9:d5 > 4a:c7:d4:1b:83:a1, ethertype 802.1Q (0x8100), length 130: vlan 100, p 5, ethertype 802.1Q, vlan 1, p 0, ethertype PPPoE S, PPPoE  [ses 0x18] IP (0x0021), length 102: (tos 0xb8, ttl 255, id 34937, offset 0, flags [none], proto ICMP (1), length 100)
+    172.20.2.11 > 192.0.2.10: ICMP echo request, id 96, seq 0, length 80
+4a:c7:d4:1b:83:a1 > a2:df:d1:ed:e9:d5, ethertype 802.1Q (0x8100), length 130: vlan 100, p 0, ethertype 802.1Q, vlan 1, p 0, ethertype PPPoE S, PPPoE  [ses 0x18] IP (0x0021), length 102: (tos 0xb8, ttl 254, id 34937, offset 0, flags [none], proto ICMP (1), length 100)
+    192.0.2.10 > 172.20.2.11: ICMP echo reply, id 96, seq 0, length 80
+```
+
+So CoS is only changed on the outer vlan tag egress from CUSTX-CPE1.  So now not sure what **trust model** means?
+
+
+vlan 10 
+
+```
+0e:c4:7c:99:c3:2a > 42:c7:46:4c:5e:8d, ethertype 802.1Q (0x8100), length 118: vlan 10, p 0, ethertype IPv4, 172.20.2.11 > 192.0.2.10: ICMP echo request, id 96, seq 2, length 80
+42:c7:46:4c:5e:8d > 0e:c4:7c:99:c3:2a, ethertype 802.1Q (0x8100), length 118: vlan 10, p 0, ethertype IPv4, 192.0.2.10 > 172.20.2.11: ICMP echo reply, id 96, seq 2, length 80
+
+```
+
+No CoS vlaues retained over second link.
+
+
+Next let's try ```cos-inner```.
+
+```
+policy-map POLICY_RTP
+ class CLASS_RTP
+  set cos 5
+  set cos-inner 5
+```
+
+Same result but with inner vlan tag CoS value changed.
+
+vlan 100
+
+```
+a2:df:d1:ed:e9:d5 > 4a:c7:d4:1b:83:a1, ethertype 802.1Q (0x8100), length 130: vlan 100, p 5, ethertype 802.1Q, vlan 1, p 5, ethertype PPPoE S, PPPoE  [ses 0x18] IP (0x0021), length 102: (tos 0xb8, ttl 255, id 34947, offset 0, flags [none], proto ICMP (1), length 100)
+    172.20.2.11 > 192.0.2.10: ICMP echo request, id 98, seq 0, length 80
+4a:c7:d4:1b:83:a1 > a2:df:d1:ed:e9:d5, ethertype 802.1Q (0x8100), length 130: vlan 100, p 0, ethertype 802.1Q, vlan 1, p 0, ethertype PPPoE S, PPPoE  [ses 0x18] IP (0x0021), length 102: (tos 0xb8, ttl 254, id 34947, offset 0, flags [none], proto ICMP (1), length 100)
+    192.0.2.10 > 172.20.2.11: ICMP echo reply, id 98, seq 0, length 80
+
+```
+
+vlan 10 not shown.
+
 
 
 
