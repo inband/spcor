@@ -59,7 +59,7 @@ root@pve6-lab:~# tcpdump -nntei vmbr0v100 -v
 **vlan10** is ```CSR1``` to ```CSR10```
 
 ```
-root@pve6-lab:~# tcpdump -nntei vmbr0v100 -v
+root@pve6-lab:~# tcpdump -nntei vmbr0v10 -v
 ```
 
 
