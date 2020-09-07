@@ -156,7 +156,7 @@ a2:df:d1:ed:e9:d5 > 4a:c7:d4:1b:83:a1, ethertype 802.1Q (0x8100), length 130: vl
     192.0.2.10 > 172.20.2.11: ICMP echo reply, id 96, seq 0, length 80
 ```
 
-So CoS is only changed on the outer vlan tag egress from CUSTX-CPE1.  So now not sure what **trust model** means?  Does it mean only for **DSCP**(Layer 3)?
+So CoS is only changed on the outer vlan tag egress from CUSTX-CPE1.  So now not sure what **trust model** means?  Does it mean only for **DSCP**(Layer 3)?  I'll have to test with Nexus/Catalyst switch to see if **CoS** is retained/trusted for Layer 2.
 
 
 vlan 10 
