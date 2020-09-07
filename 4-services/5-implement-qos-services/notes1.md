@@ -156,7 +156,7 @@ a2:df:d1:ed:e9:d5 > 4a:c7:d4:1b:83:a1, ethertype 802.1Q (0x8100), length 130: vl
     192.0.2.10 > 172.20.2.11: ICMP echo reply, id 96, seq 0, length 80
 ```
 
-So CoS is only changed on the outer vlan tag egress from CUSTX-CPE1.  So now not sure what **trust model** means?
+So CoS is only changed on the outer vlan tag egress from CUSTX-CPE1.  So now not sure what **trust model** means?  Does it mean only for **DSCP**(Layer 3)?
 
 
 vlan 10 
@@ -195,6 +195,124 @@ vlan 10 not shown.
 
 
 
+
+Change service-policy from ```Dialer1``` to ```Gi2.64499```
+
+```
+CUSTX-CPE1(config)#interface Dialer1
+CUSTX-CPE1(config-if)#no  service-policy output POLICY_RTP
+CUSTX-CPE1(config-if)#interface GigabitEthernet2.64499
+CUSTX-CPE1(config-subif)# service-policy output POLICY_RTP   
+
+CUSTX-CPE1#ping vrf CUST1 192.0.2.10 source Dialer1 tos 184
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 192.0.2.10, timeout is 2 seconds:
+Packet sent with a source address of 172.20.2.11 
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/2 ms
+```
+
+Same result
+
+```
+a2:df:d1:ed:e9:d5 > 4a:c7:d4:1b:83:a1, ethertype 802.1Q (0x8100), length 130: vlan 100, p 5, ethertype 802.1Q, vlan 1, p 5, ethertype PPPoE S, PPPoE  [ses 0x18] IP (0x0021), length 102: (tos 0xb8, ttl 255, id 34952, offset 0, flags [none], proto ICMP (1), length 100)
+    172.20.2.11 > 192.0.2.10: ICMP echo request, id 99, seq 0, length 80
+4a:c7:d4:1b:83:a1 > a2:df:d1:ed:e9:d5, ethertype 802.1Q (0x8100), length 130: vlan 100, p 0, ethertype 802.1Q, vlan 1, p 0, ethertype PPPoE S, PPPoE  [ses 0x18] IP (0x0021), length 102: (tos 0xb8, ttl 254, id 34952, offset 0, flags [none], proto ICMP (1), length 100)
+    192.0.2.10 > 172.20.2.11: ICMP echo reply, id 99, seq 0, length 80
+```
+
+
+Next test - let's do the same egress ```CSR1``` to ```CSR10``` and see what happens.  First match on ```dscp```.  Will router even modify that layer?
+
+```
+hostname CSR1
+!
+class-map match-all CLASS_RTP
+ match dscp ef 
+!
+policy-map POLICY_RTP
+ class CLASS_RTP
+  set cos 5
+!
+interface GigabitEthernet4.10
+ encapsulation dot1Q 10
+ vrf forwarding AS64499
+ ip address 192.51.100.11 255.255.255.254
+ service-policy output POLICY_RTP
+```
+
+CPE1
+
+```
+CUSTX-CPE1#ping vrf CUST1 192.0.2.10 source Dialer1 tos 184
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 192.0.2.10, timeout is 2 seconds:
+Packet sent with a source address of 172.20.2.11 
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/2 ms
+```
+
+vlan 100
+
+```
+a2:df:d1:ed:e9:d5 > 4a:c7:d4:1b:83:a1, ethertype 802.1Q (0x8100), length 130: vlan 100, p 5, ethertype 802.1Q, vlan 1, p 5, ethertype PPPoE S, PPPoE  [ses 0x18] IP (0x0021), length 102: (tos 0xb8, ttl 255, id 34985, offset 0, flags [none], proto ICMP (1), length 100)
+    172.20.2.11 > 192.0.2.10: ICMP echo request, id 105, seq 3, length 80
+4a:c7:d4:1b:83:a1 > a2:df:d1:ed:e9:d5, ethertype 802.1Q (0x8100), length 130: vlan 100, p 0, ethertype 802.1Q, vlan 1, p 0, ethertype PPPoE S, PPPoE  [ses 0x18] IP (0x0021), length 102: (tos 0xb8, ttl 254, id 34985, offset 0, flags [none], proto ICMP (1), length 100)
+    192.0.2.10 > 172.20.2.11: ICMP echo reply, id 105, seq 3, length 80
+```
+
+
+vlan 10
+
+```
+0e:c4:7c:99:c3:2a > 42:c7:46:4c:5e:8d, ethertype 802.1Q (0x8100), length 118: vlan 10, p 5, ethertype IPv4, 172.20.2.11 > 192.0.2.10: ICMP echo request, id 105, seq 3, length 80
+42:c7:46:4c:5e:8d > 0e:c4:7c:99:c3:2a, ethertype 802.1Q (0x8100), length 118: vlan 10, p 0, ethertype IPv4, 192.0.2.10 > 172.20.2.11: ICMP echo reply, id 105, seq 3, length 80
+```
+
+
+Yes - the router has inpected and modified.
+
+
+Now lets try egress from ```CSR1``` to ```CPE```. Remembering that this link is ```QinQ``` and ```PPPoE```.  
+
+
+```
+hostname CSR1
+!
+class-map match-all CLASS_RTP
+ match dscp ef 
+!
+policy-map POLICY_RTP
+ class CLASS_RTP
+  set cos 5
+!
+interface GigabitEthernet5.64499
+ encapsulation dot1Q 100 second-dot1q any
+ pppoe enable group BBA_GROUP_1
+  service-policy output POLICY_RTP
+```
+
+Well that did NOT change CoS value(same results as last test).  Let's remove
+
+```
+CSR1(config-subif)#no  service-policy output POLICY_RTP
+```
+
+Doesn't make sense but try anyway - apply to ingress from ```CSR10```
+
+```
+CSR1(config)#interface GigabitEthernet4.10
+CSR1(config-subif)# service-policy input POLICY_RTP 
+Set cos not supported in input policy
+```
+
+OK.  So the question is how to set CoS value for egress in scenario where SP providing PPPoE over QinQ?
+
+
+```
+
+
+```
 
 
 
