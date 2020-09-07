@@ -393,11 +393,29 @@ a2:df:d1:ed:e9:d5 > 4a:c7:d4:1b:83:a1, ethertype 802.1Q (0x8100), length 130: vl
 
 That worked (only outer tag as inner tag not specified yet).  However- this is far from elegant.
 
-The better method is per-user policy-map assigned via RADIUS reply.  
+The better method is per-user policy-map assigned via RADIUS reply.  I'll do that in another notes.
 
+Last test - change CSR1 
 
+```
+CSR1(config)#policy-map POLICY_RTP
+CSR1(config-pmap)# class CLASS_RTP
+CSR1(config-pmap-c)#no  set cos 5
+CSR1(config-pmap-c)#set cos-inner ?
+  <0-7>  cos value
+  <cr>
+CSR1(config-pmap-c)#set cos-inner 5
+```
 
+Ping and check
 
+```
+4a:c7:d4:1b:83:a1 > a2:df:d1:ed:e9:d5, ethertype 802.1Q (0x8100), length 130: vlan 100, p 0, ethertype 802.1Q, vlan 1, p 5, ethertype PPPoE S, PPPoE  [ses 0x19] IP (0x0021), length 102: (tos 0xb8, ttl 254, id 35006, offset 0, flags [none], proto ICMP (1), length 100)
+    192.0.2.10 > 172.20.2.11: ICMP echo reply, id 109, seq 4, length 80
+
+```
+
+Inner tag is getting correct treatment.  Egress from CSR1 to CPE1
 
 
 
