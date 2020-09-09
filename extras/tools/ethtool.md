@@ -1,5 +1,26 @@
 # ethtool
 
+Cant ssh from Debian **host1** to CSRv **CUSTX-CPE1** same subnet.
+
+Incorrect chksum
+
+```
+root@host1:~# tcpdump -nni eth0 -v
+tcpdump: listening on eth0, link-type EN10MB (Ethernet), capture size 262144 bytes
+
+12:58:07.295167 ARP, Ethernet (len 6), IPv4 (len 4), Request who-has 1.1.1.1 tell 1.1.1.2, length 28
+12:58:07.296050 ARP, Ethernet (len 6), IPv4 (len 4), Reply 1.1.1.1 is-at 02:1f:64:69:fa:f2, length 46
+
+12:58:07.296060 IP (tos 0x0, ttl 64, id 811, offset 0, flags [DF], proto TCP (6), length 60)
+    1.1.1.2.60084 > 1.1.1.1.22: Flags [S], cksum 0x0433 (incorrect -> 0xf54f), seq 25292868, win 64240, options [mss 1460,sackOK,TS val 2270162906 ecr 0,nop,wscale 7], length 0
+12:58:08.298720 IP (tos 0x0, ttl 64, id 812, offset 0, flags [DF], proto TCP (6), length 60)
+    1.1.1.2.60084 > 1.1.1.1.22: Flags [S], cksum 0x0433 (incorrect -> 0xf164), seq 25292868, win 64240, options [mss 1460,sackOK,TS val 2270163909 ecr 0,nop,wscale 7], length 0
+
+```
+
+
+Install ethtool and turn off chksum
+
 ```
 root@host1:~# apt install ethtool
 
