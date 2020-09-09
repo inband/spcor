@@ -42,6 +42,11 @@ traceroute to 172.18.22.22 (172.18.22.22), 30 hops max, 60 byte packets
 
 
 
+Netcat
+```
+apt install netcat-openbsd
+```
+
 
 
 
