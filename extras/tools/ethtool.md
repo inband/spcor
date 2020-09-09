@@ -2,6 +2,9 @@
 
 Cant ssh from Debian **host1** to CSRv **CUSTX-CPE1** same subnet.
 
+Debian is LXC.
+
+
 Incorrect chksum
 
 ```
@@ -19,7 +22,7 @@ tcpdump: listening on eth0, link-type EN10MB (Ethernet), capture size 262144 byt
 ```
 
 
-Install ethtool and turn off chksum
+Install ethtool and turn off chksum (lxc)
 
 ```
 root@host1:~# apt install ethtool
@@ -102,3 +105,12 @@ tcp-segmentation-offload: off
 	tx-tcp-mangleid-segmentation: off [requested on]
 	tx-tcp6-segmentation: off [requested on]
 ```
+
+
+For Debian VM the solution was to change Network Device from ```virtio``` to ```e1000```.  I didn't try turning chksum off.  
+
+Not sure what is happening here and why Debian is strictly dropping incorrect chksum in VM/LXC environment.
+
+And is it even incorrect or is it an issue with tcpdump/offloading? 
+
+
