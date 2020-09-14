@@ -66,6 +66,66 @@ Observations
 * keepalives comes from CSR1 and CUSTX-CPE1 every 10 seconds
 
 
+I thought it was meant to be every 20 seconds and timeout after 60 seconds - look into further.
+
+
+Check defaults
+
+```
+CSR1#show run all | b bba           
+bba-group pppoe BBA_GROUP_1
+ virtual-template 1
+ sessions max limit 4294967295 threshold 4294967295
+ sessions per-vc limit 100 threshold 0
+ sessions per-mac limit 100
+ sessions per-vlan limit 100 inner 100
+ sessions per-vc throttle 100000 3600 0
+ sessions per-mac throttle 100000 3600 0
+ sessions per-vlan throttle 100000 3600 0
+ tag ppp-max-payload minimum 1492 maximum 1500
+ pado delay -1
+ pado delay circuit-id -1
+ pado delay remote-id -1
+ control-packets vlan cos 8
+
+```
+
+```
+CSR1(config)#bba-group pppoe BBA_GROUP_1
+CSR1(config-bba-group)#?
+BBA Group configuration commands:
+  control-packets   PPPoE control packets related configuration
+  default           Set a command to its defaults
+  exit              Exit from BBA Group configuration mode
+  limit             limit contents of pppoe control messages
+  mac-address       Set mac address
+  nas-port          Specific format for nas-port
+  nas-port-id       Specific format for nas-port-id
+  no                Negate a command or set its defaults
+  pado              PADO delay options
+  pppoe             PPPoE server selection configuration
+  service           Services to be associated with this group
+  sessions          BBA session commands
+  tag               Configure processing options for a tag
+  vendor-tag        PPPoE Vendor Specific Tag
+  virtual-template  BBA virtual template command
+
+CSR1(config-bba-group)#control-packets vlan cos ?
+  <0-7>  Pirority value for PPP/PPPoE control packets in VLAN header
+
+CSR1(config-bba-group)#control-packets vlan cos 6
+
+
+```
+
+Looks like the session has to be bounced to take effect.  Which vlan tag will change - inner, outer or both (or none)
+
+It was **none**.
+
+
+
+
+
 
 
 
