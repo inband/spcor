@@ -149,3 +149,46 @@ NeighAddr                              LD/RD         RH/RS     State     Int
 
 
 ```
+
+
+
+
+
+
+
+
+Debug example - bring up bfd between ```CSR5``` and ```CSR6```
+
+```
+CSR5#debug bfd events
+
+CSR5(config)#interface GigabitEthernet2.56
+CSR5(config-subif)#ip os
+CSR5(config-subif)#ip ospf bfd
+CSR5(config-subif)#
+*Sep 16 01:36:01.948: BFD-HW-API: Handle 1: Timers: Tx timer 1000000 Detect timer 0
+*Sep 16 01:36:01.948: BFD-HW-API: Handle 1: Flags: Poll 0 Final 0
+*Sep 16 01:36:01.948: BFD-HW-API: Handle 1: Buffer: 0x20480518 0x00000001 0x00000000 0x000F4240 0x000F4240 0x00000000 size 24
+*Sep 16 01:36:01.949: BFD-DEBUG EVENT: bfd_session_created, 172.31.0.201 proc:OSPF, idb:GigabitEthernet2.56 handle:1 act
+*Sep 16 01:36:01.949: %BFD-6-BFD_SESS_CREATED: BFD-SYSLOG: bfd_session_created, neigh 172.31.0.201 proc:OSPF, idb:GigabitEthernet2.56 handle:1 act
+*Sep 16 01:36:01.969: BFD-DEBUG EVENT: bfd_session_created, 172.31.0.201 proc:CEF, idb:GigabitEthernet2.56 handle:1 act
+*Sep 16 01:36:01.997: %BFDFSM-6-BFD_SESS_UP: BFD-SYSLOG: BFD session ld:1 handle:1 is going UP
+*Sep 16 01:36:01.997: BFD-HW-API: Handle 1: Timers: Tx timer 1000000 Detect timer 5000000
+*Sep 16 01:36:01.997: BFD-HW-API: Handle 1: Flags: Poll 1 Final 0
+*Sep 16 01:36:01.997: BFD-HW-API: Handle 1: Buffer: 0x20E80518 0x00000001 0x00000001 0x0000C350 0x0000C350 0x00000000 size 24
+*Sep 16 01:36:01.997: BFD-DEBUG Event: V1 FSM ld:1 handle:1 event:RX INIT state:DOWN (0)
+*Sep 16 01:36:01.998: BFD-DEBUG Event: resetting timestamps ld:1 handle:1 (0)
+*Sep 16 01:36:01.998: BFD-DEBUG Event: notify client(CEF) IP:172.31.0.201, ld:1, handle:1, event:UP,  (0)
+*Sep 16 01:36:01.998: BFD-DEBUG Event: notify client(OSPF) IP:172.31.0.201, ld:1, handle:1, event:UP,  (0)
+*Sep 16 01:36:01.998: BFD-DEBUG Event: notify client(CEF) IP:172.31.0.201, ld:1, handle:1, event:UP,  (0)
+*Sep 16 01:36:02.024: BFD-HW-API: Handle 1: Timers: Tx timer 50000 Detect timer 250000
+*Sep 16 01:36:02.024: BFD-HW-API: Handle 1: Flags: Poll 0 Final 0
+*Sep 16 01:36:02.024: BFD-HW-API: Handle 1: Buffer: 0x20C80518 0x00000001 0x00000001 0x0000C350 0x0000C350 0x00000000 size 24
+*Sep 16 01:36:02.025: BFD-DEBUG Event: V1 FSM ld:1 handle:1 event:RX UP state:UP (0)
+*Sep 16 01:36:02.051: BFD-HW-API: Handle 1: Timers: Tx timer 50000 Detect timer 250000
+*Sep 16 01:36:02.051: BFD-HW-API: Handle 1: Flags: Poll 0 Final 1
+*Sep 16 01:36:02.051: BFD-HW-API: Handle 1: Buffer: 0x20D80518 0x00000001 0x00000001 0x0000C350 0x0000C350 0x00000000 size 24
+*Sep 16 01:36:02.051: BFD-DEBUG Event: V1 FSM ld:1 handle:1 event:RX UP state:UP (0)
+*Sep 16 01:36:02.078: BFD-DEBUG Event: V1 FSM ld:1 handle:1 event:RX UP state:UP (0)
+
+```
