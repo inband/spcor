@@ -4,7 +4,7 @@ I've been watching Tim Szigeti's QoS series on O'Reilly.  This test will attempt
 
 For the past couple of week I've been fighting the VE and abandoned test 1.  Hopefully today lab goes OK.
 
-**CML images appear to have 1Mb throughput limitation.**  
+**CML images appear to have ~1Mbps throughput limitation.**  
 
 CML limitation is fine.  I understand why.  But this means using fixed bandwidth values instead of percent values.  This is ok too as Im working to a value of 1000kbps.
 
@@ -94,8 +94,182 @@ Using iperf3 let's get a baseline on throughput.
 ```as64511-host2``` is the client
 
 
+```
+CSR5#clear counters GigabitEthernet 6
+Clear "show interface" counters on this interface [confirm]
+
+CSR8#clear counters GigabitEthernet 5
+Clear "show interface" counters on this interface [confirm]
+```
+
+Test uploads
+
+```
+root@as64511-host1:~# iperf3 -c 203.0.113.202
+Connecting to host 203.0.113.202, port 5201
+[  6] local 203.0.113.101 port 46568 connected to 203.0.113.202 port 5201
+[ ID] Interval           Transfer     Bitrate         Retr  Cwnd
+[  6]   0.00-1.00   sec   231 KBytes  1.89 Mbits/sec   12   19.7 KBytes       
+[  6]   1.00-2.00   sec   129 KBytes  1.06 Mbits/sec    0   25.3 KBytes       
+[  6]   2.00-3.00   sec  81.6 KBytes   668 Kbits/sec    0   30.9 KBytes       
+[  6]   3.00-4.00   sec   172 KBytes  1.41 Mbits/sec    0   43.6 KBytes       
+[  6]   4.00-5.00   sec   262 KBytes  2.14 Mbits/sec    0   67.5 KBytes       
+[  6]   5.00-6.00   sec   190 KBytes  1.56 Mbits/sec    0    104 KBytes       
+[  6]   6.00-7.00   sec   253 KBytes  2.07 Mbits/sec    0    152 KBytes       
+[  6]   7.00-8.00   sec   316 KBytes  2.59 Mbits/sec    0    207 KBytes       
+[  6]   8.00-9.00   sec   443 KBytes  3.63 Mbits/sec    0    262 KBytes       
+[  6]   9.00-10.00  sec  0.00 Bytes  0.00 bits/sec    0    315 KBytes       
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bitrate         Retr
+[  6]   0.00-10.00  sec  2.03 MBytes  1.70 Mbits/sec   12             sender
+[  6]   0.00-12.88  sec  1.38 MBytes   897 Kbits/sec                  receiver
+
+iperf Done.
+
+```
 
 
 
+```
+CSR5#show interfaces GigabitEthernet 6
+GigabitEthernet6 is up, line protocol is up 
+  Hardware is CSR vNIC, address is 1e99.3123.1c91 (bia 1e99.3123.1c91)
+  Internet address is 203.0.113.97/29
+  MTU 1500 bytes, BW 1000000 Kbit/sec, DLY 10 usec, 
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation ARPA, loopback not set
+  Keepalive set (10 sec)
+  Full Duplex, 1000Mbps, link type is auto, media type is RJ45
+  output flow-control is unsupported, input flow-control is unsupported
+  ARP type: ARPA, ARP Timeout 04:00:00
+  Last input 00:02:20, output 00:02:20, output hang never
+  Last clearing of "show interface" counters 00:02:04
+  Input queue: 0/375/0/0 (size/max/drops/flushes); Total output drops: 0
+  Queueing strategy: fifo
+  Output queue: 0/40 (size/max)
+  5 minute input rate 49000 bits/sec, 1 packets/sec
+  5 minute output rate 0 bits/sec, 0 packets/sec
+     1384 packets input, 2035157 bytes, 0 no buffer
+     Received 0 broadcasts (0 IP multicasts)
+     0 runts, 0 giants, 0 throttles 
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored
+     0 watchdog, 0 multicast, 0 pause input
+     1043 packets output, 65195 bytes, 0 underruns
+     0 output errors, 0 collisions, 0 interface resets
+     0 unknown protocol drops
+     0 babbles, 0 late collision, 0 deferred
+     0 lost carrier, 0 no carrier, 0 pause output
+     0 output buffer failures, 0 output buffers swapped out
+
+CSR5#clear counters GigabitEthernet 6 
+Clear "show interface" counters on this interface [confirm]
+```
 
 
+Test downloads
+
+```
+root@as64511-host1:~# iperf3 -R -c 203.0.113.202
+Connecting to host 203.0.113.202, port 5201
+Reverse mode, remote host 203.0.113.202 is sending
+[  6] local 203.0.113.101 port 46678 connected to 203.0.113.202 port 5201
+[ ID] Interval           Transfer     Bitrate
+[  6]   0.00-1.00   sec   114 KBytes   933 Kbits/sec                  
+[  6]   1.00-2.00   sec   111 KBytes   910 Kbits/sec                  
+[  6]   2.00-3.00   sec   110 KBytes   899 Kbits/sec                  
+[  6]   3.00-4.00   sec   110 KBytes   899 Kbits/sec                  
+[  6]   4.00-5.00   sec   111 KBytes   910 Kbits/sec                  
+[  6]   5.00-6.00   sec   110 KBytes   899 Kbits/sec                  
+[  6]   6.00-7.00   sec   110 KBytes   899 Kbits/sec                  
+[  6]   7.00-8.00   sec   108 KBytes   887 Kbits/sec                  
+[  6]   8.00-9.00   sec   108 KBytes   887 Kbits/sec                  
+[  6]   9.00-10.00  sec   110 KBytes   899 Kbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bitrate         Retr
+[  6]   0.00-10.01  sec  2.85 MBytes  2.39 Mbits/sec    0             sender
+[  6]   0.00-10.00  sec  1.08 MBytes   902 Kbits/sec                  receiver
+
+iperf Done.
+```
+
+
+```
+CSR5#show interfaces GigabitEthernet 6
+GigabitEthernet6 is up, line protocol is up 
+  Hardware is CSR vNIC, address is 1e99.3123.1c91 (bia 1e99.3123.1c91)
+  Internet address is 203.0.113.97/29
+  MTU 1500 bytes, BW 1000000 Kbit/sec, DLY 10 usec, 
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation ARPA, loopback not set
+  Keepalive set (10 sec)
+  Full Duplex, 1000Mbps, link type is auto, media type is RJ45
+  output flow-control is unsupported, input flow-control is unsupported
+  ARP type: ARPA, ARP Timeout 04:00:00
+  Last input 00:00:47, output 00:00:47, output hang never
+  Last clearing of "show interface" counters 00:01:19
+  Input queue: 0/375/0/0 (size/max/drops/flushes); Total output drops: 0
+  Queueing strategy: fifo
+  Output queue: 0/40 (size/max)
+  5 minute input rate 10000 bits/sec, 3 packets/sec
+  5 minute output rate 74000 bits/sec, 7 packets/sec
+     1578 packets input, 112881 bytes, 0 no buffer
+     Received 0 broadcasts (0 IP multicasts)
+     0 runts, 0 giants, 0 throttles 
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored
+     0 watchdog, 0 multicast, 0 pause input
+     2088 packets output, 3103168 bytes, 0 underruns
+     0 output errors, 0 collisions, 0 interface resets
+     0 unknown protocol drops
+     0 babbles, 0 late collision, 0 deferred
+     0 lost carrier, 0 no carrier, 0 pause output
+     0 output buffer failures, 0 output buffers swapped out
+```
+
+
+Observations
+
+To me it is not clear where packets are limited - are they being dropped.  The hosts and routers do not indicate drops.
+
+```
+root@as64511-host1:~# ip -s link show eth1
+3: eth1@if1536: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DEFAULT group default qlen 1000
+    link/ether 92:e0:66:f3:03:c9 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    RX: bytes  packets  errors  dropped overrun mcast   
+    15941670   17483    0       0       0       0       
+    TX: bytes  packets  errors  dropped carrier collsns 
+    14052057   14193    0       0       0       0   
+
+root@as64511-host2:~# ip -s link show eth1
+3: eth1@if1546: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DEFAULT group default qlen 1000
+    link/ether 0a:0a:69:b2:46:8b brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    RX: bytes  packets  errors  dropped overrun mcast   
+    13407174   17202    0       0       0       0       
+    TX: bytes  packets  errors  dropped carrier collsns 
+    16016478   13324    0       0       0       0   
+```
+
+
+Now im going to push as much as I can.
+
+```
+root@as64511-host1:~# ping -s1464 -M do -i0.001 203.0.113.202 
+...
+
+1472 bytes from 203.0.113.202: icmp_seq=7551 ttl=62 time=6936 ms
+1472 bytes from 203.0.113.202: icmp_seq=7554 ttl=62 time=6936 ms
+1472 bytes from 203.0.113.202: icmp_seq=7556 ttl=62 time=6943 ms
+^C
+--- 203.0.113.202 ping statistics ---
+8395 packets transmitted, 2795 received, 66.7064% packet loss, time 689ms
+rtt min/avg/max/mdev = 1.098/6368.915/8831.645/1503.062 ms, pipe 1070
+```
+
+
+Now Im confused - no indication of drops.  
+
+I'm going to let following command run for ~1 hour and do some checks on VE to see where traffic is dropped.
+
+
+```
+root@as64511-host1:~# ping -s1464 -M do -i0.001 203.0.113.202 
+```
