@@ -1,4 +1,4 @@
-# Test 1
+# Test 1 - abandoned due to VE issues
 
 In this test I've created 2 hosts.
 
