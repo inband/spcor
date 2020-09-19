@@ -273,3 +273,72 @@ I'm going to let following command run for ~1 hour and do some checks on VE to s
 ```
 root@as64511-host1:~# ping -s1464 -M do -i0.001 203.0.113.202 
 ```
+
+
+ICMP has no transmission control.
+
+Look at link between ```as64511-host1``` to ```csr5``` whick is **vlan 51**
+
+This is just a portion and it is clear ```as64511-host1``` is transmitting all given the sequence numbers.
+
+```
+root@pve6-lab:~# tcpdump -nnei vmbr0v51
+...
+13:06:42.038266 92:e0:66:f3:03:c9 > 1e:99:31:23:1c:91, ethertype IPv4 (0x0800), length 1506: 203.0.113.101 > 203.0.113.202: ICMP echo request, id 2210, seq 18681, length 1472
+13:06:42.048390 92:e0:66:f3:03:c9 > 1e:99:31:23:1c:91, ethertype IPv4 (0x0800), length 1506: 203.0.113.101 > 203.0.113.202: ICMP echo request, id 2210, seq 18682, length 1472
+13:06:42.058527 92:e0:66:f3:03:c9 > 1e:99:31:23:1c:91, ethertype IPv4 (0x0800), length 1506: 203.0.113.101 > 203.0.113.202: ICMP echo request, id 2210, seq 18683, length 1472
+13:06:42.062272 1e:99:31:23:1c:91 > 92:e0:66:f3:03:c9, ethertype IPv4 (0x0800), length 1506: 203.0.113.202 > 203.0.113.101: ICMP echo reply, id 2210, seq 17447, length 1472
+13:06:42.062385 92:e0:66:f3:03:c9 > 1e:99:31:23:1c:91, ethertype IPv4 (0x0800), length 1506: 203.0.113.101 > 203.0.113.202: ICMP echo request, id 2210, seq 18684, length 1472
+13:06:42.072511 92:e0:66:f3:03:c9 > 1e:99:31:23:1c:91, ethertype IPv4 (0x0800), length 1506: 203.0.113.101 > 203.0.113.202: ICMP echo request, id 2210, seq 18685, length 1472
+13:06:42.082644 92:e0:66:f3:03:c9 > 1e:99:31:23:1c:91, ethertype IPv4 (0x0800), length 1506: 203.0.113.101 > 203.0.113.202: ICMP echo request, id 2210, seq 18686, length 1472
+13:06:42.087140 1e:99:31:23:1c:91 > 92:e0:66:f3:03:c9, ethertype IPv4 (0x0800), length 1506: 203.0.113.202 > 203.0.113.101: ICMP echo reply, id 2210, seq 17453, length 1472
+13:06:42.087260 92:e0:66:f3:03:c9 > 1e:99:31:23:1c:91, ethertype IPv4 (0x0800), length 1506: 203.0.113.101 > 203.0.113.202: ICMP echo request, id 2210, seq 18687, length 1472
+13:06:42.097394 92:e0:66:f3:03:c9 > 1e:99:31:23:1c:91, ethertype IPv4 (0x0800), length 1506: 203.0.113.101 > 203.0.113.202: ICMP echo request, id 2210, seq 18688, length 1472
+
+```
+
+Next ```csr5``` to ```csr6``` which is **vlan56**
+
+And we have our answer - ```csr5``` is dropping given the sequence numbers.
+
+
+```
+root@pve6-lab:~# tcpdump -nnti vmbr0v56
+...
+IP 172.31.0.200.49152 > 172.31.0.201.3784: BFDv1, Control, State Up, Flags: [Control Plane Independent], length: 24
+MPLS (label 18, exp 0, ttl 255) (label 16, exp 0, [S], ttl 255) IP 203.0.113.101 > 203.0.113.202: ICMP echo request, id 2210, seq 38864, length 1472
+MPLS (label 23, exp 0, [S], ttl 62) IP 203.0.113.202 > 203.0.113.101: ICMP echo reply, id 2210, seq 37679, length 1472
+MPLS (label 18, exp 0, ttl 255) (label 16, exp 0, [S], ttl 255) IP 203.0.113.101 > 203.0.113.202: ICMP echo request, id 2210, seq 38867, length 1472
+IP 172.31.0.201.49152 > 172.31.0.200.3784: BFDv1, Control, State Up, Flags: [Control Plane Independent], length: 24
+MPLS (label 23, exp 0, [S], ttl 62) IP 203.0.113.202 > 203.0.113.101: ICMP echo reply, id 2210, seq 37685, length 1472
+IP 172.31.0.200.49152 > 172.31.0.201.3784: BFDv1, Control, State Up, Flags: [Control Plane Independent], length: 24
+MPLS (label 18, exp 0, ttl 255) (label 16, exp 0, [S], ttl 255) IP 203.0.113.101 > 203.0.113.202: ICMP echo request, id 2210, seq 38873, length 1472
+MPLS (label 23, exp 0, [S], ttl 62) IP 203.0.113.202 > 203.0.113.101: ICMP echo reply, id 2210, seq 37691, length 1472
+MPLS (label 18, exp 0, ttl 255) (label 16, exp 0, [S], ttl 255) IP 203.0.113.101 > 203.0.113.202: ICMP echo request, id 2210, seq 38874, length 1472
+```
+
+
+So where on ```csr5``` is it being dropped.
+
+
+There is no drops ```csr5``` on:
+
+
+interface Gi6 ```as64511-host1``` to ```csr5```
+
+nor
+
+interface Gi2 ```csr5``` to ```csr6```
+
+
+
+Perhaps it is:
+
+```
+platform punt-policer 
+```
+
+
+
+
+
