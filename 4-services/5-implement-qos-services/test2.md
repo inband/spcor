@@ -332,13 +332,39 @@ interface Gi2 ```csr5``` to ```csr6```
 
 
 
-Perhaps it is:
+Perhaps it has something to do with:
 
 ```
 platform punt-policer 
 ```
 
+But maybe Im getting sidetracked again and should accept that CML CSR has ~1Mbps limit
+
+I'll have to read [ASR Packet Drops](https://www.cisco.com/c/en/us/support/docs/routers/asr-1000-series-aggregation-services-routers/110531-asr-packet-drop.html)
 
 
+Move on to QoS.  On ```csr5``` Ive created the following
 
+
+```
+class-map match-all INTERNETWORK_CONTROL
+ match dscp 6 
+class-map match-all REALTIME
+ match dscp ef 
+class-map match-all SIGNALLING
+ match dscp cs5 
+!
+policy-map WAN_EDGE
+ class REALTIME
+  priority 100
+ class SIGNALLING
+  priority 50
+ class INTERNETWORK_CONTROL
+  bandwidth 50
+ class class-default
+  fair-queue
+  random-detect
+  bandwidth 800
+
+```
 
