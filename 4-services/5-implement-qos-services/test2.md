@@ -363,6 +363,66 @@ UnconfiguredIpv6Fia                           826                   58692
 
 ```
 
+These drops are **output** Gi2
+
+```
+CSR5#show platform hardware qfp active infrastructure bqs queue output default interface GigabitEthernet 2
+Interface: GigabitEthernet2 QFP: 0.0 if_h: 7 Num Queues/Schedules: 1
+  Queue specifics:
+    Index 0 (Queue ID:0x6e, Name: GigabitEthernet2)
+    PARQ Software Control Info:
+      (cache) queue id: 0x0000006e, wred: 0xe7e19010, qlimit (pkts ): 418
+      parent_sid: 0x95, debug_name: GigabitEthernet2
+      sw_flags: 0x08000011, sw_state: 0x00000c01, port_uidb: 65529
+      orig_min  : 0                   ,      min: 105000000           
+      min_qos   : 0                   , min_dflt: 0                   
+      orig_max  : 0                   ,      max: 0                   
+      max_qos   : 0                   , max_dflt: 0                   
+      share     : 1
+      plevel    : 0, priority: 65535
+      defer_obj_refcnt: 0
+    Statistics:
+      tail drops  (bytes): 457702973           ,          (packets): 303254              
+      total enqs  (bytes): 897311267           ,          (packets): 9075362             
+      queue_depth (pkts ): 419                 
+      licensed throughput oversubscription drops:
+                  (bytes): 457702973           ,          (packets): 303254     
+
+```
+
+But we dont see on show int Gi 2
+
+```
+CSR5#show interfaces GigabitEthernet 2
+GigabitEthernet2 is up, line protocol is up 
+  Hardware is CSR vNIC, address is ea8d.e378.ba07 (bia ea8d.e378.ba07)
+  MTU 1500 bytes, BW 1000000 Kbit/sec, DLY 10 usec, 
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation 802.1Q Virtual LAN, Vlan ID  1., loopback not set
+  Keepalive set (10 sec)
+  Full Duplex, 1000Mbps, link type is auto, media type is RJ45
+  output flow-control is unsupported, input flow-control is unsupported
+  ARP type: ARPA, ARP Timeout 04:00:00
+  Last input 03:00:05, output 03:00:05, output hang never
+  Last clearing of "show interface" counters never
+  Input queue: 0/375/0/0 (size/max/drops/flushes); Total output drops: 0
+  Queueing strategy: fifo
+  Output queue: 0/40 (size/max)
+  5 minute input rate 441000 bits/sec, 62 packets/sec
+  5 minute output rate 465000 bits/sec, 65 packets/sec
+     9059188 packets input, 890290812 bytes, 0 no buffer
+     Received 0 broadcasts (0 IP multicasts)
+     0 runts, 0 giants, 0 throttles 
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored
+     0 watchdog, 0 multicast, 0 pause input
+     9084010 packets output, 905829306 bytes, 0 underruns
+     0 output errors, 0 collisions, 1 interface resets
+     0 unknown protocol drops
+     0 babbles, 0 late collision, 0 deferred
+     0 lost carrier, 0 no carrier, 0 pause output
+     0 output buffer failures, 0 output buffers swapped out
+```
+
 
 
 Move on to QoS.  On ```csr5``` Ive created the following
