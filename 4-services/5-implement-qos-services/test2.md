@@ -423,6 +423,7 @@ GigabitEthernet2 is up, line protocol is up
      0 output buffer failures, 0 output buffers swapped out
 ```
 
+Anyway I time to move on.
 
 
 Move on to QoS.  On ```csr5``` Ive created the following
@@ -449,4 +450,165 @@ policy-map WAN_EDGE
   bandwidth 800
 
 ```
+
+I'm still over utilising link with icmp traffic.
+
+```
+CSR5#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+CSR5(config)#interface GigabitEthernet2.56
+CSR5(config-subif)#service-policy output WAN_EDGE
+CBWFQ: Not supported on subinterfaces and efps
+
+CSR5(config-subif)#exit 
+
+CSR5(config)#interface GigabitEthernet2    
+CSR5(config-if)#service-policy output WAN_EDGE
+```
+
+Prior to this the BGP sessions to ```csr6``` and ```csr8``` were flapping - both transit vlan56.  ```csr7``` is stable - it takes vlan 57.
+
+But there are no matches in service-policy
+
+```
+CSR5#show policy-map interface GigabitEthernet 2
+ GigabitEthernet2 
+
+  Service-policy output: WAN_EDGE
+
+    queue stats for all priority classes:
+      Queueing
+      queue limit 512 packets
+      (queue depth/total drops/no-buffer drops) 0/0/0
+      (pkts output/bytes output) 0/0
+
+    Class-map: REALTIME (match-all)  
+      0 packets, 0 bytes
+      5 minute offered rate 0000 bps, drop rate 0000 bps
+      Match:  dscp ef (46)
+      Priority: 100 kbps, burst bytes 2500, b/w exceed drops: 0
+      
+
+    Class-map: SIGNALLING (match-all)  
+      0 packets, 0 bytes
+      5 minute offered rate 0000 bps, drop rate 0000 bps
+      Match:  dscp cs5 (40)
+      Priority: 50 kbps, burst bytes 1500, b/w exceed drops: 0
+      
+
+    Class-map: INTERNETWORK_CONTROL (match-all)  
+      0 packets, 0 bytes
+      5 minute offered rate 0000 bps, drop rate 0000 bps
+      Match:  dscp 6 
+      Queueing
+      queue limit 64 packets
+      (queue depth/total drops/no-buffer drops) 0/0/0
+      (pkts output/bytes output) 0/0
+      bandwidth 50 kbps
+
+    Class-map: class-default (match-any)  
+      313545 packets, 401728373 bytes
+      5 minute offered rate 1478000 bps, drop rate 977000 bps
+      Match: any 
+      Queueing
+      queue limit 64 packets
+      (queue depth/total drops/no-buffer drops/flowdrops) 15/174838/0/174838
+      (pkts output/bytes output) 87952/132757329
+      Fair-queue: per-flow queue limit 16 packets
+        Exp-weight-constant: 9 (1/512)
+        Mean queue depth: 15 packets
+        class       Transmitted      Random drop      Tail/Flow drop Minimum Maximum Mark
+                    pkts/bytes       pkts/bytes      pkts/bytes   thresh  thresh  prob
+        
+        0           87431/132720258       0/0              0/0                 16            32  1/10
+        1               0/0               0/0              0/0                 18            32  1/10
+        2               0/0               0/0              0/0                 20            32  1/10
+        3               0/0               0/0              0/0                 22            32  1/10
+        4               0/0               0/0              0/0                 24            32  1/10
+        5               0/0               0/0              0/0                 26            32  1/10
+        6             521/37071           0/0              0/0                 28            32  1/10
+        7               0/0               0/0              0/0                 30            32  1/10
+      bandwidth 800 kbps
+
+```
+
+
+I would have though ```csr5``` to ```csr6``` would match.  Maybe not ```csr5``` to ```csr8``` as that is encapsulated in mpls label.
+
+And now I see ```dscp 6```
+
+Should be:
+
+```
+class-map match-all INTERNETWORK_CONTROL
+ match dscp cs6 
+```
+
+Ok give it a couple of minutes and check again.
+
+```
+CSR5#show policy-map interface GigabitEthernet 2
+ GigabitEthernet2 
+
+  Service-policy output: WAN_EDGE
+
+    queue stats for all priority classes:
+      Queueing
+      queue limit 512 packets
+      (queue depth/total drops/no-buffer drops) 0/0/0
+      (pkts output/bytes output) 0/0
+
+    Class-map: REALTIME (match-all)  
+      0 packets, 0 bytes
+      5 minute offered rate 0000 bps, drop rate 0000 bps
+      Match:  dscp ef (46)
+      Priority: 100 kbps, burst bytes 2500, b/w exceed drops: 0
+      
+
+    Class-map: SIGNALLING (match-all)  
+      0 packets, 0 bytes
+      5 minute offered rate 0000 bps, drop rate 0000 bps
+      Match:  dscp cs5 (40)
+      Priority: 50 kbps, burst bytes 1500, b/w exceed drops: 0
+      
+
+    Class-map: INTERNETWORK_CONTROL (match-all)  
+      1984 packets, 139410 bytes
+      5 minute offered rate 8000 bps, drop rate 0000 bps
+      Match:  dscp cs6 (48)
+      Queueing
+      queue limit 64 packets
+      (queue depth/total drops/no-buffer drops) 0/0/0
+      (pkts output/bytes output) 11/750
+      bandwidth 50 kbps
+
+    Class-map: class-default (match-any)  
+      386701 packets, 492744022 bytes
+      5 minute offered rate 1301000 bps, drop rate 881000 bps
+      Match: any 
+      Queueing
+      queue limit 64 packets
+      (queue depth/total drops/no-buffer drops/flowdrops) 16/214846/0/214846
+      (pkts output/bytes output) 108329/163485380
+      Fair-queue: per-flow queue limit 16 packets
+        Exp-weight-constant: 9 (1/512)
+        Mean queue depth: 15 packets
+        class       Transmitted      Random drop      Tail/Flow drop Minimum Maximum Mark
+                    pkts/bytes       pkts/bytes      pkts/bytes   thresh  thresh  prob
+        
+        0          107667/163438506       0/0              0/0                 16            32  1/10
+        1               0/0               0/0              0/0                 18            32  1/10
+        2               0/0               0/0              0/0                 20            32  1/10
+        3               0/0               0/0              0/0                 22            32  1/10
+        4               0/0               0/0              0/0                 24            32  1/10
+        5               0/0               0/0              0/0                 26            32  1/10
+        6             662/46874           0/0              0/0                 28            32  1/10
+        7               0/0               0/0              0/0                 30            32  1/10
+      bandwidth 800 kbps
+
+```
+
+So that is matching cs6 BFD, OSPF, BGP but is it matching cs6 for BGP in MPLS. Time to start another test.
+
+
 
