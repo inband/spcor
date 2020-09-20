@@ -342,6 +342,28 @@ But maybe Im getting sidetracked again and should accept that CML CSR has ~1Mbps
 
 I'll have to read [ASR Packet Drops](https://www.cisco.com/c/en/us/support/docs/routers/asr-1000-series-aggregation-services-routers/110531-asr-packet-drop.html)
 
+Note - appears to be **TailDrop** on ESP
+
+```
+CSR5#show platform hardware qfp active statistics drop 
+-------------------------------------------------------------------------
+Global Drop Stats                         Packets                  Octets  
+-------------------------------------------------------------------------
+Disabled                                      147                   12477  
+IpTtlExceeded                                   3                     222  
+Ipv4NoRoute                                  5545                 8350770  
+Ipv4Null0                                      10                     702  
+Ipv4RoutingErr                                  2                     112  
+Ipv4Unclassified                             8127                12239262  
+MplsFragReq                                    21                   31794  
+MplsUnclassified                              890                 1351020  
+TailDrop                                   269810               407117116  
+UnconfiguredIpv4Fia                            31                   15294  
+UnconfiguredIpv6Fia                           826                   58692  
+
+```
+
+
 
 Move on to QoS.  On ```csr5``` Ive created the following
 
