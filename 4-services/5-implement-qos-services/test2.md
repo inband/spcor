@@ -423,6 +423,14 @@ GigabitEthernet2 is up, line protocol is up
      0 output buffer failures, 0 output buffers swapped out
 ```
 
+And coming back to this - logging shows **licensed bandwidth**
+
+```
+*Sep 21 02:52:34.102: %BW_LICENSE-5-THROUGHPUT_THRESHOLD_LEVEL:  F0: cpp_ha_top_level_server:  Average throughput rate exceeded 95 percent of licensed bandwidth of 1 Mbps during 4 sampling periods in the last 24 hours, sampling period is 300 seconds
+```
+
+
+
 Anyway I time to move on.
 
 
