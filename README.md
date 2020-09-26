@@ -149,7 +149,7 @@ None of the material in this reposistory is endorsed by any public vendor/entity
 
 3.1.e MPLS OAM
 
-3.2 Describe traffic engineering
+3.2 [Describe traffic engineering](https://github.com/inband/spcor/tree/master/3-mpls-and-segment-routing/2-describe-traffic-engineering)
 
 3.2.a ISIS and OSPF extensions
 
