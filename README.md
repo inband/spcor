@@ -61,7 +61,7 @@ None of the material in this reposistory is endorsed by any public vendor/entity
 
 1.6.a Traceback
 
-1.6.b AAA and TACACS
+1.6.b [AAA and TACACS](https://github.com/inband/spcor/tree/master/1-architecture/6-b-aaa-and-tacacs)
 
 1.6.c RestAPI security
 
