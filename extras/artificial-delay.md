@@ -11,3 +11,5 @@ lab-mel-r1(config-if)#delay ?
 This didn't work as expected - I tried on interface and sub-interface.
 
 I'll have to research further and come back.
+
+Looks like it is used cost best route metrics for routing protocols (ie EIGRP)
