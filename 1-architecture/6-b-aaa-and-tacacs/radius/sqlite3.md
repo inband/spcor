@@ -1,5 +1,10 @@
 # sqlite3
 
+```
+root@freeradius:/etc/freeradius# sqlite3 freeradius.db
+```
+
+
 Create user
 
 ```
@@ -35,4 +40,11 @@ Delete entries
 
 ```
 sqlite> DELETE FROM radreply WHERE id = 13;
+```
+
+
+Quit
+```
+sqlite> .quit
+
 ```
