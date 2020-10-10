@@ -114,7 +114,7 @@ None of the material in this reposistory is endorsed by any public vendor/entity
 
 2.4.f Redistribution
 
-2.5 Implement routing policy language and route maps (BGP, OSPF, IS-IS)
+2.5 [Implement routing policy language and route maps (BGP, OSPF, IS-IS)](https://github.com/inband/spcor/tree/master/2-networking/5-Implement-routing-policy-language-and-route-maps)
 
 2.6 Troubleshoot routing protocols
 
