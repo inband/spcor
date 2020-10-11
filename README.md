@@ -198,11 +198,11 @@ None of the material in this reposistory is endorsed by any public vendor/entity
 
 4.3.b Shared services (extranet and Internet)
 
-4.4 Implement multicast services
+4.4 [Implement multicast services](https://github.com/inband/spcor/tree/master/4-services/4-implement-multicast-services)
 
-4.4.a PIM (PIM-SM, PIM-SSM, and PIM-BIDIR)
+4.4.a [PIM (PIM-SM, PIM-SSM, and PIM-BIDIR)](https://github.com/inband/spcor/tree/master/4-services/4-a-pim)
 
-4.4.b IGMP v1/v2/v3 and MLD
+4.4.b [IGMP v1/v2/v3 and MLD](https://github.com/inband/spcor/tree/master/4-services/4-b-icmp-and-mld)
 
 4.5 [Implement QoS services](https://github.com/inband/spcor/tree/master/4-services/5-implement-qos-services)
 
