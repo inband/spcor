@@ -20,10 +20,10 @@ So far my initial understanding of multicast:
 * setup is **BACKWARDS**
 * the last hop router (the router directly connected to the "receiver") accepts an **IGMP Join** from "receiver"
 * the **IGMP Join** is a host to router message
-* the last hop router looks up the "SRC" in RIB(this will be used for RPF verification) and builds a MROUTE table.
-* then last hop router sends **PIM Join** out toward "src"
+* the last hop router looks up the "SRC IP" in RIB(this will be used for RPF verification) and builds a MROUTE table.
+* then last hop router sends **PIM Join** out toward "SRC IP"
 * **PIM Join** is router to router message
-* next router looks up "SRC ip** in RIB and build MROUTE table
+* next router looks up "SRC IP" in RIB and build MROUTE table
 * and so on
 * until we get to FHR - first hop router (the router directly connected to the source)
 * once FHR is setup the path is in effect signalled and "multicast" flow can occur.
@@ -31,7 +31,7 @@ So far my initial understanding of multicast:
 
 Anyway, I need a break from theory so time to play around and get a proper feel for it.
 
-I'm going to setup IGMPv3.
+I'm going to setup IGMPv3/SSM
 
 Using AS64511 (```csr5```, ```csr6```, ```csr7```, ```csr8```)
 
@@ -42,10 +42,42 @@ I'll make ```csr5``` the source and ```csr8``` the receiver.
 ```csr5``` to ```csr8``` is actually ECMP over OSPFv2 so that might be interesting - if that complicates things then I'll disable it.
 
 
+So Beau says:
+
+Enable on **every** router and **every** interface
+
+Globally
+
+```
+ip multicast-routing distributed 
+```
+
+Interface
+
+```
+ip pim sparse-mode
+ip igmp version 3
+```
 
 
+Now before I added ```ip igmp version 3``` on ```csr5```
 
+Looking at wire 
 
+```
+root@pve6-lab:~# tcpdump -nntei vmbr0v56 'not udp && not proto ospf && not port 179 && not port 646 && not mpls'
+tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+listening on vmbr0v56, link-type EN10MB (Ethernet), capture size 262144 bytes
+ea:8d:e3:78:ba:07 > 01:00:5e:00:01:28, ethertype 802.1Q (0x8100), length 50: vlan 56, p 0, ethertype IPv4, 172.31.0.200 > 224.0.1.40: igmp v2 report 224.0.1.40
+ea:8d:e3:78:ba:07 > 01:00:5e:00:00:0d, ethertype 802.1Q (0x8100), length 76: vlan 56, p 0, ethertype IPv4, 172.31.0.200 > 224.0.0.13: PIMv2, Hello, length 38
+ea:8d:e3:78:ba:07 > 01:00:5e:00:00:01, ethertype 802.1Q (0x8100), length 50: vlan 56, p 0, ethertype IPv4, 172.31.0.200 > 224.0.0.1: igmp query v2 [max resp time 25]
+ea:8d:e3:78:ba:07 > 01:00:5e:00:01:28, ethertype 802.1Q (0x8100), length 50: vlan 56, p 0, ethertype IPv4, 172.31.0.200 > 224.0.1.40: igmp v2 report 224.0.1.40
+```
+
+* ```csr5``` is using ```172.31.0.200``` which is interface IP.
+* IGMPv2 is default
+* ICMPv2 report ```224.0.1.40```
+* ICMPv2 query ```224.0.0.1``` - this is to all hosts on directly connected.
 
 
 
