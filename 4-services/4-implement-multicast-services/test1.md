@@ -99,9 +99,18 @@ ea:8d:e3:78:ba:07 > 01:00:5e:00:00:0d, ethertype 802.1Q (0x8100), length 76: vla
 * IGMPv3 report ```224.0.0.22```
 
 
+Now enable on other end of link ```csr6```
 
 
-
+```
+ea:8d:e3:78:ba:07 > 01:00:5e:00:00:0d, ethertype 802.1Q (0x8100), length 76: vlan 56, p 0, ethertype IPv4, 172.31.0.200 > 224.0.0.13: PIMv2, Hello, length 38
+da:41:34:42:c8:10 > 01:00:5e:00:00:0d, ethertype 802.1Q (0x8100), length 76: vlan 56, p 0, ethertype IPv4, 172.31.0.201 > 224.0.0.13: PIMv2, Hello, length 38
+da:41:34:42:c8:10 > 01:00:5e:00:00:16, ethertype 802.1Q (0x8100), length 58: vlan 56, p 0, ethertype IPv4, 172.31.0.201 > 224.0.0.22: igmp v3 report, 1 group record(s)
+da:41:34:42:c8:10 > 01:00:5e:00:00:01, ethertype 802.1Q (0x8100), length 54: vlan 56, p 0, ethertype IPv4, 172.31.0.201 > 224.0.0.1: igmp query v3 [max resp time 2.5s]
+da:41:34:42:c8:10 > 01:00:5e:00:00:16, ethertype 802.1Q (0x8100), length 58: vlan 56, p 0, ethertype IPv4, 172.31.0.201 > 224.0.0.22: igmp v3 report, 1 group record(s)
+da:41:34:42:c8:10 > 01:00:5e:00:00:16, ethertype 802.1Q (0x8100), length 58: vlan 56, p 0, ethertype IPv4, 172.31.0.201 > 224.0.0.22: igmp v3 report, 1 group record(s)
+ea:8d:e3:78:ba:07 > 01:00:5e:00:00:16, ethertype 802.1Q (0x8100), length 58: vlan 56, p 0, ethertype IPv4, 172.31.0.200 > 224.0.0.22: igmp v3 report, 1 group record(s)
+```
 
 
 
