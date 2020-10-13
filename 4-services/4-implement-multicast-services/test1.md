@@ -331,6 +331,11 @@ Reply to request 101 from 172.31.0.205, 2 ms
 As Multicast is **BACKWARDS**
 
 
+Filter
+```
+tcpdump -nntei vmbr0v56 'proto 103 || proto 2 || dst 232.1.1.1' -v
+```
+
 Start with **vlan68**
 
 ```
@@ -398,7 +403,14 @@ Flags: D - Dense, S - Sparse, B - Bidir Group, s - SSM Group, C - Connected,
 Outgoing interface flags: H - Hardware switched, A - Assert winner, p - PIM Join
 ```
 
+Now I'll only focus on the first tuple ```(172.31.0.5, 232.1.1.1)``` which is related to SSM.   I'll look into ```(*, 224.0.1.40)``` later.
+
+
 ```csr5```
+
+This is the SRC 
+* incoming is ```Null```
+* outgoing is ``` GigabitEthernet2.56``` which is **vlan 56**
 
 ```
 CSR5#show ip mroute                                 
@@ -418,6 +430,11 @@ CSR5#show ip mroute
 
 ```csr6```
 
+This is the FHR (First Hop Router) ... and it is also the LHR (Last Hop Router).  This router is Directly Connected to both the SRC and receive.
+
+* incoming is ``` GigabitEthernet2.56``` which is **vlan 56**, RPF neighbor is interface IP of ```csr5```
+* outgoing is ``` GigabitEthernet3.68``` which is **vlan 68**
+
 ```
 CSR6#show ip mroute 
 
@@ -435,6 +452,12 @@ CSR6#show ip mroute
 
 ```csr8```
 
+This is the receiver
+
+* incoming is ``` GigabitEthernet3.68``` which is **vlan 68**, RPF neighbor is interface IP of ```csr6```
+* outgoing is ```Null``` 
+
+
 ```
 CSR8#show ip mroute 
 
@@ -448,3 +471,31 @@ CSR8#show ip mroute
     GigabitEthernet2.68, Forward/Sparse, 00:10:32/00:02:05
 ```
 
+
+-------------------------
+
+```
+CSR8#show ip igmp membership 
+Flags: A  - aggregate, T - tracked
+       L  - Local, S - static, V - virtual, R - Reported through v3 
+       I - v3lite, U - Urd, M - SSM (S,G) channel 
+       1,2,3 - The version of IGMP, the group is in
+Channel/Group-Flags: 
+       / - Filtering entry (Exclude mode (S,G), Include mode (G))
+Reporter:
+       <mac-or-ip-address> - last reporter if group is not explicitly tracked
+       <n>/<m>      - <n> reporter in include mode, <m> reporter in exclude
+
+ Channel/Group                  Reporter        Uptime   Exp.  Flags  Interface 
+/*,232.1.1.1                    172.31.0.205    00:51:50 stop  3LMA   Gi2.68
+ 172.31.0.5,232.1.1.1                           00:51:50 02:17 A      Gi2.68
+ *,224.0.1.40                   172.31.0.205    02:22:02 02:17 3LA    Gi2.68
+```
+
+
+
+```
+CSR8#show udp 
+Proto        Remote      Port      Local       Port  In Out  Stat TTY OutputIF
+ 17       --listen--          224.0.1.40        496   0   0 2000061   0 
+```
