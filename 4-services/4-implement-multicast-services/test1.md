@@ -78,12 +78,25 @@ ea:8d:e3:78:ba:07 > 01:00:5e:00:01:28, ethertype 802.1Q (0x8100), length 50: vla
 * IGMPv2 is default
 * ICMPv2 report ```224.0.1.40```
 * ICMPv2 query ```224.0.0.1``` - this is to all hosts on directly connected.
+* PIM looks to be trying to discover over PIM on local-link ```224.0.0.13```
 
 
 
+Enable ```ip igmp version 3```
+
+```
+ea:8d:e3:78:ba:07 > 01:00:5e:00:00:16, ethertype 802.1Q (0x8100), length 58: vlan 56, p 0, ethertype IPv4, 172.31.0.200 > 224.0.0.22: igmp v3 report, 1 group record(s)
+ea:8d:e3:78:ba:07 > 01:00:5e:00:00:01, ethertype 802.1Q (0x8100), length 54: vlan 56, p 0, ethertype IPv4, 172.31.0.200 > 224.0.0.1: igmp query v3 [max resp time 2.5s]
+ea:8d:e3:78:ba:07 > 01:00:5e:00:00:16, ethertype 802.1Q (0x8100), length 58: vlan 56, p 0, ethertype IPv4, 172.31.0.200 > 224.0.0.22: igmp v3 report, 1 group record(s)
+ea:8d:e3:78:ba:07 > 01:00:5e:00:00:16, ethertype 802.1Q (0x8100), length 58: vlan 56, p 0, ethertype IPv4, 172.31.0.200 > 224.0.0.22: igmp v3 report, 1 group record(s)
+
+ea:8d:e3:78:ba:07 > 01:00:5e:00:00:0d, ethertype 802.1Q (0x8100), length 76: vlan 56, p 0, ethertype IPv4, 172.31.0.200 > 224.0.0.13: PIMv2, Hello, length 38
+```
 
 
-
+* PIM remains ```224.0.0.13``` (same as above)
+* IGMPv3 query ```224.0.0.1``` - all hosts
+* IGMPv3 report ```224.0.0.22```
 
 
 
