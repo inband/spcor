@@ -256,3 +256,10 @@ Observation
 * each link has DR
 
 
+-------------------------------
+
+Beau says to enable PIM-SSM on **every** router
+
+```
+ip pim ssm default
+```
