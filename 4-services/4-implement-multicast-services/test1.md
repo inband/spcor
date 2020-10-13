@@ -1,6 +1,6 @@
 # Test 1 - getting a handle on Multicast
 
-No expierience with Multicast
+No experience with Multicast
 
 Started out watching INE Multicast - bad idea. I'll watch this after I've read(Cisco Press/rfc's and labbed).  
 
@@ -336,7 +336,7 @@ Filter
 tcpdump -nntei vmbr0v56 'proto 103 || proto 2 || dst 232.1.1.1' -v
 ```
 
-Start with **vlan68**
+Start with **vlan 68**
 
 ```
 b2:97:a6:98:ac:8d > 01:00:5e:00:00:16, ethertype 802.1Q (0x8100), length 58: vlan 68, p 0, ethertype IPv4, (tos 0xc0, ttl 1, id 8041, offset 0, flags [none], proto IGMP (2), length 40, options (RA))
