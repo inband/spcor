@@ -33,13 +33,14 @@ Anyway, I need a break from theory so time to play around and get a proper feel 
 
 I'm going to setup IGMPv3/SSM
 
-Using AS64511 (```csr5```, ```csr6```, ```csr7```, ```csr8```)
+Using AS64511 (```csr5```, ```csr6```,  ```csr8```)
 
 I have unicast routing in the GLOBAL routing table.
 
 I'll make ```csr5``` the source and ```csr8``` the receiver.
 
-```csr5``` to ```csr8``` is actually ECMP over OSPFv2 so that might be interesting - if that complicates things then I'll disable it.
+
+```csr7```can be added later to test behaviour in ECMP situation ```csr5``` to ```csr8``` over OSPFv2.  At the moment the ECMP is NOT in effect.
 
 
 So Beau says:
@@ -207,3 +208,51 @@ Outgoing interface flags: H - Hardware switched, A - Assert winner, p - PIM Join
   Outgoing interface list: Null
 
 ```
+
+Hmmm not sure if this is something left over from IGMPv2
+
+
+-------------------------------------
+
+Ok setup on remaining link
+
+```
+CSR5#show ip pim neighbor 
+PIM Neighbor Table
+Mode: B - Bidir Capable, DR - Designated Router, N - Default DR Priority,
+      P - Proxy Capable, S - State Refresh Capable, G - GenID Capable,
+      L - DR Load-balancing Capable
+Neighbor          Interface                Uptime/Expires    Ver   DR
+Address                                                            Prio/Mode
+172.31.0.201      GigabitEthernet2.56      00:28:15/00:01:30 v2    1 / DR S P G
+```
+
+```
+CSR6#show ip pim neighbor 
+PIM Neighbor Table
+Mode: B - Bidir Capable, DR - Designated Router, N - Default DR Priority,
+      P - Proxy Capable, S - State Refresh Capable, G - GenID Capable,
+      L - DR Load-balancing Capable
+Neighbor          Interface                Uptime/Expires    Ver   DR
+Address                                                            Prio/Mode
+172.31.0.200      GigabitEthernet2.56      00:27:00/00:01:18 v2    1 / S P G
+172.31.0.205      GigabitEthernet3.68      00:01:22/00:01:21 v2    1 / DR S P G
+```
+
+```
+CSR8#show ip pim neighbor 
+PIM Neighbor Table
+Mode: B - Bidir Capable, DR - Designated Router, N - Default DR Priority,
+      P - Proxy Capable, S - State Refresh Capable, G - GenID Capable,
+      L - DR Load-balancing Capable
+Neighbor          Interface                Uptime/Expires    Ver   DR
+Address                                                            Prio/Mode
+172.31.0.204      GigabitEthernet2.68      00:01:15/00:01:29 v2    1 / S P G
+
+```
+
+Observation
+
+* each link has DR
+
+
