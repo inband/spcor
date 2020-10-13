@@ -6,6 +6,9 @@ PIMv2 is proto 103
 IGMPv3 is proto 2
 
 
+"IGMP Membership Report" == "IGMP Join"
+
+
 tcpdump filter 
 
 ```
