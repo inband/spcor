@@ -9,6 +9,7 @@ Found Beau Williamson's "Fundamentals of IP Multicast" Live Lesson.  This is a m
 So far my initial understanding of multicast:
 
 * Multicast is used for 'targeted' broadcasts that traverse routers (broadcast domain)
+* or a special sub-set for link-local that basically operate like broadcast ```224.0.0.0/24``` ie OSPF, HSRP, IGMPv3
 * The use case I like to think of is bradcast television - IPTV
 * like unicast there is a SRC IP
 * unlike unicast there is NOT a DST IP rather a "receiver"
