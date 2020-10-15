@@ -142,3 +142,17 @@ USR   06:59:49     -               Peruser
 INT   06:59:49     -               Virtual-Template1
 
 ```
+
+
+The above is OK for users that share common list.  A specific user ACL can also be created:
+
+```
+sqlite> select * from radreply where value regexp 'inacl#';
+id|username|attribute|op|value
+26|ppp1|cisco-avpair|=|ip:inacl#1=deny ip any host 100.66.6.248
+27|ppp1|cisco-avpair|=|ip:inacl#100=permit ip any any
+```
+
+
+
+
