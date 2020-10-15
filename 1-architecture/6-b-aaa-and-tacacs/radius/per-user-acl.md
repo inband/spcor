@@ -144,7 +144,10 @@ INT   06:59:49     -               Virtual-Template1
 ```
 
 
-The above is OK for users that share common list.  A specific user ACL can also be created:
+----------------------
+
+
+The above is OK for users that share common list.  A specific user ACL can be created:
 
 ```
 sqlite> select * from radreply where value regexp 'inacl#';
@@ -154,5 +157,15 @@ id|username|attribute|op|value
 ```
 
 
+-------------------------
 
+Probably the next test would be to have a "default" ACL implemented via the virtual-template.  The question would be "what happens if I have both, the default ACL and the radius defined ACL?" 
+
+I would think that ther would be a priority from top to bottom.
+
+* manually defined on interface
+* radius attribute
+* virtual-template
+
+but I'll lab it up and check.
 
