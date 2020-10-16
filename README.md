@@ -31,9 +31,9 @@ None of the material in this reposistory is endorsed by any public vendor/entity
 
 1.3.c OpenStack
 
-1.4 Describe QoS architecture
+1.4 [Describe QoS architecture](https://github.com/inband/spcor/tree/master/1-architecture/4-describe-qos-architecture)
 
-1.4.a MPLS QOS models (Pipe, Short Pipe, and Uniform)
+1.4.a [MPLS QOS models (Pipe, Short Pipe, and Uniform)](https://github.com/inband/spcor/tree/master/1-architecture/4-a-mpls-qos-models)
 
 1.4.b MPLS TE QoS (MAM, RDM, CBTS, PBTS, and DS-TE)
 
