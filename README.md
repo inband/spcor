@@ -35,11 +35,11 @@ None of the material in this reposistory is endorsed by any public vendor/entity
 
 1.4.a [MPLS QOS models (Pipe, Short Pipe, and Uniform)](https://github.com/inband/spcor/tree/master/1-architecture/4-a-mpls-qos-models)
 
-1.4.b MPLS TE QoS (MAM, RDM, CBTS, PBTS, and DS-TE)
+1.4.b [MPLS TE QoS (MAM, RDM, CBTS, PBTS, and DS-TE)](https://github.com/inband/spcor/tree/master/1-architecture/4-b-mpls-te-qos)
 
-1.4.c DiffServ and IntServ QoS models
+1.4.c [DiffServ and IntServ QoS models](https://github.com/inband/spcor/tree/master/1-architecture/4-c-diffserv-and-intserv-qos-models)
 
-1.4.d Trust boundaries between enterprise and SP environments
+1.4.d [Trust boundaries between enterprise and SP environments](https://github.com/inband/spcor/tree/master/1-architecture/4-d-trust-boundaries)
 
 1.4.e IPv6 flow label
 
