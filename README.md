@@ -102,7 +102,7 @@ None of the material in this reposistory is endorsed by any public vendor/entity
 
 2.4 [Implement BGP (v4 and v6 for IBGP and EBGP)](https://github.com/inband/spcor/tree/master/2-networking/4-implement-bgp)
 
-2.4.a Neighbors
+2.4.a [Neighbors](https://github.com/inband/spcor/tree/master/2-networking/4-a-neighbors)
 
 2.4.b Prefix advertisement
 
