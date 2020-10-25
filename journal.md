@@ -29,13 +29,12 @@ So routhly breaking up the next 12 months.
 * At a high level - no pressure
 
 **Feb-April**
-* Why do I need to work on?
+* Work out where I'm weekest - what do I need to work on?
 * 1 month INE
 * Make sure all topics covered IPv4
 
 **May-July**
 * Revisit all topics but with IPv6
-
 
 **Aug-Oct**
 * Study hard
