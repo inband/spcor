@@ -69,7 +69,7 @@ None of the material in this reposistory is endorsed by any public vendor/entity
 
 1.7 Implement data plane security
 
-1.7.a uRPF
+1.7.a [uRPF](https://github.com/inband/spcor/tree/master/1-architecture/7-a-uRPF)
 
 1.7.b [ACLs](https://github.com/inband/spcor/tree/master/1-architecture/7-b-acls)
 
