@@ -126,7 +126,7 @@ None of the material in this reposistory is endorsed by any public vendor/entity
 
 2.8 [Implement high availability](https://github.com/inband/spcor/tree/master/2-networking/8-Implement-high-availability)
 
-2.8.a NSF / graceful restart
+2.8.a [NSF / graceful restart](https://github.com/inband/spcor/tree/master/2-networking/8-a-NSF-graceful-restart)
 
 2.8.b NSR
 
