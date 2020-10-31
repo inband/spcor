@@ -3,7 +3,7 @@
 
 
 
-NSF
+### NSF
 
 [Cisco documentation](https://www.cisco.com/c/en/us/td/docs/ios-xml/ios/iproute_bgp/configuration/xe-16/irg-xe-16-book/bgp-nonstop-forwarding-awareness.html)
 
@@ -11,7 +11,7 @@ NSF
 
 
 
-Graceful restart
+### Graceful restart
 
 [RFC4724](https://tools.ietf.org/html/rfc4724)
 
