@@ -28,10 +28,25 @@ PVE Server installed in DC.
 
 Setup as per INE's CCIE SPv4 Advanced Technologies Topology.
 
+Setup ansible to backup all routers in topology.
+
 Got a bit side tracked and installed vMX in PVE.  I'd like to learn more about Juniper at the same time - I'll have to work out a way of fitting in the above topology.  Name ```VMX1``` connect to XR2 **vlan 1215** 10.12.15.0/24 and 2001:12:15::/64 and ```lo0 15.15.15.15/32 2001::15/128```
 
+Next:
+
+Video:
+* Cisco Lessions Luc De Ghein's MPLS Fundametals
+* Cisco Live Breakout sessions - try and watch one a week.  
 
 
+Reading:
+
+* MPLS Fundamentials
+* MPLS in SDN era
+* Cisco ISP Essentials
+
+
+I need to start going through the INE SPv4 workbook.
 
 ---------------------------------------------
 So routhly breaking up the next 12 months.
