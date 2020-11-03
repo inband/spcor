@@ -21,6 +21,18 @@ With this in mind I've set a loose goal of getting CCIE SP by October 31st 2021.
 
 I've rented 2RU AU$140 per month from 2nd Nov 2020.  I expect that I'll rent this for a year while I study.
 
+
+**3/11/2020**
+
+PVE Server installed in DC.
+
+Setup as per INE's CCIE SPv4 Advanced Technologies Topology.
+
+Got a bit side tracked and installed vMX in PVE.  I'd like to learn more about Juniper at the same time - I'll have to work out a way of fitting in the above topology.
+
+
+
+
 ---------------------------------------------
 So routhly breaking up the next 12 months.
 
