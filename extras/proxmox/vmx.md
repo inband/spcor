@@ -1,5 +1,9 @@
 # vmx
 
+This was a pain.  Hopefully I have most of it documented below.  Surely it is going to give me a headache next time too. 
+
+The goal is to create an Ubuntu host and run vMX on it.
+
 Installed Ubuntu Server 18.04
 
 ```
@@ -48,6 +52,11 @@ GRUB_TIMEOUT_STYLE=hidden
 GRUB_TIMEOUT=0
 GRUB_DISTRIBUTOR=`lsb_release -i -s 2> /dev/null || echo Debian`
 GRUB_CMDLINE_LINUX_DEFAULT="maybe-ubiquity quiet intel_iommu=on hugepagesz=1G default_hugepagesz=1G hugepages=16"
+```
+
+```
+update-grub
+shutdown -r now
 ```
 
 Disable KSM
@@ -101,8 +110,39 @@ root@ubuntu18:~# cat /etc/modprobe.d/qemu-system-x86.conf
 options kvm_intel nested=1 enable_apicv=0
 ```
 
-May need a reboot
+May need a reboot. 
 
+Copy ```scp``` 
+```
+cd /root/
+scp -r host:/images/vmx .
+```
+
+Storage permissions
+
+```
+root@ubuntu18:/root/vmx# cat /etc/libvirt/qemu.conf | grep -C10 'user ='
+# specified as a user name or as a user id. The qemu driver will try to
+# parse this value first as a name and then, if the name doesn't exist,
+# as a user id.
+#
+# Since a sequence of digits is a valid user name, a leading plus sign
+# can be used to ensure that a user id will not be interpreted as a user
+# name.
+#
+# Some examples of valid values are:
+#
+#       user = "qemu"   # A user named "qemu"
+#       user = "+0"     # Super user (uid=0)
+#       user = "100"    # A user named "100" or a user with uid=100
+#
+user = "root"
+user = "libvirt-qemu"
+
+# The group for QEMU processes run by the system instance. It can be
+# specified in a similar way to user.
+group = "root"
+```
 
 ```
 root@ubuntu18:/root/vmx# cat config/vmx.conf 
@@ -251,4 +291,15 @@ Console to vMX
 
 ```
 root@ubuntu18:/root/vmx# ./vmx.sh --console vcp vmx1
+```
+
+
+
+
+On Juniper
+
+```
+cli
+configure
+set chassis fpc 0 lite-mode
 ```
