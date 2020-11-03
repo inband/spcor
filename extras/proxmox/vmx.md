@@ -296,10 +296,11 @@ root@ubuntu18:/root/vmx# ./vmx.sh --console vcp vmx1
 
 
 
-On Juniper
+On Juniper to enable ge-* interfaces
 
 ```
 cli
 configure
 set chassis fpc 0 lite-mode
+request system reboot
 ```
