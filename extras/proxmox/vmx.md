@@ -304,3 +304,9 @@ configure
 set chassis fpc 0 lite-mode
 request system reboot
 ```
+
+```
+cli
+configure
+delete chassis auto-image-upgrade
+```
