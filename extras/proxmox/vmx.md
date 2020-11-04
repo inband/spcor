@@ -310,3 +310,95 @@ cli
 configure
 delete chassis auto-image-upgrade
 ```
+
+
+Issue with terminal output
+```
+Message from syslogd@VMX1 at Nov 4 ...
+VMX1 fpc0 Fram 0: sp = 0xff... , pc = 0xf7...
+```
+Tried the following
+
+```
+set system syslog user * pfe none
+```
+
+
+
+
+--------------------------
+
+### Useful commands
+
+Help
+
+```
+root@ubuntu18:/root/vmx# ./vmx.sh --help
+
+Usage: vmx.sh [CONTROL OPTIONS]
+       vmx.sh [LOGGING OPTIONS] [CONTROL OPTIONS]
+       vmx.sh [JUNOS-DEV BIND OPTIONS]
+       vmx.sh [CONSOLE LOGIN OPTIONS]
+
+    CONTROL OPTIONS:
+       --install                      : Install And Start vMX
+       --start                        : Start vMX
+       --stop                         : Stop vMX
+       --restart                      : Restart vMX
+       --status                       : Check Status Of vMX
+       --cleanup                      : Stop vMX And Cleanup Build Files
+       --cfg <file>                   : Override With The Specified vmx.conf File
+       --env <file>                   : Override With The Specified Environment .env File
+       --build <directory>            : Override With The Specified Directory for Temporary Files
+       --help                         : This Menu
+
+    LOGGING OPTIONS:
+       -l                             : Enable Logging
+       -lv                            : Enable Verbose Logging
+       -lvf                           : Enable Foreground Verbose Logging
+
+    JUNOS-DEV BIND OPTIONS:
+       --bind-dev                     : Bind Junos Devices
+       --unbind-dev                   : Unbind Junos Devices
+       --bind-check                   : Check Junos Device Bindings
+       --cfg <file>                   : Override With The Specified vmx-junosdev.conf File
+
+    CONSOLE LOGIN OPTIONS:
+       --console [vcp|vfp] [vmx_id]   : Login to the Console of VCP/VFP
+
+    VFP Image OPTIONS:
+       --vfp-info <VFP Image Path>    : Display Information About The Specified vFP image
+
+Copyright(c) Juniper Networks, 2015
+```
+
+
+
+Console
+
+```
+./vmx.sh --console vcp vmx1
+```
+
+Stop
+
+```
+./vmx.sh -lv --stop
+```
+
+Start
+
+```
+./vmx.sh -lv --start
+```
+
+Bind check
+
+```
+./vmx.sh --bind-check
+```
+Bind
+
+```
+./vmx.sh --bind-dev
+```
