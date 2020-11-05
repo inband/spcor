@@ -143,7 +143,7 @@ None of the material in this reposistory is endorsed by any public vendor/entity
 
 3.1.b LDP session protection
 
-3.1.c LDP neighbors
+3.1.c [LDP neighbors](https://github.com/inband/spcor/tree/master/3-mpls-and-segment-routing/1-c-ldp-neighbors)
 
 3.1.d Unified MPLS
 
