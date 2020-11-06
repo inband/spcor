@@ -62,7 +62,7 @@ RR1;
 
 ```
 
-
+display set
 
 ```
 root@VMX1> show configuration logical-systems | display set 
