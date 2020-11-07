@@ -1,8 +1,21 @@
 # Adding interfaces
 
 
+Add to vmx.conf
 
 
+Stop
+
+
+Install (automatically start)
+
+
+Check status
+
+
+Bind status
+
+Re-bind
 
 
 
