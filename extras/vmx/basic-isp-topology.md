@@ -1,10 +1,11 @@
 # Basic ISP topology
 
 
-
 **AS65000**
 
 ```PE1```
+
+Platform: Juniper vMX
 
 ```
 root@VMX1:PE1> show configuration 
@@ -98,3 +99,17 @@ set logical-systems PE1 protocols isis interface ge-0/0/3.16
 set logical-systems PE1 protocols isis interface lo0.1
 
 ```
+
+```
+root@VMX1:PE1> show isis adjacency 
+Interface             System         L State        Hold (secs) SNPA
+ge-0/0/3.16           PE2            2  Up                    8  32:20:a8:23:76:f2
+
+```
+
+---------------------------------------------------
+
+```PE2```
+
+Platform: Cisco XRv
+
