@@ -113,3 +113,43 @@ ge-0/0/3.16           PE2            2  Up                    8  32:20:a8:23:76:
 
 Platform: Cisco XRv
 
+```
+hostname PE2
+!
+interface GigabitEthernet0/0/0/0.16
+ ipv4 address 10.0.0.1 255.255.255.254
+ encapsulation dot1q 16
+!
+!
+router isis 1
+ is-type level-2-only
+ net 00.0000.0000.0006.00
+ address-family ipv4 unicast
+  metric-style wide
+ !
+ interface Loopback0
+  address-family ipv4 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/0.16
+  address-family ipv4 unicast
+  !
+ !
+! 
+```
+
+
+```
+RP/0/RP0/CPU0:PE2#show isis adjacency
+Sat Nov  7 09:50:57.442 UTC
+
+IS-IS 1 Level-2 adjacencies:
+System Id      Interface        SNPA           State Hold Changed  NSF IPv4 IPv6
+                                                                       BFD  BFD 
+VMX1-PE1       Gi0/0/0/0.16     0206.0a0e.fff3 Up    26   00:28:01 Yes None None
+
+Total adjacency count: 1
+```
+
+
+-------------------------
