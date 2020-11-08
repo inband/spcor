@@ -174,6 +174,16 @@ inet.0: 22 destinations, 23 routes (22 active, 0 holddown, 0 hidden)
 172.16.0.44/32     *[IS-IS/18] 00:02:16, metric 40
                     > to 10.0.0.8 via lt-0/0/0.32
 ```
+Traceroute
+
+```
+root@VMX1:PE3> traceroute 172.16.0.44 interface lo0.3 no-resolve 
+traceroute to 172.16.0.44 (172.16.0.44), 30 hops max, 52 byte packets
+ 1  10.0.0.8  3629.922 ms  3316.192 ms  466.354 ms
+ 2  10.0.0.7  151.919 ms  145.312 ms  41.384 ms
+ 3  10.0.0.11  139.903 ms *  22.941 ms
+```
+
 
 
 ```
@@ -195,6 +205,21 @@ Routing entry for 172.16.0.33/32
     10.0.0.10, from 172.16.0.1, via GigabitEthernet0/0/0/1.78
       Route metric is 30
   No advertising protos. 
+```
+
+Traceroute
+
+```
+RP/0/RP0/CPU0:PE4#traceroute 172.16.0.33 source Loopback 0 numeric 
+Sun Nov  8 07:58:22.892 UTC
+
+Type escape sequence to abort.
+Tracing the route to 172.16.0.33
+
+ 1  10.0.0.10 373 msec  11 msec  4 msec 
+ 2  10.0.0.6 6 msec  4 msec 
+    10.0.0.24 4 msec 
+ 3  172.16.0.33 5 msec  5 msec  6 msec 
 ```
 
 
