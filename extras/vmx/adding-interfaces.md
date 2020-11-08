@@ -20,7 +20,7 @@ Re-bind
 
 
 
-The default number of ports on xMX is 10.  However this can be increased - to 96 virtio in lite mode.
+The default number of ports on xMX is 10.  However this can be increased - to 96 virtio in lite mode.  [Juniper link]https://www.juniper.net/documentation/en_US/vmx/topics/task/configuration/vmx-chassis-active-ports-configuring.html#:~:text=You%20can%20specify%20the%20number,added%20to%20the%20VFP%20VM.)
 
 
 ```
