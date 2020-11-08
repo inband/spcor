@@ -61,7 +61,7 @@ Backup
 ```
 root@VMX1> show configuration | display set 
 set version 18.2R1.9
-set system root-authentication encrypted-password "***********"
+set system root-authentication encrypted-password "*****************"
 set system host-name VMX1
 set system services ssh root-login allow
 set system syslog user * any emergency
@@ -88,6 +88,11 @@ set logical-systems P1 interfaces lt-0/0/0 unit 23 vlan-id 23
 set logical-systems P1 interfaces lt-0/0/0 unit 23 peer-unit 32
 set logical-systems P1 interfaces lt-0/0/0 unit 23 family inet address 10.0.0.8/31
 set logical-systems P1 interfaces lt-0/0/0 unit 23 family iso
+set logical-systems P1 interfaces lt-0/0/0 unit 24 encapsulation vlan
+set logical-systems P1 interfaces lt-0/0/0 unit 24 vlan-id 24
+set logical-systems P1 interfaces lt-0/0/0 unit 24 peer-unit 42
+set logical-systems P1 interfaces lt-0/0/0 unit 24 family inet address 10.0.0.16/31
+set logical-systems P1 interfaces lt-0/0/0 unit 24 family iso
 set logical-systems P1 interfaces ge-0/0/6 unit 27 vlan-id 27
 set logical-systems P1 interfaces ge-0/0/6 unit 27 family inet address 10.0.0.6/31
 set logical-systems P1 interfaces ge-0/0/6 unit 27 family iso
@@ -129,7 +134,7 @@ set logical-systems PE1 interfaces lo0 unit 1 family inet address 172.16.0.11/32
 set logical-systems PE1 interfaces lo0 unit 1 family iso address 49.0000.0000.0001.00
 set logical-systems PE1 protocols isis level 2 wide-metrics-only
 set logical-systems PE1 protocols isis interface lt-0/0/0.12
-set logical-systems PE1 protocols isis interface ge-0/0/3.16
+set logical-systems PE1 protocols isis interface ge-0/0/3.16 level 2 metric 100
 set logical-systems PE1 protocols isis interface lo0.1
 set logical-systems PE3 interfaces lt-0/0/0 unit 32 encapsulation vlan
 set logical-systems PE3 interfaces lt-0/0/0 unit 32 vlan-id 23
@@ -143,7 +148,7 @@ set logical-systems PE3 interfaces lo0 unit 3 family inet address 172.16.0.33/32
 set logical-systems PE3 interfaces lo0 unit 3 family iso address 49.0000.0000.0003.00
 set logical-systems PE3 protocols isis level 2 wide-metrics-only
 set logical-systems PE3 protocols isis interface lt-0/0/0.32
-set logical-systems PE3 protocols isis interface ge-0/0/9.38
+set logical-systems PE3 protocols isis interface ge-0/0/9.38 level 2 metric 100
 set logical-systems PE3 protocols isis interface lo0.3
 set logical-systems RR1 interfaces lt-0/0/0 unit 42 encapsulation vlan
 set logical-systems RR1 interfaces lt-0/0/0 unit 42 vlan-id 24
@@ -168,12 +173,12 @@ set chassis fpc 0 lite-mode
 set interfaces ge-0/0/0 unit 0 family inet address 192.168.222.80/24
 set interfaces ge-0/0/1 unit 0 family inet address 10.0.0.0/31
 set interfaces ge-0/0/1 unit 0 family mpls
-set interfaces ge-0/0/2 vlan-tagging
+set interfaces ge-0/0/2 vlan-tagging    
 set interfaces ge-0/0/2 encapsulation extended-vlan-bridge
 set interfaces ge-0/0/2 unit 1215 vlan-id 1215
 set interfaces ge-0/0/3 vlan-tagging
 set interfaces ge-0/0/4 vlan-tagging
-set interfaces ge-0/0/5 vlan-tagging    
+set interfaces ge-0/0/5 vlan-tagging
 set interfaces ge-0/0/6 vlan-tagging
 set interfaces ge-0/0/7 vlan-tagging
 set interfaces ge-0/0/8 vlan-tagging
@@ -197,5 +202,4 @@ set bridge-domains vlan-1215 domain-type bridge
 set bridge-domains vlan-1215 vlan-id 1215
 set bridge-domains vlan-1215 interface ge-0/0/2.1215
 set bridge-domains vlan-1215 routing-interface irb.1215
-
 ```
