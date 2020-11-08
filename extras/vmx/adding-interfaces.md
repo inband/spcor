@@ -59,9 +59,9 @@ ge-0/0/14               up    up
 Backup
 
 ```
-root@VMX1> show configuration | display set 
+root@VMX1# show | display set 
 set version 18.2R1.9
-set system root-authentication encrypted-password "*****************"
+set system root-authentication encrypted-password "****************"
 set system host-name VMX1
 set system services ssh root-login allow
 set system syslog user * any emergency
@@ -112,6 +112,8 @@ set logical-systems P1 protocols isis interface ge-0/0/6.27
 set logical-systems P1 protocols isis interface ge-0/0/7.227
 set logical-systems P1 protocols isis interface ge-0/0/8.25
 set logical-systems P1 protocols isis interface lo0.2
+set logical-systems P1 policy-options policy-statement LB then load-balance per-packet
+set logical-systems P1 routing-options forwarding-table export LB
 set logical-systems PE1 interfaces lt-0/0/0 unit 12 encapsulation vlan
 set logical-systems PE1 interfaces lt-0/0/0 unit 12 vlan-id 12
 set logical-systems PE1 interfaces lt-0/0/0 unit 12 peer-unit 21
@@ -163,17 +165,19 @@ set logical-systems RR1 interfaces ge-0/0/5 unit 45 family inet address 10.0.0.1
 set logical-systems RR1 interfaces ge-0/0/5 unit 45 family iso
 set logical-systems RR1 interfaces lo0 unit 4 family inet address 172.16.0.201/32
 set logical-systems RR1 interfaces lo0 unit 4 family iso address 49.0000.0000.0004.00
+set logical-systems RR1 protocols isis overload
+set logical-systems RR1 protocols isis level 2 wide-metrics-only
 set logical-systems RR1 protocols isis interface lt-0/0/0.42
 set logical-systems RR1 protocols isis interface ge-0/0/4.47
 set logical-systems RR1 protocols isis interface ge-0/0/5.45
 set logical-systems RR1 protocols isis interface lo0.4
 set chassis fpc 0 pic 0 tunnel-services
 set chassis fpc 0 pic 0 number-of-ports 15
-set chassis fpc 0 lite-mode
+set chassis fpc 0 lite-mode             
 set interfaces ge-0/0/0 unit 0 family inet address 192.168.222.80/24
 set interfaces ge-0/0/1 unit 0 family inet address 10.0.0.0/31
 set interfaces ge-0/0/1 unit 0 family mpls
-set interfaces ge-0/0/2 vlan-tagging    
+set interfaces ge-0/0/2 vlan-tagging
 set interfaces ge-0/0/2 encapsulation extended-vlan-bridge
 set interfaces ge-0/0/2 unit 1215 vlan-id 1215
 set interfaces ge-0/0/3 vlan-tagging
