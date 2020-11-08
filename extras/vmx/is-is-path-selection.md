@@ -275,5 +275,38 @@ Sun Nov  8 08:16:54.280 UTC
 Ok - run that traceroute from ```PE3``` it should go to via ```RR1```
 
 ```
+root@VMX1:PE3> traceroute 172.16.0.44 interface lo0.3 no-resolve 
+traceroute to 172.16.0.44 (172.16.0.44), 30 hops max, 52 byte packets
+ 1  10.0.0.8  3203.608 ms  3346.875 ms  3311.839 ms
+ 2  10.0.0.17  351.013 ms  236.785 ms  178.315 ms
+ 3  10.0.0.18  153.777 ms  44.781 ms  6.622 ms
+ 4  10.0.0.11  12.422 ms *  1341.968 ms
+```
+
+
+Yes - it does.
 
 ```
+root@VMX1:RR1# set protocols isis ?
+Possible completions:
+...
+> overload             Set the overload bit (no transit traffic)
+
+root@VMX1:RR1# set protocols isis overload            
+
+[edit]
+root@VMX1:RR1# commit 
+commit complete
+
+```
+
+Back to ```PE3``` to test - it should now take directly connected link to get to ```PE4```
+
+```
+root@VMX1:PE3> traceroute 172.16.0.44 interface lo0.3 no-resolve 
+traceroute to 172.16.0.44 (172.16.0.44), 30 hops max, 52 byte packets
+ 1  10.0.0.13  15.233 ms *  194.321 ms
+
+```
+
+
