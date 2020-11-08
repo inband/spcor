@@ -71,9 +71,45 @@ Tracing the route to 172.16.0.11
 
 Lets change the directly connect interface metric to 100 on both ```PE1``` and ```PE2``` and see the behaviour.
 
+```PE1```
+
+```
+root@VMX1:PE1# set protocols isis interface ge-0/0/3.16 level 2 metric 100  
+```
+
+Now ```PE2``` prefers link to ```P2```
+
+```
+RP/0/RP0/CPU0:PE2#show route 172.16.0.11
+Sun Nov  8 07:48:46.216 UTC
+
+Routing entry for 172.16.0.11/32
+  Known via "isis 1", distance 115, metric 30, type level-2
+  Installed Nov  8 07:47:22.685 for 00:01:24
+  Routing Descriptor Blocks
+    10.0.0.5, from 172.16.0.1, via GigabitEthernet0/0/0/1.67
+      Route metric is 30
+  No advertising protos. 
+```
+Traceroute
+
+```
+RP/0/RP0/CPU0:PE2#traceroute 172.16.0.11
+Sun Nov  8 07:49:36.079 UTC
+
+Type escape sequence to abort.
+Tracing the route to 172.16.0.11
+
+ 1  10.0.0.5 72 msec  41 msec  28 msec 
+ 2  10.0.0.6 1847 msec 
+    10.0.0.24 116 msec 
+    10.0.0.6 125 msec 
+ 3  172.16.0.11 170 msec  150 msec  121 msec 
+```
 
 
-```PE2```
+
+Ok now for ```PE2```
 
 ```
 RP/0/RP0/CPU0:PE2#show running-config | begin router isis
@@ -94,7 +130,29 @@ router isis 1
    metric 100
 ```
 
+Route
 
+```
+root@VMX1:PE1> show route 172.16.0.22 
+
+inet.0: 25 destinations, 26 routes (25 active, 0 holddown, 0 hidden)
++ = Active Route, - = Last Active, * = Both
+
+172.16.0.22/32     *[IS-IS/18] 00:03:25, metric 40
+                    > to 10.0.0.3 via lt-0/0/0.12
+```
+
+
+
+Traceroute - OK but looks like vMX doesn't EC load balance by default - this cant be fix later on ```P1```
+
+```
+root@VMX1:PE1> traceroute 172.16.0.22    
+traceroute to 172.16.0.22 (172.16.0.22), 30 hops max, 52 byte packets
+ 1  10.0.0.3 (10.0.0.3)  3142.048 ms  1734.468 ms  328.063 ms
+ 2  10.0.0.25 (10.0.0.25)  163.612 ms  51.124 ms  16.674 ms
+ 3  10.0.0.4 (10.0.0.4)  23.654 ms *  166.483 ms
+```
 
 
 
