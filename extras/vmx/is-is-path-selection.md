@@ -309,4 +309,18 @@ traceroute to 172.16.0.44 (172.16.0.44), 30 hops max, 52 byte packets
 
 ```
 
+Remember to ```no shut``` on ```P2```
+
+
+```
+RP/0/RP0/CPU0:P2#configure 
+Sun Nov  8 08:34:49.604 UTC
+RP/0/RP0/CPU0:P2(config)#interface GigabitEthernet0/0/0/2.27
+RP/0/RP0/CPU0:P2(config-subif)#no shut
+RP/0/RP0/CPU0:P2(config-subif)#interface GigabitEthernet0/0/0/3.227
+RP/0/RP0/CPU0:P2(config-subif)#no shut
+RP/0/RP0/CPU0:P2(config-subif)#commit
+```
+
+I'll create another page to address [load balancing](https://github.com/inband/spcor/blob/master/extras/vmx/load-balance.md) on ```P1```
 
