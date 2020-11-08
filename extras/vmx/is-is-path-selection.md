@@ -154,7 +154,48 @@ traceroute to 172.16.0.22 (172.16.0.22), 30 hops max, 52 byte packets
  3  10.0.0.4 (10.0.0.4)  23.654 ms *  166.483 ms
 ```
 
+```PE3``` and ```PE4```
 
+```
+root@VMX1# set logical-systems PE3 protocols isis interface ge-0/0/9.38 level 2 metric 100 
+
+[edit]
+root@VMX1# commit 
+commit complete
+```
+
+Verify
+```
+root@VMX1:PE3> show route 172.16.0.44 
+
+inet.0: 22 destinations, 23 routes (22 active, 0 holddown, 0 hidden)
++ = Active Route, - = Last Active, * = Both
+
+172.16.0.44/32     *[IS-IS/18] 00:02:16, metric 40
+                    > to 10.0.0.8 via lt-0/0/0.32
+```
+
+
+```
+RP/0/RP0/CPU0:PE4(config-isis)#interface GigabitEthernet0/0/0/0.38
+RP/0/RP0/CPU0:PE4(config-isis-if)#address-family ipv4 unicast 
+RP/0/RP0/CPU0:PE4(config-isis-if-af)#metric 100
+RP/0/RP0/CPU0:PE4(config-isis-if-af)#commit
+```
+Verify
+
+```
+RP/0/RP0/CPU0:PE4#show route 172.16.0.33
+Sun Nov  8 07:56:52.436 UTC
+
+Routing entry for 172.16.0.33/32
+  Known via "isis 1", distance 115, metric 30, type level-2
+  Installed Nov  8 07:56:27.743 for 00:00:26
+  Routing Descriptor Blocks
+    10.0.0.10, from 172.16.0.1, via GigabitEthernet0/0/0/1.78
+      Route metric is 30
+  No advertising protos. 
+```
 
 
 -------------
