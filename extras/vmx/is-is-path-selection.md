@@ -225,3 +225,55 @@ Tracing the route to 172.16.0.33
 
 -------------
 **Task 2**
+
+Configure ```RRs``` with overload bit so they don't attract transit traffic
+
+I'm going to admin shut ```P2``` interfaces to ```P1```
+
+
+```
+RP/0/RP0/CPU0:P2#configure 
+Sun Nov  8 08:12:48.662 UTC
+RP/0/RP0/CPU0:P2(config)#interface GigabitEthernet0/0/0/2.27
+RP/0/RP0/CPU0:P2(config-subif)#shut
+RP/0/RP0/CPU0:P2(config-subif)#interface GigabitEthernet0/0/0/3.227
+RP/0/RP0/CPU0:P2(config-subif)#shut
+RP/0/RP0/CPU0:P2(config-subif)#commit
+Sun Nov  8 08:13:08.655 UTC
+```
+
+Now if ```PE3``` routes to ```PE4``` it should take ```RRs```
+
+```
+root@VMX1:PE3> traceroute 172.16.0.44 interface lo0.3 no-resolve    
+traceroute to 172.16.0.44 (172.16.0.44), 30 hops max, 52 byte packets
+ 1  10.0.0.8  3053.232 ms  2368.828 ms  312.949 ms
+ 2  10.0.0.21  320.715 ms  113.566 ms  159.025 ms
+ 3  10.0.0.22  159.894 ms  14.234 ms  6.964 ms
+ 4  10.0.0.11  10.551 ms *  180.654 ms
+```
+
+Yes - ```10.0.0.21``` is ```RR2```
+
+So what does the book mean?
+
+Configure ```RRs``` with overload bit so they don't attract transit traffic
+
+
+On XRv
+
+```
+ set-overload-bit      Signal other routers not to use us in SPF
+```
+
+```
+RP/0/RP0/CPU0:RR2(config-isis)#set-overload-bit 
+RP/0/RP0/CPU0:RR2(config-isis)#commit
+Sun Nov  8 08:16:54.280 UTC
+```
+
+Ok - run that traceroute from ```PE3``` it should go to via ```RR1```
+
+```
+
+```
