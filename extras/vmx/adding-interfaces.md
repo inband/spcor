@@ -20,6 +20,40 @@ Re-bind
 
 
 
+The default number of ports on xMX is 10.  However this can be increased - to 96 virtio in lite mode.
+
+
+```
+root@VMX1# set chassis fpc 0 pic 0 number-of-ports 15 
+```
+```
+root@VMX1# run show interfaces terse | match ge 
+ge-0/0/0                up    up
+ge-0/0/0.0              up    up   inet     192.168.222.80/24
+ge-0/0/1                up    up
+ge-0/0/1.0              up    up   inet     10.0.0.0/31     
+ge-0/0/2                up    up
+ge-0/0/2.1215           up    up   bridge  
+ge-0/0/2.32767          up    up   multiservice
+ge-0/0/3                up    up
+ge-0/0/3.16             up    up   inet     10.0.0.0/31     
+ge-0/0/3.32767          up    up   multiservice
+ge-0/0/4                up    up
+ge-0/0/4.47             up    up   inet     10.0.0.19/31    
+ge-0/0/4.32767          up    up   multiservice
+ge-0/0/5                up    up
+ge-0/0/6                up    up
+ge-0/0/7                up    up
+ge-0/0/8                up    up
+ge-0/0/9                up    up
+ge-0/0/10               up    up
+ge-0/0/11               up    up
+ge-0/0/12               up    up
+ge-0/0/13               up    up
+ge-0/0/14               up    up
+```
+
+
 -------------------------
 
 Backup
