@@ -59,7 +59,7 @@ ge-0/0/14               up    up
 Backup
 
 ```
-root@VMX1# show | display set 
+root@VMX1> show configuration | display set 
 set version 18.2R1.9
 set system root-authentication encrypted-password "****************"
 set system host-name VMX1
@@ -77,7 +77,64 @@ set logical-systems CE1 interfaces lt-0/0/0 unit 211 encapsulation vlan
 set logical-systems CE1 interfaces lt-0/0/0 unit 211 vlan-id 112
 set logical-systems CE1 interfaces lt-0/0/0 unit 211 peer-unit 112
 set logical-systems CE1 interfaces lt-0/0/0 unit 211 family inet address 10.1.0.0/31
-set logical-systems CE1 interfaces lo0 unit 12 family inet address 192.168.10.1/32
+set logical-systems CE1 interfaces lt-0/0/0 unit 2122 encapsulation vlan
+set logical-systems CE1 interfaces lt-0/0/0 unit 2122 vlan-id 2122
+set logical-systems CE1 interfaces lt-0/0/0 unit 2122 peer-unit 2221
+set logical-systems CE1 interfaces lt-0/0/0 unit 2122 family inet address 10.1.12.1/24
+set logical-systems CE1 interfaces ge-0/0/10 unit 621 vlan-id 621
+set logical-systems CE1 interfaces ge-0/0/10 unit 621 family inet address 10.1.0.4/31
+set logical-systems CE1 interfaces lo0 unit 21 family inet address 192.168.10.1/32
+set logical-systems CE1 protocols bgp group iBGP type internal
+set logical-systems CE1 protocols bgp group iBGP local-address 192.168.10.1
+set logical-systems CE1 protocols bgp group iBGP family inet unicast add-path receive
+set logical-systems CE1 protocols bgp group iBGP family inet unicast add-path send path-count 6
+set logical-systems CE1 protocols bgp group iBGP export PL-iBGP-OUT
+set logical-systems CE1 protocols bgp group iBGP neighbor 192.168.10.2
+set logical-systems CE1 protocols bgp group eBGP family inet unicast
+set logical-systems CE1 protocols bgp group eBGP peer-as 65000
+set logical-systems CE1 protocols bgp group eBGP neighbor 10.1.0.1 export ADV-LOOPBACK
+set logical-systems CE1 protocols bgp group eBGP neighbor 10.1.0.5 export ADV-LOOPBACK
+set logical-systems CE1 protocols ospf area 0.0.0.0 interface lt-0/0/0.2122
+set logical-systems CE1 protocols ospf area 0.0.0.0 interface lo0.21
+set logical-systems CE1 policy-options policy-statement ADV-LOOPBACK term 1 from protocol direct
+set logical-systems CE1 policy-options policy-statement ADV-LOOPBACK term 1 from protocol local
+set logical-systems CE1 policy-options policy-statement ADV-LOOPBACK term 1 from protocol ospf
+set logical-systems CE1 policy-options policy-statement ADV-LOOPBACK term 1 from route-filter 192.168.10.0/32 orlonger
+set logical-systems CE1 policy-options policy-statement ADV-LOOPBACK term 1 then accept
+set logical-systems CE1 policy-options policy-statement PL-iBGP-OUT term NHS from family inet
+set logical-systems CE1 policy-options policy-statement PL-iBGP-OUT term NHS then next-hop self
+set logical-systems CE1 routing-options autonomous-system 65001
+set logical-systems CE2 interfaces lt-0/0/0 unit 221 encapsulation vlan
+set logical-systems CE2 interfaces lt-0/0/0 unit 221 vlan-id 122
+set logical-systems CE2 interfaces lt-0/0/0 unit 221 peer-unit 122
+set logical-systems CE2 interfaces lt-0/0/0 unit 221 family inet address 10.1.0.6/31
+set logical-systems CE2 interfaces lt-0/0/0 unit 2221 encapsulation vlan
+set logical-systems CE2 interfaces lt-0/0/0 unit 2221 vlan-id 2122
+set logical-systems CE2 interfaces lt-0/0/0 unit 2221 peer-unit 2122
+set logical-systems CE2 interfaces lt-0/0/0 unit 2221 family inet address 10.1.12.2/24
+set logical-systems CE2 interfaces ge-0/0/11 unit 622 vlan-id 622
+set logical-systems CE2 interfaces ge-0/0/11 unit 622 family inet address 10.1.0.2/31
+set logical-systems CE2 interfaces lo0 unit 22 family inet address 192.168.10.2/32
+set logical-systems CE2 protocols bgp group iBGP type internal
+set logical-systems CE2 protocols bgp group iBGP local-address 192.168.10.2
+set logical-systems CE2 protocols bgp group iBGP family inet unicast add-path receive
+set logical-systems CE2 protocols bgp group iBGP family inet unicast add-path send path-count 6
+set logical-systems CE2 protocols bgp group iBGP export PL-iBGP-OUT
+set logical-systems CE2 protocols bgp group iBGP neighbor 192.168.10.1
+set logical-systems CE2 protocols bgp group eBGP family inet unicast
+set logical-systems CE2 protocols bgp group eBGP peer-as 65000
+set logical-systems CE2 protocols bgp group eBGP neighbor 10.1.0.7 export ADV-LOOPBACK
+set logical-systems CE2 protocols bgp group eBGP neighbor 10.1.0.3 export ADV-LOOPBACK
+set logical-systems CE2 protocols ospf area 0.0.0.0 interface lt-0/0/0.2221
+set logical-systems CE2 protocols ospf area 0.0.0.0 interface lo0.22
+set logical-systems CE2 policy-options policy-statement ADV-LOOPBACK term 1 from protocol direct
+set logical-systems CE2 policy-options policy-statement ADV-LOOPBACK term 1 from protocol local
+set logical-systems CE2 policy-options policy-statement ADV-LOOPBACK term 1 from protocol ospf
+set logical-systems CE2 policy-options policy-statement ADV-LOOPBACK term 1 from route-filter 192.168.10.0/24 orlonger
+set logical-systems CE2 policy-options policy-statement ADV-LOOPBACK term 1 then accept
+set logical-systems CE2 policy-options policy-statement PL-iBGP-OUT term NHS from family inet
+set logical-systems CE2 policy-options policy-statement PL-iBGP-OUT term NHS then next-hop self
+set logical-systems CE2 routing-options autonomous-system 65001
 set logical-systems P1 interfaces lt-0/0/0 unit 21 encapsulation vlan
 set logical-systems P1 interfaces lt-0/0/0 unit 21 vlan-id 12
 set logical-systems P1 interfaces lt-0/0/0 unit 21 peer-unit 12
@@ -123,21 +180,42 @@ set logical-systems PE1 interfaces lt-0/0/0 unit 112 encapsulation vlan
 set logical-systems PE1 interfaces lt-0/0/0 unit 112 vlan-id 112
 set logical-systems PE1 interfaces lt-0/0/0 unit 112 peer-unit 211
 set logical-systems PE1 interfaces lt-0/0/0 unit 112 family inet address 10.1.0.1/31
-set logical-systems PE1 interfaces lt-0/0/0 unit 112 family iso
-set logical-systems PE1 interfaces lt-0/0/0 unit 113 encapsulation vlan
-set logical-systems PE1 interfaces lt-0/0/0 unit 113 vlan-id 113
-set logical-systems PE1 interfaces lt-0/0/0 unit 113 peer-unit 311
-set logical-systems PE1 interfaces lt-0/0/0 unit 113 family inet address 10.1.0.7/31
-set logical-systems PE1 interfaces lt-0/0/0 unit 113 family iso
+set logical-systems PE1 interfaces lt-0/0/0 unit 122 encapsulation vlan
+set logical-systems PE1 interfaces lt-0/0/0 unit 122 vlan-id 122
+set logical-systems PE1 interfaces lt-0/0/0 unit 122 peer-unit 221
+set logical-systems PE1 interfaces lt-0/0/0 unit 122 family inet address 10.1.0.7/31
 set logical-systems PE1 interfaces ge-0/0/3 unit 16 vlan-id 16
 set logical-systems PE1 interfaces ge-0/0/3 unit 16 family inet address 10.0.0.0/31
 set logical-systems PE1 interfaces ge-0/0/3 unit 16 family iso
 set logical-systems PE1 interfaces lo0 unit 1 family inet address 172.16.0.11/32
 set logical-systems PE1 interfaces lo0 unit 1 family iso address 49.0000.0000.0001.00
+set logical-systems PE1 protocols bgp group iBGP-RR type internal
+set logical-systems PE1 protocols bgp group iBGP-RR local-address 172.16.0.11
+set logical-systems PE1 protocols bgp group iBGP-RR family inet unicast add-path receive
+set logical-systems PE1 protocols bgp group iBGP-RR family inet unicast add-path send path-count 6
+set logical-systems PE1 protocols bgp group iBGP-RR export PL-iBGP-RR-OUT
+set logical-systems PE1 protocols bgp group iBGP-RR neighbor 172.16.0.201
+set logical-systems PE1 protocols bgp group iBGP-RR neighbor 172.16.0.202
+set logical-systems PE1 protocols bgp group eBGP-65001 family inet unicast
+set logical-systems PE1 protocols bgp group eBGP-65001 peer-as 65001
+set logical-systems PE1 protocols bgp group eBGP-65001 neighbor 10.1.0.0 export PL-eBGP-65001-CE1-OUT
+set logical-systems PE1 protocols bgp group eBGP-65001 neighbor 10.1.0.0 export ADV-LOOPBACK
+set logical-systems PE1 protocols bgp group eBGP-65001 neighbor 10.1.0.6 export PL-eBGP-65001-CE2-OUT
+set logical-systems PE1 protocols bgp group eBGP-65001 neighbor 10.1.0.6 export ADV-LOOPBACK
 set logical-systems PE1 protocols isis level 2 wide-metrics-only
 set logical-systems PE1 protocols isis interface lt-0/0/0.12
 set logical-systems PE1 protocols isis interface ge-0/0/3.16 level 2 metric 100
 set logical-systems PE1 protocols isis interface lo0.1
+set logical-systems PE1 policy-options policy-statement ADV-LOOPBACK term 1 from protocol direct
+set logical-systems PE1 policy-options policy-statement ADV-LOOPBACK term 1 from protocol local
+set logical-systems PE1 policy-options policy-statement ADV-LOOPBACK term 1 from protocol isis
+set logical-systems PE1 policy-options policy-statement ADV-LOOPBACK term 1 from route-filter 172.16.0.0/24 orlonger
+set logical-systems PE1 policy-options policy-statement ADV-LOOPBACK term 1 then accept
+set logical-systems PE1 policy-options policy-statement PL-eBGP-65001-CE1-OUT term BGP then metric 100
+set logical-systems PE1 policy-options policy-statement PL-eBGP-65001-CE2-OUT term BGP then metric 200
+set logical-systems PE1 policy-options policy-statement PL-iBGP-RR-OUT term NHS from family inet
+set logical-systems PE1 policy-options policy-statement PL-iBGP-RR-OUT term NHS then next-hop self
+set logical-systems PE1 routing-options autonomous-system 65000
 set logical-systems PE3 interfaces lt-0/0/0 unit 32 encapsulation vlan
 set logical-systems PE3 interfaces lt-0/0/0 unit 32 vlan-id 23
 set logical-systems PE3 interfaces lt-0/0/0 unit 32 peer-unit 23
@@ -148,10 +226,20 @@ set logical-systems PE3 interfaces ge-0/0/9 unit 38 family inet address 10.0.0.1
 set logical-systems PE3 interfaces ge-0/0/9 unit 38 family iso
 set logical-systems PE3 interfaces lo0 unit 3 family inet address 172.16.0.33/32
 set logical-systems PE3 interfaces lo0 unit 3 family iso address 49.0000.0000.0003.00
+set logical-systems PE3 protocols bgp group iBGP-RR type internal
+set logical-systems PE3 protocols bgp group iBGP-RR local-address 172.16.0.33
+set logical-systems PE3 protocols bgp group iBGP-RR family inet unicast add-path receive
+set logical-systems PE3 protocols bgp group iBGP-RR family inet unicast add-path send path-count 6
+set logical-systems PE3 protocols bgp group iBGP-RR export PL-iBGP-RR-OUT
+set logical-systems PE3 protocols bgp group iBGP-RR neighbor 172.16.0.201
+set logical-systems PE3 protocols bgp group iBGP-RR neighbor 172.16.0.202
 set logical-systems PE3 protocols isis level 2 wide-metrics-only
 set logical-systems PE3 protocols isis interface lt-0/0/0.32
 set logical-systems PE3 protocols isis interface ge-0/0/9.38 level 2 metric 100
 set logical-systems PE3 protocols isis interface lo0.3
+set logical-systems PE3 policy-options policy-statement PL-iBGP-RR-OUT term NHS from family inet
+set logical-systems PE3 policy-options policy-statement PL-iBGP-RR-OUT term NHS then next-hop self
+set logical-systems PE3 routing-options autonomous-system 65000
 set logical-systems RR1 interfaces lt-0/0/0 unit 42 encapsulation vlan
 set logical-systems RR1 interfaces lt-0/0/0 unit 42 vlan-id 24
 set logical-systems RR1 interfaces lt-0/0/0 unit 42 peer-unit 24
@@ -165,15 +253,30 @@ set logical-systems RR1 interfaces ge-0/0/5 unit 45 family inet address 10.0.0.1
 set logical-systems RR1 interfaces ge-0/0/5 unit 45 family iso
 set logical-systems RR1 interfaces lo0 unit 4 family inet address 172.16.0.201/32
 set logical-systems RR1 interfaces lo0 unit 4 family iso address 49.0000.0000.0004.00
+set logical-systems RR1 protocols bgp group iBGP-CLIENTS type internal
+set logical-systems RR1 protocols bgp group iBGP-CLIENTS local-address 172.16.0.201
+set logical-systems RR1 protocols bgp group iBGP-CLIENTS family inet unicast add-path receive
+set logical-systems RR1 protocols bgp group iBGP-CLIENTS family inet unicast add-path send path-count 6
+set logical-systems RR1 protocols bgp group iBGP-CLIENTS cluster 172.16.0.201
+set logical-systems RR1 protocols bgp group iBGP-CLIENTS neighbor 172.16.0.11
+set logical-systems RR1 protocols bgp group iBGP-CLIENTS neighbor 172.16.0.22
+set logical-systems RR1 protocols bgp group iBGP-CLIENTS neighbor 172.16.0.33
+set logical-systems RR1 protocols bgp group iBGP-CLIENTS neighbor 172.16.0.44
+set logical-systems RR1 protocols bgp group iBGP-RR type internal
+set logical-systems RR1 protocols bgp group iBGP-RR local-address 172.16.0.201
+set logical-systems RR1 protocols bgp group iBGP-RR family inet unicast add-path receive
+set logical-systems RR1 protocols bgp group iBGP-RR family inet unicast add-path send path-count 6
+set logical-systems RR1 protocols bgp group iBGP-RR neighbor 172.16.0.202
 set logical-systems RR1 protocols isis overload
 set logical-systems RR1 protocols isis level 2 wide-metrics-only
 set logical-systems RR1 protocols isis interface lt-0/0/0.42
 set logical-systems RR1 protocols isis interface ge-0/0/4.47
 set logical-systems RR1 protocols isis interface ge-0/0/5.45
 set logical-systems RR1 protocols isis interface lo0.4
+set logical-systems RR1 routing-options autonomous-system 65000
 set chassis fpc 0 pic 0 tunnel-services
 set chassis fpc 0 pic 0 number-of-ports 15
-set chassis fpc 0 lite-mode             
+set chassis fpc 0 lite-mode
 set interfaces ge-0/0/0 unit 0 family inet address 192.168.222.80/24
 set interfaces ge-0/0/1 unit 0 family inet address 10.0.0.0/31
 set interfaces ge-0/0/1 unit 0 family mpls
@@ -187,13 +290,14 @@ set interfaces ge-0/0/6 vlan-tagging
 set interfaces ge-0/0/7 vlan-tagging
 set interfaces ge-0/0/8 vlan-tagging
 set interfaces ge-0/0/9 vlan-tagging
+set interfaces ge-0/0/10 vlan-tagging
+set interfaces ge-0/0/11 vlan-tagging
 set interfaces fxp0 unit 0 family inet dhcp vendor-id Juniper-vmx-VM5F9FE3B49D
 set interfaces irb unit 1215 family inet address 10.12.15.15/24
 set interfaces irb unit 1215 family mpls
 set interfaces lo0 unit 0 family inet address 15.15.15.15/32
 set interfaces lo0 unit 0 family inet6 address 2001::15/128
 set routing-options static route 192.168.20.10/32 next-hop 192.168.222.1
-set routing-options autonomous-system 65000
 set protocols mpls interface ge-0/0/1.0
 set protocols mpls interface irb.1215
 set protocols ospf area 0.0.0.0 interface ge-0/0/1.0
@@ -206,4 +310,6 @@ set bridge-domains vlan-1215 domain-type bridge
 set bridge-domains vlan-1215 vlan-id 1215
 set bridge-domains vlan-1215 interface ge-0/0/2.1215
 set bridge-domains vlan-1215 routing-interface irb.1215
+
+
 ```
