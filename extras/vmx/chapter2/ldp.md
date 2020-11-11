@@ -2,6 +2,9 @@
 
 ```P1```
 
+* add ```family mpls``` to interfaces that need to support mpls
+* add interfaces to ```protocol mpls```
+* add interfaces to ```protocol ldp```
 
 ```
 root@VMX1> set cli logical-system P1 
@@ -71,6 +74,8 @@ interfaces {
             family mpls;
         }
     }
+    
+    ---------------------------------------------
     lo0 {
         unit 2 {
             family inet {
@@ -123,4 +128,6 @@ routing-options {
         export LB;
     }
 }
+
+
 ```
