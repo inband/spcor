@@ -107,3 +107,53 @@ Routing entry for 172.16.0.44/32
   No advertising protos. 
 ```
 
+LFIB on ```PE2```
+
+```
+RP/0/RP0/CPU0:PE2#show mpls forwarding prefix 172.16.0.44/32
+Sat Nov 14 09:42:39.191 UTC
+Local  Outgoing    Prefix             Outgoing     Next Hop        Bytes       
+Label  Label       or ID              Interface                    Switched    
+------ ----------- ------------------ ------------ --------------- ------------
+24007  24009       172.16.0.44/32     Gi0/0/0/1.67 10.0.0.5        3456  
+```
+
+
+LFIB on ```P2```
+
+```
+RP/0/RP0/CPU0:P2#show mpls forwarding prefix 172.16.0.44/32
+Sat Nov 14 09:43:48.262 UTC
+Local  Outgoing    Prefix             Outgoing     Next Hop        Bytes       
+Label  Label       or ID              Interface                    Switched    
+------ ----------- ------------------ ------------ --------------- ------------
+24009  Pop         172.16.0.44/32     Gi0/0/0/5.78 10.0.0.11       1039641  
+```
+
+Label binding in ```PE4```, note ``` Local binding: label: ImpNull```
+
+```
+RP/0/RP0/CPU0:PE4#show mpls ldp bindings 172.16.0.44/32                      
+Sat Nov 14 09:46:14.173 UTC
+172.16.0.44/32, rev 2
+        Local binding: label: ImpNull
+        Remote bindings: (2 peers)
+            Peer                Label    
+            -----------------   ---------
+            172.16.0.2:0        24009   
+            172.16.0.33:0       299840 
+```
+
+The above binding will be advertised via LDP to ```PE4``` neighbors
+
+```
+RP/0/RP0/CPU0:PE4#show mpls ldp neighbor brief 
+Sat Nov 14 09:47:38.631 UTC
+
+Peer               GR  NSR  Up Time     Discovery   Addresses     Labels    
+                                        ipv4  ipv6  ipv4  ipv6  ipv4   ipv6 
+-----------------  --  ---  ----------  ----------  ----------  ------------
+172.16.0.2:0       N   N    3d09h       1     0     7     0     22     0    
+172.16.0.33:0      N   N    3d09h       1     0     2     0     11     0 
+```
+
