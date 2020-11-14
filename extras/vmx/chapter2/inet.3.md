@@ -1,5 +1,8 @@
 # inet.3
 
+LDP FEC Mapping table
+
+
 What is the equivalent in Cisco?
 
 [Ivan's Blog](https://blog.ipspace.net/2011/12/junos-day-one-mpls-behind-scenes.html)
