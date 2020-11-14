@@ -1,7 +1,10 @@
 # inet.3
 
+What is the equivalent in Cisco?
 
-This is the LFIB
+[Ivan's Blog](https://blog.ipspace.net/2011/12/junos-day-one-mpls-behind-scenes.html)
+
+
 
 ```
 root@VMX1:PE1> show route table inet.3  
