@@ -88,3 +88,167 @@ mpls ldp
 ```
 
 
+```
+RP/0/RP0/CPU0:PE2#show mpls ldp bindings 
+Tue Nov 17 02:21:18.012 UTC
+
+172.16.0.1/32, rev 49
+        Local binding: label: 24010
+        Remote bindings: (2 peers)
+            Peer                Label    
+            -----------------   ---------
+            172.16.0.2:0        24000   
+            172.16.0.11:0       299776  
+172.16.0.2/32, rev 31
+        Local binding: label: 24000
+        Remote bindings: (2 peers)
+            Peer                Label    
+            -----------------   ---------
+            172.16.0.2:0        ImpNull 
+            172.16.0.11:0       299808  
+172.16.0.11/32, rev 52
+        Local binding: label: 24009
+        Remote bindings: (2 peers)
+            Peer                Label    
+            -----------------   ---------
+            172.16.0.2:0        24007   
+            172.16.0.11:0       ImpNull 
+172.16.0.22/32, rev 2
+        Local binding: label: ImpNull
+        Remote bindings: (2 peers)
+            Peer                Label    
+            -----------------   ---------
+            172.16.0.2:0        24013   
+            172.16.0.11:0       299856  
+172.16.0.33/32, rev 50
+        Local binding: label: 24011
+        Remote bindings: (2 peers)
+            Peer                Label    
+            -----------------   ---------
+            172.16.0.2:0        24008   
+            172.16.0.11:0       299872  
+172.16.0.44/32, rev 38
+        Local binding: label: 24007
+        Remote bindings: (2 peers)
+            Peer                Label    
+            -----------------   ---------
+            172.16.0.2:0        24009   
+            172.16.0.11:0       299840  
+172.16.0.201/32, rev 51
+        Local binding: label: 24008
+        Remote bindings: (2 peers)
+            Peer                Label    
+            -----------------   ---------
+            172.16.0.2:0        24001   
+            172.16.0.11:0       299888  
+172.16.0.202/32, rev 37
+        Local binding: label: 24006
+        Remote bindings: (2 peers)
+            Peer                Label    
+            -----------------   ---------
+            172.16.0.2:0        24010   
+            172.16.0.11:0       299792  
+
+RP/0/RP0/CPU0:PE2#
+```
+
+Detail
+
+```
+RP/0/RP0/CPU0:PE2#show mpls ldp bindings detail 
+Tue Nov 17 02:22:03.497 UTC
+
+Advertisement Spec: None
+
+Local Label Allocation Spec: 
+        Host routes only
+
+172.16.0.1/32, rev 49, ELC
+        Local binding: label: 24010
+          Advertised to: (2 peers)
+            172.16.0.2:0       172.16.0.11:0      
+          Acked by: (2 peers)
+            172.16.0.2:0       172.16.0.11:0      
+        Remote bindings: (2 peers)
+            Peer                Label       Stale   ELC  
+            -----------------   ---------   -----   -----
+            172.16.0.2:0        24000        N       Y  
+            172.16.0.11:0       299776       N       Y  
+172.16.0.2/32, rev 31
+        Local binding: label: 24000
+          Advertised to: (2 peers)
+            172.16.0.2:0       172.16.0.11:0      
+          Acked by: (2 peers)
+            172.16.0.2:0       172.16.0.11:0      
+        Remote bindings: (2 peers)
+            Peer                Label       Stale   ELC  
+            -----------------   ---------   -----   -----
+            172.16.0.2:0        ImpNull      N       N  
+            172.16.0.11:0       299808       N       N  
+172.16.0.11/32, rev 52, ELC
+        Local binding: label: 24009
+          Advertised to: (2 peers)
+            172.16.0.2:0       172.16.0.11:0      
+          Acked by: (2 peers)
+            172.16.0.2:0       172.16.0.11:0      
+        Remote bindings: (2 peers)
+            Peer                Label       Stale   ELC  
+            -----------------   ---------   -----   -----
+            172.16.0.2:0        24007        N       Y  
+            172.16.0.11:0       ImpNull      N       Y  
+172.16.0.22/32, rev 2
+        Local binding: label: ImpNull
+          Advertised to: (2 peers)
+            172.16.0.2:0       172.16.0.11:0      
+          Acked by: (2 peers)
+            172.16.0.2:0       172.16.0.11:0      
+        Remote bindings: (2 peers)
+            Peer                Label       Stale   ELC  
+            -----------------   ---------   -----   -----
+            172.16.0.2:0        24013        N       N  
+            172.16.0.11:0       299856       N       N  
+172.16.0.33/32, rev 50, ELC
+        Local binding: label: 24011
+          Advertised to: (2 peers)
+            172.16.0.2:0       172.16.0.11:0      
+          Acked by: (2 peers)
+            172.16.0.2:0       172.16.0.11:0      
+        Remote bindings: (2 peers)
+            Peer                Label       Stale   ELC  
+            -----------------   ---------   -----   -----
+            172.16.0.2:0        24008        N       Y  
+            172.16.0.11:0       299872       N       Y  
+172.16.0.44/32, rev 38
+        Local binding: label: 24007
+          Advertised to: (2 peers)
+            172.16.0.2:0       172.16.0.11:0      
+          Acked by: (2 peers)
+            172.16.0.2:0       172.16.0.11:0      
+        Remote bindings: (2 peers)
+            Peer                Label       Stale   ELC  
+            -----------------   ---------   -----   -----
+            172.16.0.2:0        24009        N       N  
+            172.16.0.11:0       299840       N       N  
+172.16.0.201/32, rev 51, ELC
+        Local binding: label: 24008
+          Advertised to: (2 peers)
+            172.16.0.2:0       172.16.0.11:0      
+          Acked by: (2 peers)
+            172.16.0.2:0       172.16.0.11:0      
+        Remote bindings: (2 peers)
+            Peer                Label       Stale   ELC  
+            -----------------   ---------   -----   -----
+            172.16.0.2:0        24001        N       Y  
+            172.16.0.11:0       299888       N       Y  
+172.16.0.202/32, rev 37
+        Local binding: label: 24006
+          Advertised to: (2 peers)
+            172.16.0.2:0       172.16.0.11:0      
+          Acked by: (2 peers)
+            172.16.0.2:0       172.16.0.11:0      
+        Remote bindings: (2 peers)
+            Peer                Label       Stale   ELC  
+            -----------------   ---------   -----   -----
+            172.16.0.2:0        24010        N       N  
+            172.16.0.11:0       299792       N       N  
+```
