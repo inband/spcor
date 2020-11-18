@@ -27,9 +27,10 @@ The default number of ports on xMX is 10.  However this can be increased - to 96
 root@VMX1# set chassis fpc 0 pic 0 number-of-ports 15 
 ```
 ```
-root@VMX1# run show interfaces terse | match ge 
+root@VMX1> show interfaces terse | match ge* 
 ge-0/0/0                up    up
 ge-0/0/0.0              up    up   inet     192.168.222.80/24
+gr-0/0/0                up    up
 ge-0/0/1                up    up
 ge-0/0/1.0              up    up   inet     10.0.0.0/31     
 ge-0/0/2                up    up
@@ -42,13 +43,29 @@ ge-0/0/4                up    up
 ge-0/0/4.47             up    up   inet     10.0.0.19/31    
 ge-0/0/4.32767          up    up   multiservice
 ge-0/0/5                up    up
+ge-0/0/5.45             up    up   inet     10.0.0.14/31    
+ge-0/0/5.32767          up    up   multiservice
 ge-0/0/6                up    up
+ge-0/0/6.27             up    up   inet     10.0.0.6/31     
+ge-0/0/6.32767          up    up   multiservice
 ge-0/0/7                up    up
+ge-0/0/7.227            up    up   inet     10.0.0.24/31    
+ge-0/0/7.32767          up    up   multiservice
 ge-0/0/8                up    up
+ge-0/0/8.25             up    up   inet     10.0.0.20/31    
+ge-0/0/8.32767          up    up   multiservice
 ge-0/0/9                up    up
+ge-0/0/9.38             up    up   inet     10.0.0.12/31    
+ge-0/0/9.32767          up    up   multiservice
 ge-0/0/10               up    up
+ge-0/0/10.621           up    up   inet     10.1.0.4/31     
+ge-0/0/10.32767         up    up   multiservice
 ge-0/0/11               up    up
+ge-0/0/11.622           up    up   inet     10.1.0.2/31     
+ge-0/0/11.32767         up    up   multiservice
 ge-0/0/12               up    up
+ge-0/0/12.1234          up    up   inet     10.2.0.33/24    
+ge-0/0/12.32767         up    up   multiservice
 ge-0/0/13               up    up
 ge-0/0/14               up    up
 ```
