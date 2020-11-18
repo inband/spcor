@@ -236,3 +236,109 @@ Peer: 10.1.0.6+55852 AS 65001  Local: 10.1.0.7+179 AS 65000
 
 
 --------------------------------
+
+bgp route table 
+
+NOTE: format is very hard to read
+
+```
+root@VMX1:PE1> show route protocol bgp terse    
+
+inet.0: 34 destinations, 44 routes (34 active, 1 holddown, 0 hidden)
++ = Active Route, - = Last Active, * = Both
+
+A V Destination        P Prf   Metric 1   Metric 2  Next hop        AS path
+* ? 10.1.0.2/31        B 170        100          0                  ?
+  unverified                                       >10.0.0.3
+  ?                    B 170        100          0                  ?
+  unverified                                       >10.0.0.3
+* ? 10.1.0.4/31        B 170        100          0                  ?
+  unverified                                       >10.0.0.3
+  ?                    B 170        100          0                  ?
+  unverified                                       >10.0.0.3
+* ? 192.168.10.1/32    B 170        100                             65001 I
+  unverified                                       >10.1.0.0
+  ?                    B 170        100                             65001 I
+  unverified                                       >10.0.0.3
+  ?                    B 170        100          1                  65001 I
+  unverified                                       >10.1.0.6
+* ? 192.168.10.2/32    B 170        100                             65001 I
+  unverified                                       >10.1.0.6
+  ?                    B 170        100                             65001 I
+  unverified                                       >10.0.0.3
+  ?                    B 170        100          1                  65001 I
+  unverified                                       >10.1.0.0
+* ? 192.168.20.3/32    B 170        100          0                  65002 I
+  unverified                                       >10.0.0.3
+  ?                    B 170        100          0                  65002 I
+  unverified                                       >10.0.0.3
+  ?                    B 170        100                             65002 I
+  unverified                                       >10.0.0.3
+* ? 192.168.20.4/32    B 170        100          0                  65002 I
+  unverified                                       >10.0.0.3
+  ?                    B 170        100          0                  65002 I
+  unverified                                       >10.0.0.3
+
+
+```
+
+Only best/active
+
+```
+root@VMX1:PE1> show route protocol bgp active-path 
+
+inet.0: 34 destinations, 43 routes (34 active, 1 holddown, 0 hidden)
++ = Active Route, - = Last Active, * = Both
+
+10.1.0.2/31        *[BGP/170] 1w1d 11:29:32, MED 0, localpref 100, from 172.16.0.201
+                      AS path: ?, validation-state: unverified
+                    > to 10.0.0.3 via lt-0/0/0.12, Push 299840
+10.1.0.4/31        *[BGP/170] 1w1d 11:29:32, MED 0, localpref 100, from 172.16.0.201
+                      AS path: ?, validation-state: unverified
+                    > to 10.0.0.3 via lt-0/0/0.12, Push 299840
+192.168.10.1/32    *[BGP/170] 00:19:00, localpref 100
+                      AS path: 65001 I, validation-state: unverified
+                    > to 10.1.0.0 via lt-0/0/0.112
+192.168.10.2/32    *[BGP/170] 1w2d 02:05:28, localpref 100
+                      AS path: 65001 I, validation-state: unverified
+                    > to 10.1.0.6 via lt-0/0/0.122
+192.168.20.3/32    *[BGP/170] 1w0d 11:22:33, MED 0, localpref 100, from 172.16.0.201
+                      AS path: 65002 I, validation-state: unverified
+                    > to 10.0.0.3 via lt-0/0/0.12, Push 299856
+192.168.20.4/32    *[BGP/170] 1w0d 11:21:34, MED 0, localpref 100, from 172.16.0.201
+                      AS path: 65002 I, validation-state: unverified
+                    > to 10.0.0.3 via lt-0/0/0.12, Push 299824
+```
+
+
+
+The following is a little better but format still difficult
+
+```
+root@VMX1:PE1> show route protocol bgp active-path terse 
+
+inet.0: 34 destinations, 43 routes (34 active, 1 holddown, 0 hidden)
++ = Active Route, - = Last Active, * = Both
+
+A V Destination        P Prf   Metric 1   Metric 2  Next hop        AS path
+* ? 10.1.0.2/31        B 170        100          0                  ?
+  unverified                                       >10.0.0.3
+* ? 10.1.0.4/31        B 170        100          0                  ?
+  unverified                                       >10.0.0.3
+* ? 192.168.10.1/32    B 170        100                             65001 I
+  unverified                                       >10.1.0.0
+* ? 192.168.10.2/32    B 170        100                             65001 I
+  unverified                                       >10.1.0.6
+* ? 192.168.20.3/32    B 170        100          0                  65002 I
+  unverified                                       >10.0.0.3
+* ? 192.168.20.4/32    B 170        100          0                  65002 I
+  unverified                                       >10.0.0.3
+```
+
+What is ```validation-state: unverified```?
+
+[Origin Validation](https://www.juniper.net/documentation/en_US/junos/topics/topic-map/bgp-origin-as-validation.html)
+
+This is based on RPKI and validating against trusted database - usually maintain by RIR - such as APNIC, RIPE 
+
+
