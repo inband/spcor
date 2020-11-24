@@ -72,6 +72,9 @@ Vr HL TOS  Len   ID Flg  off TTL Pro  cks      Src      Dst
  4  5  00 0054 30f4   0 0000  3c  01 ae60 192.168.10.1  192.168.20.3 
 ```
 
+It would be better if the router ```BR3``` silently dropped the packet, rather than responding with an icmp unreachable to ```CE1```.
+
+
 So what if an ACL is attached to outgoing interface to:
 
 ```
