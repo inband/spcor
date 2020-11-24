@@ -135,3 +135,14 @@ BR3(config-ext-nacl)#do show policy-map control-plane
       5 minute offered rate 135000 bps, drop rate 0000 bps
       Match: any 
 ```
+
+```CE1``` is not receiving anything - which is the desired behaviour.
+
+```
+root@VMX1:CE1> ping 192.168.20.3 interface lo0.21    
+PING 192.168.20.3 (192.168.20.3): 56 data bytes
+
+
+
+```
+
