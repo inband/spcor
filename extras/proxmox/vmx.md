@@ -7,7 +7,23 @@ The goal is to create an Ubuntu host and run vMX on it.
 Installed Ubuntu Server 18.04
 
 ```
-root@pve:~# cat /etc/pve/qemu-server/700.conf 
+root@pve:~# qm config 500
+balloon: 0
+boot: cdn
+bootdisk: ide0
+cores: 2
+ide0: local-lvm:vm-500-disk-1,size=40G
+ide2: none,media=cdrom
+memory: 32768
+name: win-server
+net0: e1000=76:C3:A2:DE:66:16,bridge=vmbr0,firewall=1,tag=222
+numa: 0
+onboot: 1
+ostype: l26
+smbios1: uuid=898b32ee-1719-4c02-8a0c-b60042be7d6f
+sockets: 1
+vmgenid: 894cb455-c9ee-49c6-87ed-47b749434f6b
+root@pve:~# qm config 700
 balloon: 0
 bootdisk: scsi0
 cores: 4
@@ -17,16 +33,24 @@ memory: 24576
 name: ubunu18
 net0: virtio=3E:FA:0B:2B:78:D3,bridge=vmbr0,firewall=1,tag=999
 net1: virtio=F2:49:EF:9C:6C:C6,bridge=vmbr0,firewall=1,tag=222
+net10: virtio=72:0C:0A:70:48:73,bridge=vmbr0,firewall=1,tag=38
+net11: virtio=2A:7C:9C:18:F8:F9,bridge=vmbr0,firewall=1,tag=621
+net12: virtio=3E:52:4E:6E:E7:D1,bridge=vmbr0,firewall=1,tag=622
+net13: virtio=B6:B2:3E:BB:23:EF,bridge=vmbr0,firewall=1,tag=1234
 net2: virtio=C2:44:0D:E1:6C:94,bridge=vmbr0,firewall=1,tag=1712
-net3: virtio=CA:A0:92:73:F9:8B,bridge=vmbr0,firewall=1
-net4: virtio=86:6C:30:08:A8:56,bridge=vmbr0,firewall=1
+net3: virtio=CA:A0:92:73:F9:8B,bridge=vmbr0,firewall=1,tag=1215
+net4: virtio=86:6C:30:08:A8:56,bridge=vmbr0,firewall=1,tag=16
+net5: virtio=9A:53:1C:17:B3:11,bridge=vmbr0,firewall=1,tag=47
+net6: virtio=5E:A5:17:F3:D1:33,bridge=vmbr0,firewall=1,tag=45
+net7: virtio=1E:A6:3D:7E:74:8C,bridge=vmbr0,firewall=1,tag=27
+net8: virtio=26:77:C6:0B:6E:9B,bridge=vmbr0,firewall=1,tag=227
+net9: virtio=FE:69:DF:61:62:C5,bridge=vmbr0,firewall=1,tag=25
 numa: 1
-onboot: 1
 ostype: l26
 scsi0: local-lvm:vm-700-disk-0,size=40G
 scsihw: virtio-scsi-pci
 smbios1: uuid=60c8be82-765f-4c7d-90f6-e03ddd11923d
-sockets: 1
+sockets: 2
 vmgenid: 49881a7b-b7bf-461a-89a5-8adb44eb4932
 ```
 
