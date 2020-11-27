@@ -35,3 +35,14 @@ tcpdump: listening on ens21, link-type EN10MB (Ethernet), capture size 262144 by
 f2:f0:7b:40:e9:31 > ff:ff:ff:ff:ff:ff, ethertype 802.1Q (0x8100), length 60: vlan 1000, p 0, ethertype ARP, Ethernet (len 6), IPv4 (len 4), Request who-has 10.0.0.2 tell 10.0.0.1, length 42
 f2:f0:7b:40:e9:31 > ff:ff:ff:ff:ff:ff, ethertype 802.1Q (0x8100), length 60: vlan 1000, p 0, ethertype ARP, Ethernet (len 6), IPv4 (len 4), Request who-has 10.0.0.2 tell 10.0.0.1, length 42
 ```
+
+On the ```vmx-host2``` it needs to tune in.  Note - the following is not persistent.
+
+```
+root@vmx2-host2:~# ip link add link eth1 name eth1.1000 type vlan id 1000
+root@vmx2-host2:~# ip link set dev eth1.1000 up
+root@vmx2-host2:~# ip addr add 10.0.0.2/24 brd 10.0.0.255 dev eth1.1000
+```
+
+
+
