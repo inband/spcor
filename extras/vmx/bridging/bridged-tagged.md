@@ -35,6 +35,7 @@ tcpdump: listening on ens21, link-type EN10MB (Ethernet), capture size 262144 by
 f2:f0:7b:40:e9:31 > ff:ff:ff:ff:ff:ff, ethertype 802.1Q (0x8100), length 60: vlan 1000, p 0, ethertype ARP, Ethernet (len 6), IPv4 (len 4), Request who-has 10.0.0.2 tell 10.0.0.1, length 42
 f2:f0:7b:40:e9:31 > ff:ff:ff:ff:ff:ff, ethertype 802.1Q (0x8100), length 60: vlan 1000, p 0, ethertype ARP, Ethernet (len 6), IPv4 (len 4), Request who-has 10.0.0.2 tell 10.0.0.1, length 42
 ```
+------------------------------------
 
 On the ```vmx-host2``` it needs to tune in.  Note - the following is not persistent.
 
@@ -49,4 +50,24 @@ root@vmx2-host2:~# ip addr add 10.0.0.2/24 brd 10.0.0.255 dev eth1.1000
 root@vmx2-host2:~# ip link show type vlan
 4: eth1.1000@eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DEFAULT group default qlen 1000
     link/ether da:76:06:9a:e9:17 brd ff:ff:ff:ff:ff:ff
+```
+
+For persistent
+
+```
+root@vmx2-host2:~# cat /etc/network/interfaces
+auto lo
+iface lo inet loopback
+
+
+auto eth1
+iface eth1 inet static
+        address 10.1.0.2
+        netmask 255.255.255.0
+
+auto eth1.1000
+iface eth1.1000 inet static
+        address 10.0.0.2
+        netmask 255.255.255.0
+        vlan-raw-device eth1
 ```
