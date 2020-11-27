@@ -45,4 +45,8 @@ root@vmx2-host2:~# ip addr add 10.0.0.2/24 brd 10.0.0.255 dev eth1.1000
 ```
 
 
-
+```
+root@vmx2-host2:~# ip link show type vlan
+4: eth1.1000@eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DEFAULT group default qlen 1000
+    link/ether da:76:06:9a:e9:17 brd ff:ff:ff:ff:ff:ff
+```
