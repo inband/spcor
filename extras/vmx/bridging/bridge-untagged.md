@@ -1,5 +1,7 @@
 # bridge untagged
 
+First example is ```VLAN-Bridge```
+
 ```
 set interfaces ge-0/0/1 flexible-vlan-tagging
 set interfaces ge-0/0/1 native-vlan-id 1000
@@ -30,10 +32,15 @@ root@VMX2> show interfaces ge-0/0/1.0
       Flags: Is-Primary
 ```
 
+---------------------------------------
 
-
+Second example is ```Ethernet-Bridge```
 
 Untagged bridge domain (alternative) see ```ge-0/0/2```
+
+Note ```ge-0/0/1``` is still using the encapsulation from the first example.  
+
+```ge-0/0/1``` could have also been changed but this proves the 2 different methods can work together.
 
 ```
 set interfaces ge-0/0/1 flexible-vlan-tagging
