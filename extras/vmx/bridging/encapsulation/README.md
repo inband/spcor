@@ -22,7 +22,21 @@ Possible completions:
 
 ```
 
-In this directory I'll try and give an example of each for the IFD.  ```flexible-ethernet-services``` will be used when drilling 
+In this directory I'll try and give an example of each for the IFD.  
+
+
+
+
+```flexible-ethernet-services``` will be used when drilling 
 down IFL's and this may be the best option in SP environment. 
 
-
+```
+root@VMX2# set interfaces ge-0/0/2 unit 1000 encapsulation ?
+Possible completions:
+  dix                  Ethernet DIXv2 (RFC 894)
+  ppp-over-ether       PPPoE encapsulation
+  vlan-bridge          VLAN layer-2 bridging
+  vlan-ccc             802.1q tagging for a cross-connect
+  vlan-tcc             802.1q tagging for a translational cross-connect
+  vlan-vpls            VLAN virtual private LAN service
+```
