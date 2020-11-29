@@ -48,6 +48,17 @@ Reading:
 
 I need to start going through the INE SPv4 workbook.
 
+**29/11/2020**
+
+Been a bit side tracked.  Since installing vMX I've been reading and labbing "MPLS in SDN era" and "Juniper MX Series".  
+I really don't mind going off-track.  Junos offers a different perspective and I probably need to slow down and enjoy 
+learning.  I don't think it is a bad - since it builds on my fundamentals and to me this is the most important 
+thing to develop.
+
+The reality is I do need a certification for career progression but work is tough enough atm without the extra
+self-pressure.  I have another 2 months before the next push.
+
+
 ---------------------------------------------
 So routhly breaking up the next 12 months.
 
