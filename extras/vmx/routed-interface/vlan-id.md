@@ -114,9 +114,10 @@ root@VMX2# delete interfaces ge-0/0/2 unit 1000
 [edit]
 root@VMX2# commit 
 commit complete
-
-
 ```
+As suggested - ```encapsulation flexible-ethernet-services``` was allowing bridging services.  Therefore bridged interface ```ge-0/0/2.1000``` also had to be removed.
+
+
 
 ```
 root@VMX2# run ping 10.10.222.2 
