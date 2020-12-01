@@ -2,6 +2,8 @@
 
 This is a tagged interface.  
 
+```vmx2``` - the router
+
 ```
 root@VMX2# show interfaces ge-0/0/2    
 flexible-vlan-tagging;
@@ -15,6 +17,13 @@ unit 222 {
 
 ```
 
+```vmx2-host2``` - the host
+
+```
+root@vmx2-host2:~# ip link add link eth1 name eth1.222 type vlan id 222 
+root@vmx2-host2:~# ip link set dev eth1.222 up
+root@vmx2-host2:~# ip addr add 10.10.222.2/24 dev eth1.222
+```
 
 
 
@@ -36,8 +45,44 @@ Physical interface: ge-0/0/2, Enabled, Physical link is Up
     Flags: Up SNMP-Traps 0x4000 VLAN-Tag [ 0x8100.222 ]  Encapsulation: ENET2
 ```
 
+Verify
+
+ip route
+
+```
+root@vmx2-host2:~# ip route get 10.10.222.1
+10.10.222.1 dev eth1.222 src 10.10.222.2 uid 0 
+    cache 
+```
+
+ping
+
+```
+root@vmx2-host2:~# ping 10.10.222.2
+PING 10.10.222.2 (10.10.222.2) 56(84) bytes of data.
+64 bytes from 10.10.222.2: icmp_seq=1 ttl=64 time=0.033 ms
+64 bytes from 10.10.222.2: icmp_seq=2 ttl=64 time=0.042 ms
+64 bytes from 10.10.222.2: icmp_seq=3 ttl=64 time=0.042 ms
+```
+
+arp
+
+```
+root@vmx2-host2:~# ip neigh 
+10.0.0.1 dev eth1.1000 lladdr f2:f0:7b:40:e9:31 REACHABLE
+10.10.222.1 dev eth1.222 lladdr 02:06:0a:0e:ff:e2 REACHABLE
+```
+
+arp from ```vmx2```
+
 ```
 root@VMX2# run show arp interface ge-0/0/2.222 
 MAC Address       Address         Name                      Interface               Flags
 da:76:06:9a:e9:17 10.10.222.2     10.10.222.2               ge-0/0/2.222            none
 ```
+
+-------------------------------------------------------
+
+
+
+
