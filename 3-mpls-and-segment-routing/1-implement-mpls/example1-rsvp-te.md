@@ -33,6 +33,7 @@ interface Tunnel 14
  ip unnumbered Loopback0
  tunnel mode mpls traffic-eng
  tunnel destination 192.51.100.4
+ tunnel mpls traffic-eng autoroute announce
  tunnel mpls traffic-eng path-option 10 explicit name EP_Tun14
  tunnel mpls traffic-eng path-option 20 dynamic
 
@@ -42,7 +43,7 @@ ip explicit-path name EP_Tun14
  
 ```
 
-And on interfaces in PATH
+And on all interfaces in PATH (signalling can return)
 
 ```
 interface Gigabit2.12
