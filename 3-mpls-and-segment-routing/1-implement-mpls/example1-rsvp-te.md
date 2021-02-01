@@ -16,3 +16,10 @@ In this example:
 
 * create primary TE tunnels -  ```csr1``` <-> ```csr4``` via ```csr2```
 * create backup tunnels -  ```csr1``` <-> ```csr4``` via ```csr3```
+
+
+Steps:
+
+1. 
+2.
+3.
