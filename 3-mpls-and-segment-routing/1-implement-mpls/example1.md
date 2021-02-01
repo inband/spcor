@@ -452,3 +452,26 @@ Label      Label      or Tunnel Id     Switched      interface
 
 
 
+
+```
+csr1#show mpls forwarding-table 192.51.100.4 32
+Local      Outgoing   Prefix           Bytes Label   Outgoing   Next Hop    
+Label      Label      or Tunnel Id     Switched      interface              
+18         18         192.51.100.4/32  0             Gi2.12     192.51.100.201
+
+csr1#show mpls forwarding-table 192.51.100.4 32 detail 
+Local      Outgoing   Prefix           Bytes Label   Outgoing   Next Hop    
+Label      Label      or Tunnel Id     Switched      interface              
+18         18         192.51.100.4/32  0             Gi2.12     192.51.100.201
+        MAC/Encaps=18/22, MRU=1500, Label Stack{18}
+        4ED8B10E30B2E69299C666738100000C8847 00012000
+        No output feature configured
+```
+CEF
+
+```
+csr1#show ip cef 192.51.100.4/32 detail 
+192.51.100.4/32, epoch 2
+  dflt local label info: global/18 [0x3]
+  nexthop 192.51.100.201 GigabitEthernet2.12 label 18-(local:18)
+```
