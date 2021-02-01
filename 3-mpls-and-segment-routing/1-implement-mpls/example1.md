@@ -382,6 +382,38 @@ IP (tos 0xc0, ttl 1, id 0, offset 0, flags [none], proto UDP (17), length 62)
 
 ```
 
+Now the ldp are xmit and recv - the ldp neighbors have formed.
+
+```
+csr1#show mpls ldp discovery 
+ Local LDP Identifier:
+    192.51.100.1:0
+    Discovery Sources:
+    Interfaces:
+        GigabitEthernet2.12 (ldp): xmit/recv
+            LDP Id: 192.51.100.2:0
+        GigabitEthernet3.13 (ldp): xmit/recv
+            LDP Id: 192.51.100.3:0
+
+csr1#show mpls ldp neighbor 
+    Peer LDP Ident: 192.51.100.2:0; Local LDP Ident 192.51.100.1:0
+        TCP connection: 192.51.100.2.45315 - 192.51.100.1.646
+        State: Oper; Msgs sent/rcvd: 19/19; Downstream
+        Up time: 00:06:30
+        LDP discovery sources:
+          GigabitEthernet2.12, Src IP addr: 192.51.100.201
+        Addresses bound to peer LDP Ident:
+          192.51.100.201  192.51.100.204  192.51.100.2    
+    Peer LDP Ident: 192.51.100.3:0; Local LDP Ident 192.51.100.1:0
+        TCP connection: 192.51.100.3.39561 - 192.51.100.1.646
+        State: Oper; Msgs sent/rcvd: 13/13; Downstream
+        Up time: 00:01:24
+        LDP discovery sources:
+          GigabitEthernet3.13, Src IP addr: 192.51.100.203
+        Addresses bound to peer LDP Ident:
+          192.51.100.203  192.51.100.206  192.51.100.3  
+
+```
 
 
 
