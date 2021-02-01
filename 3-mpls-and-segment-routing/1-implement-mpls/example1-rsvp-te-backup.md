@@ -10,16 +10,19 @@ interface Tunnel2014
  tunnel destination 192.51.100.4
  tunnel mpls traffic-eng path-option 10 explicit name EP_Tun2014
 
+
 ip explicit-path name EP_Tun2014 enable
  index 1 next-address 192.51.100.203
  index 2 next-address 192.51.100.207
 
 interface Gigabit2.12
  mpls traffic-eng backup-path Tunnel2014
+ 
 
 
 interface Tunnel14
  no tunnel mpls traffic-eng path-option 20 dynamic
+ tunnel mpls traffic-eng fast-reroute
 ```
 
 
@@ -43,6 +46,7 @@ interface Gigabit2.24
 
 interface Tunnel14
  no tunnel mpls traffic-eng path-option 20 dynamic
+  tunnel mpls traffic-eng fast-reroute
 ```
 
 
