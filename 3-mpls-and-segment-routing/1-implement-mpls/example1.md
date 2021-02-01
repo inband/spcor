@@ -415,7 +415,25 @@ csr1#show mpls ldp neighbor
 
 ```
 
+Verify wth ping and traceroute
 
+```
+csr1#ping 192.51.100.4 source Lo0
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 192.51.100.4, timeout is 2 seconds:
+Packet sent with a source address of 192.51.100.1 
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/2 ms
+csr1#
+csr1#
+csr1#traceroute 192.51.100.4 source Lo0 num
+csr1#traceroute 192.51.100.4 source Lo0 numeric 
+Type escape sequence to abort.
+Tracing the route to 192.51.100.4
+VRF info: (vrf in name/id, vrf out name/id)
+  1 192.51.100.201 [MPLS: Label 18 Exp 0] 2 msec 0 msec 0 msec
+  2 192.51.100.205 1 msec *  2 msec
+```
 
 
 
