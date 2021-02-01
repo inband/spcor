@@ -98,3 +98,23 @@ ip explicit-path name EP_Tun14
  index 1 next-address 192.51.100.204
  index 2 next-address 192.51.100.200
 ```
+
+Verify
+
+```
+csr4# traceroute 192.51.100.1 source Lo0 numeric 
+Type escape sequence to abort.
+Tracing the route to 192.51.100.1
+VRF info: (vrf in name/id, vrf out name/id)
+  1 192.51.100.204 [MPLS: Label 22 Exp 0] 2 msec 2 msec 1 msec
+  2 192.51.100.200 2 msec *  2 msec
+
+csr4#show mpls forwarding-table 192.51.100.1 32 detail 
+Local      Outgoing   Prefix           Bytes Label   Outgoing   Next Hop    
+Label      Label      or Tunnel Id     Switched      interface              
+16         Pop Label  192.51.100.1/32  0             Tu14       point2point 
+        MAC/Encaps=18/22, MRU=1512, Label Stack{22}, via Gi2.24
+        8EB1147055AA6EF7F53EB638810000188847 00016000
+        No output feature configured
+```
+
