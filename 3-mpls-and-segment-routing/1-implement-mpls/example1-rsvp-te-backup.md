@@ -30,8 +30,9 @@ ip explicit-path name EP_Tun2014 enable
  index 2 next-address 192.51.100.202
 ```
 
-csr3 will require
+csr3 will require: (on transiting interfaces)
 
 ```
-
+ mpls traffic-eng tunnels
+ ip rsvp bandwidth
 ```
