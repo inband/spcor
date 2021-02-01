@@ -72,4 +72,63 @@ VRF info: (vrf in name/id, vrf out name/id)
 
 
 
+```
+csr1(config-router)#mpls ldp ?
+  autoconfig  Configure LDP automatic configuration
 
+csr1(config-router)#mpls ldp autoconfig
+```
+
+
+```
+csr1#show mpls interfaces 
+Interface              IP            Tunnel   BGP Static Operational
+GigabitEthernet2.12    Yes (ldp)     No       No  No     Yes        
+GigabitEthernet3.13    Yes (ldp)     No       No  No     Yes  
+```
+
+Show discovery - it can be seen that mpls has chosen Lo0 as the ```Local LDP Identifier``` 
+
+```
+csr1#show mpls ldp discovery 
+ Local LDP Identifier:
+    192.51.100.1:0
+    Discovery Sources:
+    Interfaces:
+        GigabitEthernet2.12 (ldp): xmit
+        GigabitEthernet3.13 (ldp): xmit
+        
+        
+csr1#show mpls ldp neighbor 
+csr1#
+```
+
+As csr1 is the only router configured at this stage for mpls, there is xmit - but no recv.  There are nmo ldp neighbors formed.
+
+
+What is happening on the wire?
+
+```
+root@pve6-lab:~# tcpdump -nnti vmbr0v13 -v
+tcpdump: listening on vmbr0v13, link-type EN10MB (Ethernet), capture size 262144 bytes
+
+
+IP (tos 0xc0, ttl 1, id 0, offset 0, flags [none], proto UDP (17), length 62)
+    192.51.100.202.646 > 224.0.0.2.646: 
+	LDP, Label-Space-ID: 192.51.100.1:0, pdu-length: 30
+	  Hello Message (0x0100), length: 20, Message ID: 0x00000000, Flags: [ignore if unknown]
+	    Common Hello Parameters TLV (0x0400), length: 4, Flags: [ignore and don't forward if unknown]
+	      Hold Time: 15s, Flags: [Link Hello]
+	    IPv4 Transport Address TLV (0x0401), length: 4, Flags: [ignore and don't forward if unknown]
+	      IPv4 Transport Address: 192.51.100.1
+
+```
+
+Key points on above packet.
+
+* it is multicast to **all routers** ```224.0.0.2```
+* UDP/646
+* TTL 1 (neighbor must be directly connected)
+* TOS c0 **InterNetwork Control**
+
+--------
