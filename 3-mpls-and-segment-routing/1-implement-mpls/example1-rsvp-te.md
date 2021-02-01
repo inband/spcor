@@ -51,3 +51,14 @@ interface Gigabit2.12
  ip rsvp bandwidth
 ```
 
+Example of signalling debug on csr2 (in-path)
+
+```
+csr2#debug mpls traffic-eng tunnels signalling
+*Feb  1 05:40:21.159: TE-SIG-LM: 192.51.100.1_43->192.51.100.4_14 {7}: received ADD RESV request
+*Feb  1 05:40:21.159: TE-SIG-LM: 192.51.100.1_43->192.51.100.4_14 {7}: path previous hop is 192.51.100.200 (GigabitEthernet2.12)
+*Feb  1 05:40:21.159: TE-SIG-LM: 192.51.100.1_43->192.51.100.4_14 {7}: path next hop is 192.51.100.205 (GigabitEthernet3.24)
+*Feb  1 05:40:21.166: TE-SIG: Installed up_tag 21
+*Feb  1 05:40:21.166: TE-SIG: Installed down_tag 1
+*Feb  1 05:40:21.167: TE-SIG-LM: 192.51.100.1_43->192.51.100.4_14 {7}: sending ADD RESV reply
+```
