@@ -435,5 +435,20 @@ VRF info: (vrf in name/id, vrf out name/id)
   2 192.51.100.205 1 msec *  2 msec
 ```
 
+csr1 LFIB 
+
+```
+csr1#show mpls forwarding-table 
+Local      Outgoing   Prefix           Bytes Label   Outgoing   Next Hop    
+Label      Label      or Tunnel Id     Switched      interface              
+16         Pop Label  192.51.100.2/32  0             Gi2.12     192.51.100.201
+17         Pop Label  192.51.100.3/32  0             Gi3.13     192.51.100.203
+18         18         192.51.100.4/32  0             Gi2.12     192.51.100.201
+19         Pop Label  192.51.100.204/31   \
+                                       0             Gi2.12     192.51.100.201
+20         20         192.51.100.206/31   \
+                                       0             Gi2.12     192.51.100.201
+```
+
 
 
