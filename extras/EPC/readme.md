@@ -111,3 +111,14 @@ Stop capture
 ```
 csr8#monitor capture TEST stop
 ```
+
+
+--------
+
+Clear buffer
+
+```
+csr8#monitor capture TEST clear 
+Captured data will be deleted [clear]?[confirm]
+cleared buffer : TEST
+```
