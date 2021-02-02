@@ -73,7 +73,8 @@ Status Information for Capture TEST
 Start capture
 
 ```
-csr8#monitor capture TEST start
+csr8#monitor capture TEST start 
+*Feb  2 23:57:24.079: %BUFCAP-6-ENABLE:  
 ```
 
 ------
@@ -109,7 +110,8 @@ csr8#show monitor capture TEST buffer dump
 Stop capture
 
 ```
-csr8#monitor capture TEST stop
+csr8#monitor capture TEST stop             
+Stopped capture point : TEST
 ```
 
 
