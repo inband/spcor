@@ -1,5 +1,9 @@
 # Example1 rsvp te backup tunnel
 
+Note this does NOT work as NH (next Hop/link) protection as there is an intermediate node in path.  Need to look into further but should be node protection, NNH (next-next Hop)
+
+Look further into path protection
+
 
 csr1
 
