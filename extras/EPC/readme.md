@@ -19,6 +19,8 @@ csr8#monitor capture TEST ?
   stop           Disable Capture 
 ```
 
+Create capture named ```TEST``` with inline filter.  ```any``` will ```Capture all packets```
+
 ```
 csr8#monitor capture TEST match any
 
