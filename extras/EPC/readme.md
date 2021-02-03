@@ -227,3 +227,44 @@ Another example. Specifying UDP as protocol
 csr8#monitor capture TEST match ipv4 protocol udp host 8.8.8.8 any 
 A filter is already attached to the capture . Replace with specified filter?[confirm]
 ```
+
+Another example.  If protocol is specified then port can also be specified.
+
+```
+monitor capture <name> match ipv4 protocol <udp/tcp> <src> <src port> <dst> <dst port> <interface> <direction>
+```
+
+```
+csr8#monitor capture TEST match ipv4 protocol udp host 8.8.8.8 eq 53 any 
+A filter is already attached to the capture . Replace with specified filter?[confirm]
+
+csr8#show monitor capture TEST
+
+Status Information for Capture TEST
+  Target Type: 
+ Interface: GigabitEthernet1, Direction: IN
+   Status : Inactive
+  Filter Details: 
+   IPv4 
+    Source IP:  host 8.8.8.8
+    Destination IP:  any
+   Protocol: udp
+   Source port(s): = 53
+  Buffer Details: 
+   Buffer Type: LINEAR (default)
+   Buffer Size (in MB): 10
+  Limit Details: 
+   Number of Packets to capture: 0 (no limit)
+   Packet Capture duration: 0 (no limit)
+   Packet Size to capture: 0 (no limit)
+   Maximum number of packets to capture per second: 1000
+   Packet sampling rate: 0 (no sampling)
+```
+
+Inline filter appears to be a good quick solution if filter can be expressed with one line.
+
+There are access-lists for more expressive filters.
+
+To do:  access-list examples, buffer/limit examples
+
+
