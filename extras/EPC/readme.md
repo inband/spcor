@@ -123,4 +123,6 @@ Clear buffer
 csr8#monitor capture TEST clear 
 Captured data will be deleted [clear]?[confirm]
 cleared buffer : TEST
+
+*Feb  2 23:58:37.654: %BUFCAP-6-DISABLE: Capture Point TEST disabled.
 ```
