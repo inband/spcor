@@ -136,3 +136,59 @@ cleared buffer : TEST
 
 *Feb  2 23:58:37.654: %BUFCAP-6-DISABLE: Capture Point TEST disabled.
 ```
+
+
+------------
+
+Filters
+
+The ```match``` statement allows for inline filters.
+
+```
+csr8#monitor capture TEST match any
+
+csr8#show monitor capture          
+
+Status Information for Capture TEST
+  Target Type: 
+   Interface unattached 
+   Status : Inactive
+  Filter Details:                 ### FILTER
+    Capture all packets           ### 
+  Buffer Details: 
+   Buffer Type: LINEAR (default)
+  Limit Details: 
+   Number of Packets to capture: 0 (no limit)
+   Packet Capture duration: 0 (no limit)
+   Packet Size to capture: 0 (no limit)
+   Packet sampling rate: 0 (no sampling)
+```
+
+Specify new filter
+
+```
+csr8#monitor capture TEST match ipv4 any any 
+A filter is already attached to the capture . Replace with specified filter?[confirm]
+
+csr8#show monitor capture TEST
+
+Status Information for Capture TEST
+  Target Type: 
+ Interface: GigabitEthernet1, Direction: IN
+   Status : Inactive
+  Filter Details:               ### FILTER
+   IPv4                         ###
+    Source IP:  any             ###
+    Destination IP:  any        ###
+   Protocol: any                ###
+  Buffer Details: 
+   Buffer Type: LINEAR (default)
+   Buffer Size (in MB): 10
+  Limit Details: 
+   Number of Packets to capture: 0 (no limit)
+   Packet Capture duration: 0 (no limit)
+   Packet Size to capture: 0 (no limit)
+   Maximum number of packets to capture per second: 1000
+   Packet sampling rate: 0 (no sampling)
+csr8#
+```
