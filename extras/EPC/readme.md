@@ -52,6 +52,16 @@ csr8#monitor capture TEST interface GigabitEthernet 1 ?
 csr8#monitor capture TEST interface GigabitEthernet 1 in
 ```
 
+Show parameters (note the ```buffer size``` and ```limit pps``` were not specified, so these are default values)
+
+```
+csr8#show monitor capture TEST parameter 
+   monitor capture TEST interface GigabitEthernet1 IN
+   monitor capture TEST match any
+   monitor capture TEST buffer size 10
+   monitor capture TEST limit pps 1000
+```
+
 ```
 csr8#show monitor capture                               
 
