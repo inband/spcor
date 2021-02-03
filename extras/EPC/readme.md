@@ -192,3 +192,38 @@ Status Information for Capture TEST
    Packet sampling rate: 0 (no sampling)
 csr8#
 ```
+
+Another example.  Capture IPv4 on Gig1 inbound from src 8.8.8.8 to dst 192.168.1.0/24, any protocol
+
+```
+csr8#$match ipv4 host 8.8.8.8 192.168.1.0/24                               
+A filter is already attached to the capture . Replace with specified filter?[confirm]
+
+csr8#show monitor capture TEST                                             
+
+Status Information for Capture TEST
+  Target Type: 
+ Interface: GigabitEthernet1, Direction: IN
+   Status : Inactive
+  Filter Details:                       ###
+   IPv4                                 ###
+    Source IP:  host 8.8.8.8            ###
+    Destination IP:  192.168.1.0/24     ###
+   Protocol: any                        ###
+  Buffer Details: 
+   Buffer Type: LINEAR (default)
+   Buffer Size (in MB): 10
+  Limit Details: 
+   Number of Packets to capture: 0 (no limit)
+   Packet Capture duration: 0 (no limit)
+   Packet Size to capture: 0 (no limit)
+   Maximum number of packets to capture per second: 1000
+   Packet sampling rate: 0 (no sampling)
+```
+
+Another example. Specifying UDP as protocol
+
+```
+csr8#monitor capture TEST match ipv4 protocol udp host 8.8.8.8 any 
+A filter is already attached to the capture . Replace with specified filter?[confirm]
+```
