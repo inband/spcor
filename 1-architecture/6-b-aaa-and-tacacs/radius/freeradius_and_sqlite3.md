@@ -92,7 +92,7 @@ Add to ```mods-enabled``` and import ```schema```
 ```
 cd /etc/freeradius/3.0/
 cd mods-enabled/
-ln -s ../mods-available/sql
+ln -s ../mods-available/sql sql
 
 cd /etcfreeradius/
 sqlite3 freeradius.db < 3.0/mods-config/sql/main/sqlite/schema.sql 
