@@ -94,7 +94,7 @@ cd /etc/freeradius/3.0/
 cd mods-enabled/
 ln -s ../mods-available/sql sql
 
-cd /etcfreeradius/
+cd /etc/freeradius/
 sqlite3 freeradius.db < 3.0/mods-config/sql/main/sqlite/schema.sql 
 chown freeradius:freeradius freeradius.db
 chmod 664 freeradius.db 
